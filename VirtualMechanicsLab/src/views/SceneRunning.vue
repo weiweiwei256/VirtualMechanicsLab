@@ -1,29 +1,17 @@
 <template>
-  <div id='scene-running'
-       style="height:100%">
+  <div id='scene-running' style="height:100%">
     <div id='scene-running-toolbar'>
-      <el-button type="primary"
-                 title="开始"
-                 @click='sceneStart'
-                 icon="el-icon-caret-right"></el-button>
-      <el-button type="primary"
-                 title='暂停'
-                 @click='scenePause'
-                 icon="el-icon-circle-close"></el-button>
-      <el-button type="primary"
-                 title='重置'
-                 @click='sceneReset'
-                 icon="el-icon-refresh"></el-button>
+      <el-button type="primary" size="mini" title="开始" @click='sceneStart' icon="el-icon-caret-right"></el-button>
+      <el-button type="primary" size="mini" title='暂停' @click='scenePause' icon="el-icon-circle-close"></el-button>
+      <el-button type="primary" size="mini" title='重置' @click='sceneReset' icon="el-icon-refresh"></el-button>
     </div>
-    <div id='scene-running-runningRender'></div>
+    <div id='scene-running-render'></div>
     <div id='operation'>
       <el-button @click='handleAdd'>add object</el-button>
       <span>view x:</span>
-      <el-slider v-model="viewPort.max.x"
-                 :max='1920'></el-slider>
+      <el-slider v-model="viewPort.max.x" :max='1920'></el-slider>
       <span>view y:</span>
-      <el-slider v-model="viewPort.max.y"
-                 :max='1080'></el-slider>
+      <el-slider v-model="viewPort.max.y" :max='1080'></el-slider>
     </div>
   </div>
 </template>
@@ -91,7 +79,7 @@ export default {
     }
   },
   mounted () {
-    this.renderDom = $('#scene-running-runningRender')[0]
+    this.renderDom = $('#scene-running-render')[0]
     this.initSceneRunning();
     this.renderScene();
   },

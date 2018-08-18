@@ -1,33 +1,18 @@
 <template>
-  <div id="scene-editor"
-       style="height:100%">
+  <div id="scene-editor" style="height:100%">
     <div id='scene-running-toolbar'>
-      <el-button type="primary"
-                 title="保存"
-                 @click='saveSceneData'
-                 icon="el-icon-document"></el-button>
-      <el-button type="primary"
-                 title='删除'
-                 @click='deleteBody'
-                 icon="el-icon-delete"></el-button>
-      <el-button type="primary"
-                 title='撤销'
-                 @click='undo'
-                 icon="el-icon-d-arrow-left"></el-button>
-      <el-button type="primary"
-                 title='恢复'
-                 @click='redo'
-                 icon="el-icon-d-arrow-right"></el-button>
+      <el-button type="primary" size="mini" title="保存" @click='saveSceneData' icon="el-icon-document"></el-button>
+      <el-button type="primary" size="mini" title='删除' @click='deleteBody' icon="el-icon-delete"></el-button>
+      <el-button type="primary" size="mini" title='撤销' @click='undo' icon="el-icon-d-arrow-left"></el-button>
+      <el-button type="primary" size="mini" title='恢复' @click='redo' icon="el-icon-d-arrow-right"></el-button>
     </div>
     <el-row style="height:100%">
-      <el-col style="height:100%"
-              :span="4">
+      <el-col style="height:100%" :span="4">
         <div id="gscene-editor-palette"></div>
         <div id='scene-editor-outline'></div>
         <div id="property"></div>
       </el-col>
-      <el-col style="height:100%"
-              :span="20">
+      <el-col style="height:100%" :span="20">
         <div id="graph-container"></div>
       </el-col>
     </el-row>

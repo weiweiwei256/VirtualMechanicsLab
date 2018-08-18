@@ -1,27 +1,18 @@
 <template>
-  <div class="vml-workbench"
-       style="height:100%:width:100%">
+  <div class="vml-workbench" style="height:100%:width:100%">
     <div id='menu'>
-      <el-menu mode="horizontal"
-               @select="handleSelect"
-               background-color="#545c64"
-               text-color="#fff"
-               active-text-color="#ffd04b">
+      <el-menu mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
         <el-submenu index="scene">
           <template slot="title">场景</template>
           <el-menu-item index="createScene">新建</el-menu-item>
           <el-menu-item index="showScene">查看</el-menu-item>
           <el-submenu index="2">
             <template slot="title">打开</template>
-            <el-menu-item :index="item"
-                          v-for="(item, index) in storageFileNames"
-                          :key='index'>{{item}}</el-menu-item>
+            <el-menu-item :index="item" v-for="(item, index) in storageFileNames" :key='index'>{{item}}</el-menu-item>
             <el-menu-item index="importScene">
               <span class="fileinput-button">
                 <span>导入</span>
-                <input type="file"
-                       id="import-scene-input"
-                       @change="importScene" />
+                <input type="file" id="import-scene-input" @change="importScene" />
               </span>
             </el-menu-item>
           </el-submenu>
@@ -34,33 +25,21 @@
           <el-menu-item index="2-3">运行</el-menu-item>
         </el-submenu>
         <el-menu-item index="about">
-          <a href="#"
-             target="_blank">关于</a>
+          <a href="#" target="_blank">关于</a>
         </el-menu-item>
       </el-menu>
     </div>
     <div id='workbench-toolbar'>
-      <el-button type="primary"
-                 title="编辑"
-                 @click='sceneEdit'
-                 icon="el-icon-setting"></el-button>
-      <el-button type="primary"
-                 title='编辑&运行'
-                 @click='sceneHalf'
-                 icon="el-icon-menu"></el-button>
-      <el-button type="primary"
-                 title='运行'
-                 @click='sceneRunning'
-                 icon="el-icon-d-arrow-right"></el-button>
+      <el-button type="primary" size="mini" circle title="编辑" @click='sceneEdit' icon="el-icon-setting"></el-button>
+      <el-button type="primary" size="mini" circle title='编辑&运行' @click='sceneHalf' icon="el-icon-menu"></el-button>
+      <el-button type="primary" size="mini" circle title='运行' @click='sceneRunning' icon="el-icon-d-arrow-right"></el-button>
     </div>
     <div id='main-workbench'>
       <el-row style="height:100%">
-        <el-col style="height:100%"
-                :span="sceneEditorSpan">
+        <el-col style="height:100%" :span="sceneEditorSpan">
           <SceneEditor></SceneEditor>
         </el-col>
-        <el-col style="height:100%"
-                :span="sceneRunningSpan">
+        <el-col style="height:100%" :span="sceneRunningSpan">
           <SceneRunning></SceneRunning>
         </el-col>
       </el-row>
