@@ -14,7 +14,6 @@ let SceneCodec = {
       mxCell.style = 'round=1';
       let { x, y, width, height, type, options } = jsonData.bodies[i];
       mxCell.geometry = new window.mxGeometry(x, y, width, height);
-      mxCell.name = options.label;
       mxCell.type = type;
       mxCell.value = options;
       parentCell.insert(mxCell);

@@ -26,6 +26,9 @@ export const store = new Vuex.Store({
     editorGraph: state => {
       return state.editorGraph;
     },
+    editorSelectionCell: state => {
+      return state.editorSelectionCell;
+    },
     sceneData: state => {
       return state.sceneData;
     },
@@ -126,6 +129,7 @@ export const store = new Vuex.Store({
         let cell = graph.getSelectionCell();
         context.commit(types.SET_EDITOR_SELECTION_CELL, cell);
       });
+      // 从value中获取展示名
       graph.convertValueToString = function(cell) {
         return cell.value.label;
       };
