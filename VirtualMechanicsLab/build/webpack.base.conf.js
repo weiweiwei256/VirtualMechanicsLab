@@ -78,12 +78,6 @@ module.exports = {
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
       $: 'jquery'
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: 'node_modules/monaco-editor/min/vs',
-        to: 'static/vs'
-      }
-    ])
+    })
   ]
 };
