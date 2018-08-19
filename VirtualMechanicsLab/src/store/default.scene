@@ -9,8 +9,13 @@
       "width": 80,
       "height": 80,
       "options": {
+        "position": {
+          "x": 100,
+          "y": 200
+        },
         "label": "rectangle1",
-        "render": { "fillStyle": "blue" }
+        "angle": 30,
+        "force": { "x": 0.2, "y": 0 }
       }
     },
     {
@@ -20,7 +25,8 @@
       "width": 80,
       "height": 80,
       "options": {
-        "label": "rectangle2"
+        "label": "rectangle2",
+        "torque": 2
       }
     },
     {
@@ -32,8 +38,11 @@
       "options": {
         "label": "rectangle3",
         "friction": 0,
+        "frictionAir": 0,
         "frictionStatic": 0,
-        "frictionAir": 0
+        "restitution": 1,
+        "timeScale": 1,
+        "vertices": [{ "x": 0, "y": 0 }, { "x": 25, "y": 50 }, { "x": 50, "y": 0 }]
       }
     },
     {
@@ -44,7 +53,12 @@
       "height": 30,
       "options": {
         "label": "ground",
-        "isStatic": true
+        "isStatic": true,
+        "friction": 0,
+        "frictionAir": 0,
+        "frictionStatic": 0,
+        "restitution": 1,
+        "timeScale": 1
       }
     }
   ],

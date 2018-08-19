@@ -1,3 +1,4 @@
+export const BODY_PROPERTY_LABEL = 'label';
 // file operation
 export const SAVE_SCENE = 'sceneEditor/mutations/saveScene';
 // scene running operation

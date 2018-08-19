@@ -6,29 +6,37 @@
 
 <script>
 import Vue from "vue"
+import * as types from '@/modules-constant.js'
+import utility from '@/common/utility.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { Input } from "element-ui"
+import PropertyStringEditor from './property-editor/PropertyStringEditor.vue'
 export default {
   name: 'scene-property',
   data: function () {
     return {
-      activePropertyEditors: []
+      propertyNameToEditorMap: new Map([
+        [types.BODY_PROPERTY_LABEL, PropertyStringEditor],
+      ]),
+      activePropertyEditors: [],
+      demoCell: new window.mxCell()
     }
   },
   computed: {
     ...mapGetters(['editorSelectionCell'])
   },
   watch: {
-    editorSelectionCell: function (newVal, oldVal) {
-      console.log(newVal)
-      let containerEle = $("#scene-editor-property")[0];
-      let vueClass = Vue.extend(Input);
-      let vueObject = new vueClass({
-        propsData: { value: newVal.value.label }
-      });
-      let vueObjectEle = vueObject.$mount();
-      containerEle.appendChild(vueObjectEle.$el);
-      this.activePropertyEditors.push(vueObject);
+    editorSelectionCell: function (newCell, oldCell) {
+      let bodyType = newCell.type;
+      for (let i in newCell.value) {
+        let containerEle = $("#scene-editor-property")[0];
+        let vueClass = Vue.extend(this.propertyNameToEditorMap.get(i));
+        let vueObject = new vueClass({
+          propsData: { value: newCell.value[i] }
+        });
+        let vueObjectEle = vueObject.$mount();
+        containerEle.appendChild(vueObjectEle.$el);
+        this.activePropertyEditors.push(vueObject);
+      }
     }
   },
   methods: {
@@ -62,6 +70,9 @@ export default {
   mounted () {
     console.log(this.$refs.elinput)
   },
+  components: {
+    PropertyStringEditor
+  }
 }
 </script>
 

@@ -1,4 +1,10 @@
 let SceneCodec = {
+  /**
+   *将jsonData解码到model
+   *
+   * @param {*} jsonData
+   * @param {*} model
+   */
   decode(jsonData, model) {
     // 1.0 将全局信息设置到model
     for (let i in jsonData) {
@@ -20,6 +26,7 @@ let SceneCodec = {
     }
     model.setRoot(model.root);
   },
+
   encode(model) {
     let jsonData = { name: '', description: '', bodies: [] };
     // 获取全局属性
