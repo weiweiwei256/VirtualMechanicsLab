@@ -57,8 +57,8 @@ export default {
   data: function () {
     return {
       storage: window.localStorage,
-      sceneEditorSpan: 12,
-      sceneRunningSpan: 12,
+      sceneEditorSpan: 24,
+      sceneRunningSpan: 0,
     }
   },
   computed: {
@@ -91,7 +91,7 @@ export default {
           this.saveScene({ fileName: key, sceneData: this.storage.getItem(key) })
           break;
         case 'showScene':
-          console.log(JSON.stringify(this.sceneData))
+          console.log(JSON.stringify(this.sceneData, null, 2))
           break;
         case 'importScene':
           // do nothing.  handle by input event
