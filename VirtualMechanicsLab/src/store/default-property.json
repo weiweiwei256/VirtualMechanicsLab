@@ -1,0 +1,10 @@
+{
+  "label": "Body",
+  "isStatic": false,
+  "mass": 1,
+  "friction": 0.1,
+  "restitution": 0,
+  "position": { "x": 0, "y": 0 },
+  "vertices": [],
+  "angle": 0
+}

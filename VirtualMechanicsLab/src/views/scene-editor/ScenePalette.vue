@@ -16,7 +16,6 @@ export default {
     mxCell.type = 'rectangle'
     mxCell.setVertex(true);
     let funct = (graph, evt, cell) => {
-      debugger
       graph.stopEditing(false);
       let pt = graph.getPointForEvent(evt);
       let vertexClone = graph.getModel().cloneCell(mxCell);

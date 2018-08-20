@@ -1,6 +1,16 @@
 <template>
   <div id="scene-editor-property">
-    <el-input ref='elinput' value='sadfasdf'></el-input>
+    <el-input placeholder="请输入名称" v-model="label" @blur="modifyAttribute('label')">
+      <template slot="prepend">名称：</template>
+    </el-input>
+    <el-switch inactive-text="静止物体:" v-model="isStatic" @change="modifyAttribute('isStatic')">
+    </el-switch>
+    <p>质量</p>
+    <el-input-number v-model="mass" @change="modifyAttribute('mass')" :min="0" :step="1" :precision="2" controls-position="right"></el-input-number>
+    <p>摩擦力</p>
+    <el-input-number v-model="friction" @change="modifyAttribute('friction')" :min="0" :max="1" :step="0.1" :precision="2" controls-position="right"></el-input-number>
+    <p>恢复系数</p>
+    <el-input-number v-model="restitution" @change="modifyAttribute('restitution')" :min="0" :max="1" :step="0.1" :precision="2" controls-position="right"></el-input-number>
   </div>
 </template>
 
@@ -8,70 +18,62 @@
 import Vue from "vue"
 import * as types from '@/modules-constant.js'
 import utility from '@/common/utility.js'
+import defaultProperty from '@/store/default-property.json'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import PropertyStringEditor from './property-editor/PropertyStringEditor.vue'
 export default {
   name: 'scene-property',
   data: function () {
     return {
-      propertyNameToEditorMap: new Map([
-        [types.BODY_PROPERTY_LABEL, PropertyStringEditor],
-      ]),
-      activePropertyEditors: [],
-      demoCell: new window.mxCell()
+      label: "Body",
+      isStatic: false,
+      mass: 1,
+      friction: 0.1,
+      restitution: 0,
     }
   },
   computed: {
-    ...mapGetters(['editorSelectionCell'])
+    ...mapGetters({ selectionCell: 'editorSelectionCell', graph: 'editorGraph' })
   },
   watch: {
-    editorSelectionCell: function (newCell, oldCell) {
-      let bodyType = newCell.type;
-      for (let i in newCell.value) {
-        let containerEle = $("#scene-editor-property")[0];
-        let vueClass = Vue.extend(this.propertyNameToEditorMap.get(i));
-        let vueObject = new vueClass({
-          propsData: { value: newCell.value[i] }
-        });
-        let vueObjectEle = vueObject.$mount();
-        containerEle.appendChild(vueObjectEle.$el);
-        this.activePropertyEditors.push(vueObject);
+    selectionCell: function (newCell, oldCell) {
+      // reset
+      this.label = defaultProperty.label;
+      this.isStatic = defaultProperty.isStatic;
+      this.mass = defaultProperty.mass;
+      this.friction = defaultProperty.friction;
+      this.restitution = defaultProperty.restitution;
+      if (newCell) {
+        let value = newCell.value;
+        this.label = value.label || this.label
+        this.isStatic = value.isStatic || this.isStatic
+        this.mass = value.mass || this.mass
+        this.friction = value.friction || this.friction
+        this.restitution = value.restitution || this.restitution
       }
     }
   },
   methods: {
-    // 清空整个属性区
-    cleanPropertyArea: function () {
-      this.activePropertyEditors.forEach(object => object.$destroy());
-      let containerEle = $("#scene-editor-property")[0];
-      // 移除所有子孩子 清空自定义数据
-      var childs = containerEle.childNodes;
-      while (childs.length != 0) {
-        containerEle.removeChild(containerEle.firstChild);
-      }
-    },
-    change: function () {
-      var oldValue = cell.getAttribute(attribute.nodeName, '');
+    modifyAttribute: function (attrName) {
+      let oldValue = this.selectionCell.getAttribute(attrName, defaultProperty[attrName]);
+      let newValue = this[attrName]
       if (newValue != oldValue) {
-        graph.getModel().beginUpdate();
+        this.graph.getModel().beginUpdate();
         try {
-          var edit = new mxCellAttributeChange(
-            cell, attribute.nodeName,
+          let edit = new mxCellAttributeChange(
+            this.selectionCell, attrName,
             newValue);
-          graph.getModel().execute(edit);
-          graph.updateCellSize(cell);
+          this.graph.getModel().execute(edit);
         }
         finally {
-          graph.getModel().endUpdate();
+          this.graph.getModel().endUpdate();
         }
       }
     }
   },
   mounted () {
-    console.log(this.$refs.elinput)
+    console.log(this)
   },
   components: {
-    PropertyStringEditor
   }
 }
 </script>
