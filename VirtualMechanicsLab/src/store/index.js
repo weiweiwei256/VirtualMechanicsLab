@@ -59,6 +59,10 @@ export const store = new Vuex.Store({
   },
   actions: {
     [types.INIT_SCENE_RUNNING]: context => {
+      // update scene data
+      context.commit(types.UPDATE_SCENE_RUNNING, {
+        sceneData: sceneCodec.encode(context.getters.editorGraph.getModel())
+      });
       let engine = Engine.create();
       let runningRender = Render.create({
         engine: engine,
@@ -88,16 +92,16 @@ export const store = new Vuex.Store({
         }
       });
       context.commit(types.SET_RUNNING_RENDER, runningRender);
-      context.commit(types.UPDATE_SCENE_RUNNING, {
-        sceneData: sceneCodec.encode(context.getters.editorGraph.getModel())
-      });
       let sceneData = context.getters.sceneData;
       for (let i = 0; i < sceneData.bodies.length; i++) {
         let bodyData = sceneData.bodies[i];
         let bodyObject = null;
         switch (bodyData.type) {
-          case 'rectangle':
+          case types.RECTANGLE:
             bodyObject = Bodies.rectangle(bodyData.x, bodyData.y, bodyData.width, bodyData.height, bodyData.options);
+            break;
+          case types.CIRCLE:
+            bodyObject = Bodies.circle(bodyData.x, bodyData.y, bodyData.radius, bodyData.options);
             break;
           default:
             console.error('unknown body type' + bodyData.type);

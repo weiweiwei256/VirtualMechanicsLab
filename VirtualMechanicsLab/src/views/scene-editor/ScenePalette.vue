@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import * as types from '@/modules-constant.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'scene-palette',
@@ -16,7 +17,7 @@ export default {
   },
   methods: {
     addVertex: function (icon, w, h, style) {
-      var vertex = new mxCell({ label: 'rectangle', vertices: [{ "x": 0, "y": 0 }, { "x": 25, "y": 50 }, { "x": 50, "y": 0 }] }, new mxGeometry(0, 0, w, h), style);
+      var vertex = new mxCell({ label: types.RECTANGLE, vertices: [{ "x": 0, "y": 0 }, { "x": 25, "y": 50 }, { "x": 50, "y": 0 }] }, new mxGeometry(0, 0, w, h), style);
       vertex.setVertex(true);
       this.addToolbarItem(vertex, icon);
     },

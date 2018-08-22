@@ -3,36 +3,29 @@
   "description": "This is a test scene file",
   "bodies": [
     {
-      "type": "rectangle",
-      "x": 0,
-      "y": 0,
-      "width": 80,
-      "height": 80,
+      "type": "circle",
+      "x": 100,
+      "y": 100,
+      "radius": 30,
       "options": {
-        "position": {
-          "x": 100,
-          "y": 200
-        },
-        "angle": 30,
-        "force": { "x": 0.2, "y": 0 }
+        "label": "circle"
       }
     },
     {
       "type": "rectangle",
-      "x": 150,
-      "y": 50,
+      "x": 40,
+      "y": 40,
       "width": 80,
       "height": 80,
       "options": {
         "label": "rectangle2",
         "friction": 0,
-        "restitution": 1,
-        "angle": 45
+        "restitution": 1
       }
     },
     {
       "type": "rectangle",
-      "x": 250,
+      "x": 200,
       "y": 50,
       "width": 80,
       "height": 80,
@@ -40,8 +33,7 @@
         "label": "rectangle3",
         "mass": 20,
         "friction": 0.2,
-        "restitution": 0.1,
-        "vertices": [{ "x": 0, "y": 0 }, { "x": 25, "y": 50 }, { "x": 50, "y": 0 }]
+        "restitution": 0.1
       }
     },
     {

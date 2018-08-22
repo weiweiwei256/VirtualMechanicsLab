@@ -1,3 +1,4 @@
+import * as types from '@/modules-constant.js';
 let SceneCodec = {
   /**
    *将jsonData解码到model
@@ -16,10 +17,23 @@ let SceneCodec = {
     let parentCell = model.root.children[0];
     for (let i in jsonData.bodies) {
       let mxCell = new window.mxCell();
+      let { type } = jsonData.bodies[i];
+      let { x, y, radius, width, height, options } = jsonData.bodies[i];
+      let geometry;
+      switch (type) {
+        case types.RECTANGLE:
+          geometry = new window.mxGeometry(x - width / 2, y - height / 2, width, height);
+          mxCell.style = 'shape=rectangle';
+          break;
+        case types.CIRCLE:
+          geometry = new window.mxGeometry(x - radius, y - radius, 2 * radius, 2 * radius);
+          mxCell.style = 'shape=ellipse';
+          break;
+        default:
+          console.error('unknown body type' + bodyData.type);
+      }
+      mxCell.geometry = geometry;
       mxCell.vertex = true;
-      mxCell.style = 'round=1';
-      let { x, y, width, height, type, options } = jsonData.bodies[i];
-      mxCell.geometry = new window.mxGeometry(x, y, width, height);
       mxCell.type = type;
       mxCell.value = options;
       parentCell.insert(mxCell);
@@ -40,9 +54,25 @@ let SceneCodec = {
       let mxCell = model.root.children[0].children[i];
       let { geometry, value, type } = mxCell;
       let { x, y, width, height } = geometry;
-      let body = { x, y, width, height };
+      let body = {};
       body.options = value;
       body.type = type;
+      switch (type) {
+        case types.RECTANGLE:
+          body.x = x + width / 2;
+          body.y = y + height / 2;
+          body.width = width;
+          body.height = height;
+          break;
+        case types.CIRCLE:
+          let radius = width / 2;
+          body.x = x + radius;
+          body.y = y + radius;
+          body.radius = radius;
+          break;
+        default:
+          console.error('unknown body type' + bodyData.type);
+      }
       jsonData.bodies.push(body);
     }
     return jsonData;

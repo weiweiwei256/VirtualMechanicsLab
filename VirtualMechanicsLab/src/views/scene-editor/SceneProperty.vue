@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import Vue from "vue"
 import * as types from '@/modules-constant.js'
 import utility from '@/common/utility.js'
 import defaultProperty from '@/store/default-property.json'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+let options = defaultProperty.options;
 export default {
   name: 'scene-property',
   data: function () {
@@ -62,11 +62,11 @@ export default {
   watch: {
     selectionCell: function (newCell, oldCell) {
       // reset
-      this.label = defaultProperty.label;
-      this.isStatic = defaultProperty.isStatic;
-      this.mass = defaultProperty.mass;
-      this.friction = defaultProperty.friction;
-      this.restitution = defaultProperty.restitution;
+      this.label = options.label;
+      this.isStatic = options.isStatic;
+      this.mass = options.mass;
+      this.friction = options.friction;
+      this.restitution = options.restitution;
       if (newCell) {
         let value = newCell.value;
         this.label = value.label || this.label
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     modifyAttribute: function (attrName) {
-      let oldValue = this.selectionCell.getAttribute(attrName, defaultProperty[attrName]);
+      let oldValue = this.selectionCell.getAttribute(attrName, options[attrName]);
       let newValue = this[attrName]
       if (newValue != oldValue) {
         this.graph.getModel().beginUpdate();
