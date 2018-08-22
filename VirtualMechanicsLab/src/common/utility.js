@@ -1,5 +1,5 @@
-let demoGraphModel = new window.mxGraphModel();
-let demoCell = new window.mxCell();
+// let demoGraphModel = new window.mxGraphModel();
+// let demoCell = new window.mxCell();
 let utility = {
   /**
    *
@@ -31,5 +31,24 @@ let utility = {
     }
     return propertyMap;
   }
+  // getCenterOfGravityPoint(mPoints) {
+  //   let area = 0.0; //多边形面积
+  //   let Gx = 0.0,
+  //     Gy = 0.0; // 重心的x、y
+  //   for (let i = 1; i <= mPoints.length; i++) {
+  //     let iLat = mPoints[i % mPoints.length].x;
+  //     let iLng = mPoints[i % mPoints.length].y;
+  //     let nextLat = mPoints[i - 1].x;
+  //     let nextLng = mPoints[i - 1].y;
+  //     let temp = (iLat * nextLng - iLng * nextLat) / 2.0;
+  //     area += temp;
+  //     Gx += (temp * (iLat + nextLat)) / 3.0;
+  //     Gy += (temp * (iLng + nextLng)) / 3.0;
+  //   }
+  //   Gx = Gx / area;
+  //   Gy = Gy / area;
+  //   return { x: Gx, y: Gy };
+  // }
 };
 export default utility;
+// [{ x: 0, y: 0 }, { x: 25, y: 50 }, { x: 50, y: 0 }]

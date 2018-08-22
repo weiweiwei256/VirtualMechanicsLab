@@ -60,9 +60,9 @@ export const store = new Vuex.Store({
   actions: {
     [types.INIT_SCENE_RUNNING]: context => {
       // update scene data
-      context.commit(types.UPDATE_SCENE_RUNNING, {
-        sceneData: sceneCodec.encode(context.getters.editorGraph.getModel())
-      });
+      // context.commit(types.UPDATE_SCENE_RUNNING, {
+      //   sceneData: sceneCodec.encode(context.getters.editorGraph.getModel())
+      // });
       let engine = Engine.create();
       let runningRender = Render.create({
         engine: engine,
@@ -102,6 +102,10 @@ export const store = new Vuex.Store({
             break;
           case types.CIRCLE:
             bodyObject = Bodies.circle(bodyData.x, bodyData.y, bodyData.radius, bodyData.options);
+            break;
+          case types.TRIANGLE:
+            let massCenter = Vertices.centre(bodyData.vertices);
+            bodyObject = Bodies.fromVertices(massCenter.x, massCenter.y, bodyData.vertices);
             break;
           default:
             console.error('unknown body type' + bodyData.type);

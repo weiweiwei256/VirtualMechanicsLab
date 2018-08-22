@@ -13,7 +13,7 @@
     },
     {
       "type": "rectangle",
-      "x": 40,
+      "x": 140,
       "y": 40,
       "width": 80,
       "height": 80,
@@ -24,14 +24,12 @@
       }
     },
     {
-      "type": "rectangle",
-      "x": 200,
-      "y": 50,
+      "type": "triangle",
       "width": 80,
       "height": 80,
+      "vertices": [{ "x": 0, "y": 0 }, { "x": 25, "y": 50 }, { "x": 50, "y": 0 }],
       "options": {
         "label": "rectangle3",
-        "mass": 20,
         "friction": 0.2,
         "restitution": 0.1
       }

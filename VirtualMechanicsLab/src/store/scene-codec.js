@@ -30,7 +30,7 @@ let SceneCodec = {
           mxCell.style = 'shape=ellipse';
           break;
         default:
-          console.error('unknown body type' + bodyData.type);
+          console.error('unknown body type' + type);
       }
       mxCell.geometry = geometry;
       mxCell.vertex = true;
@@ -71,7 +71,7 @@ let SceneCodec = {
           body.radius = radius;
           break;
         default:
-          console.error('unknown body type' + bodyData.type);
+          console.error('unknown body type' + type);
       }
       jsonData.bodies.push(body);
     }

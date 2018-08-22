@@ -18,6 +18,7 @@
 
 <script>
 import * as types from '@/modules-constant.js'
+import '@/common/decomp.js'
 import { Render, Engine, Runner, Common } from 'matter-js'
 import { mapGetters, mapActions } from 'vuex'
 export default {
