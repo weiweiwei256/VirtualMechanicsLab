@@ -3,14 +3,39 @@
     <el-input placeholder="请输入名称" v-model="label" @blur="modifyAttribute('label')">
       <template slot="prepend">名称：</template>
     </el-input>
-    <el-switch inactive-text="静止物体:" v-model="isStatic" @change="modifyAttribute('isStatic')">
-    </el-switch>
-    <p>质量</p>
-    <el-input-number v-model="mass" @change="modifyAttribute('mass')" :min="0" :step="1" :precision="2" controls-position="right"></el-input-number>
-    <p>摩擦力</p>
-    <el-input-number v-model="friction" @change="modifyAttribute('friction')" :min="0" :max="1" :step="0.1" :precision="2" controls-position="right"></el-input-number>
-    <p>恢复系数</p>
-    <el-input-number v-model="restitution" @change="modifyAttribute('restitution')" :min="0" :max="1" :step="0.1" :precision="2" controls-position="right"></el-input-number>
+    <el-row>
+      <el-col :span="4">
+        <p>静止:</p>
+      </el-col>
+      <el-col :span="20">
+        <el-switch v-model="isStatic" @change="modifyAttribute('isStatic')">
+        </el-switch>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="4">
+        <p>质量:</p>
+      </el-col>
+      <el-col :span="20">
+        <el-input-number v-model="mass" @change="modifyAttribute('mass')" :min="0" :step="1" :precision="2" controls-position="right"></el-input-number>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="4">
+        <p>摩擦力:</p>
+      </el-col>
+      <el-col :span="20">
+        <el-input-number v-model="friction" @change="modifyAttribute('friction')" :min="0" :max="1" :step="0.1" :precision="2" controls-position="right"></el-input-number>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="4">
+        <p>恢复系数:</p>
+      </el-col>
+      <el-col :span="20">
+        <el-input-number v-model="restitution" @change="modifyAttribute('restitution')" :min="0" :max="1" :step="0.1" :precision="2" controls-position="right"></el-input-number>
+      </el-col>
+    </el-row>
   </div>
 </template>
 

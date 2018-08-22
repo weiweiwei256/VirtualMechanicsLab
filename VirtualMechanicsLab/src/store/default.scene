@@ -13,7 +13,6 @@
           "x": 100,
           "y": 200
         },
-        "label": "rectangle1",
         "angle": 30,
         "force": { "x": 0.2, "y": 0 }
       }
@@ -26,7 +25,9 @@
       "height": 80,
       "options": {
         "label": "rectangle2",
-        "torque": 2
+        "friction": 0,
+        "restitution": 1,
+        "angle": 45
       }
     },
     {
@@ -37,11 +38,9 @@
       "height": 80,
       "options": {
         "label": "rectangle3",
-        "friction": 0,
-        "frictionAir": 0,
-        "frictionStatic": 0,
-        "restitution": 1,
-        "timeScale": 1,
+        "mass": 20,
+        "friction": 0.2,
+        "restitution": 0.1,
         "vertices": [{ "x": 0, "y": 0 }, { "x": 25, "y": 50 }, { "x": 50, "y": 0 }]
       }
     },
@@ -56,9 +55,8 @@
         "isStatic": true,
         "friction": 0,
         "frictionAir": 0,
-        "frictionStatic": 0,
-        "restitution": 1,
-        "timeScale": 1
+        "frictionStatic": 1,
+        "restitution": 1
       }
     }
   ],

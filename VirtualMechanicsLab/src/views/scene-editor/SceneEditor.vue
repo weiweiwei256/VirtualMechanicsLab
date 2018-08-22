@@ -6,15 +6,15 @@
       <el-button type="primary" size="mini" title='撤销' @click='undo' icon="el-icon-d-arrow-left"></el-button>
       <el-button type="primary" size="mini" title='恢复' @click='redo' icon="el-icon-d-arrow-right"></el-button>
     </div>
-    <el-row style="height:100%">
+    <el-row style="height:70%">
       <el-col style="height:100%" :span="4">
         <scene-palette></scene-palette>
-        <scene-property></scene-property>
       </el-col>
       <el-col style="height:100%" :span="20">
         <div id="graph-container"></div>
       </el-col>
     </el-row>
+    <scene-property></scene-property>
   </div>
 </template>
 
