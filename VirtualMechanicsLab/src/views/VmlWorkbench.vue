@@ -57,8 +57,8 @@ export default {
   data: function () {
     return {
       storage: window.localStorage,
-      sceneEditorSpan: 24,
-      sceneRunningSpan: 0,
+      sceneEditorSpan: 12,
+      sceneRunningSpan: 12,
     }
   },
   computed: {
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      saveScene: types.SAVE_SCENE
+      updateSceneRunning: types.UPDATE_SCENE_RUNNING
     }),
     ...mapActions({
       initSceneEditor: types.INIT_SCENE_EDITOR,
@@ -88,7 +88,7 @@ export default {
     handleSelect (key) {
       switch (key) {
         case 'createScene':
-          this.saveScene({ fileName: key, sceneData: this.storage.getItem(key) })
+          this.updateSceneRunning({ fileName: key, sceneData: this.storage.getItem(key) })
           break;
         case 'showScene':
           console.log(JSON.stringify(this.sceneData, null, 2))
@@ -112,7 +112,7 @@ export default {
       reader.onload = function () {
         console.log(file.name)
         console.log(this.result)
-        self.saveScene({ fileName: file.name, sceneData: JSON.parse(this.result) })
+        self.updateSceneRunning({ fileName: file.name, sceneData: JSON.parse(this.result) })
       }
     },
 

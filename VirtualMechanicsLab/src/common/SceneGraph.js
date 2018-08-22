@@ -11,3 +11,5 @@ mxCell.prototype.setAttribute = function(name, value) {
   var cellValue = this.getValue();
   cellValue[name] = value;
 };
+mxVertexHandler.prototype.rotationEnabled = true;
+mxVertexHandler.prototype.singleSizer = true;

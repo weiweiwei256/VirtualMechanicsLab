@@ -52,7 +52,7 @@ export const store = new Vuex.Store({
     [types.SET_EDITOR_SELECTION_CELL]: (state, cell) => {
       state.editorSelectionCell = cell;
     },
-    [types.SAVE_SCENE]: (state, { fileName, sceneData }) => {
+    [types.UPDATE_SCENE_RUNNING]: (state, { fileName = state.fileName, sceneData }) => {
       state.fileName = fileName;
       state.sceneData = sceneData;
     }
@@ -88,6 +88,9 @@ export const store = new Vuex.Store({
         }
       });
       context.commit(types.SET_RUNNING_RENDER, runningRender);
+      context.commit(types.UPDATE_SCENE_RUNNING, {
+        sceneData: sceneCodec.encode(context.getters.editorGraph.getModel())
+      });
       let sceneData = context.getters.sceneData;
       for (let i = 0; i < sceneData.bodies.length; i++) {
         let bodyData = sceneData.bodies[i];

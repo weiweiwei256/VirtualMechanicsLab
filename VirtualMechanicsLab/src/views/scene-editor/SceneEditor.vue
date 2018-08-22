@@ -35,13 +35,13 @@ export default {
   },
   methods: {
     ...mapMutations({
-      saveScene: types.SAVE_SCENE
+      updateSceneRunning: types.UPDATE_SCENE_RUNNING
     }),
     ...mapActions({
       initSceneEditor: types.INIT_SCENE_EDITOR
     }),
     saveSceneData: function () {
-      this.saveScene({ fileName: this.fileName, sceneData: sceneCodec.encode(this.editorGraph.getModel()) })
+      this.updateSceneRunning({ sceneData: sceneCodec.encode(this.editorGraph.getModel()) })
     },
     deleteBody: function () {
       console.log('delete')
