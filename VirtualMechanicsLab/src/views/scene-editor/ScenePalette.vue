@@ -1,5 +1,12 @@
 <template>
-  <div id="scene-editor-palette"></div>
+  <div id="scene-editor-palette">
+    <div id='object-palette'></div>
+    <div id='object-container'>
+      <i class="iconfont icon-rectangle" title="矩形"></i>
+      <i class="iconfont icon-left-bottom-triangle" title='直角三角形'></i>
+      <i class="iconfont icon-circle" title='圆形'></i>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -39,7 +46,7 @@ export default {
   },
 
   mounted: function () {
-    this.toolbar = new window.mxToolbar($('#scene-editor-palette')[0]);
+    this.toolbar = new window.mxToolbar($('#object-palette')[0]);
     this.addVertex('/static/imgs/rectangle.gif', 100, 40, '');
     this.addVertex('/static/imgs/rounded.gif', 100, 40, 'shape=rounded');
     this.addVertex('/static/imgs/triangle.gif', 40, 40, 'shape=triangle');
@@ -47,5 +54,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.object-container {
+  display: flex;
+  flex-direction: column;
+}
+.iconfont {
+  font-size: 40px;
+}
 </style>

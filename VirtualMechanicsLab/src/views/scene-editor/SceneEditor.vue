@@ -8,6 +8,8 @@
     <el-row style="height:70%">
       <el-col style="height:100%" :span="4">
         <scene-palette></scene-palette>
+        <p>缩略图</p>
+        <div id='outline'></div>
       </el-col>
       <el-col style="height:100%" :span="20">
         <div id="graph-container"></div>
@@ -49,6 +51,7 @@ export default {
   mounted () {
     this.editorGraph.init($("#graph-container")[0]) // 数据与渲染分离
     this.editorGraph.view.refresh();
+    new mxOutline(this.editorGraph, $('#outline')[0]);
   },
   components: {
     ScenePalette,
@@ -66,5 +69,4 @@ export default {
   cursor: default;
   background: url('/static/imgs/grid.gif');
 }
-
 </style>
