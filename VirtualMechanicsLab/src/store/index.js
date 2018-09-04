@@ -59,9 +59,9 @@ export const store = new Vuex.Store({
   actions: {
     [types.INIT_SCENE_RUNNING]: context => {
       // update scene data
-      // context.commit(types.UPDATE_SCENE_RUNNING, {
-      //   sceneData: sceneCodec.encode(context.getters.editorGraph.getModel())
-      // });
+      context.commit(types.UPDATE_SCENE_RUNNING, {
+        sceneData: sceneCodec.encode(context.getters.editorGraph.getModel())
+      });
       let engine = Engine.create();
       let runningRender = Render.create({
         engine: engine,

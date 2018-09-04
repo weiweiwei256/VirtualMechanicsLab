@@ -36,7 +36,7 @@ let SceneCodec = {
           mxCell.direction = direction;
           break;
         default:
-          console.error('unknown body type' + type);
+          console.error('unknown body type:' + type);
       }
       mxCell.geometry = geometry;
       mxCell.vertex = true;
@@ -58,7 +58,7 @@ let SceneCodec = {
     }
     for (let i in model.root.children[0].children) {
       let mxCell = model.root.children[0].children[i];
-      let { geometry, value, type } = mxCell;
+      let { geometry, value, type, direction } = mxCell;
       let { x, y, width, height } = geometry;
       let body = {};
       body.options = value;
@@ -76,8 +76,15 @@ let SceneCodec = {
           body.y = y + radius;
           body.radius = radius;
           break;
+        case types.TRIANGLE:
+          body.x = x;
+          body.y = y;
+          body.width = width;
+          body.height = height;
+          body.direction = direction;
+          break;
         default:
-          console.error('unknown body type' + type);
+          console.error('unknown body type:' + type);
       }
       jsonData.bodies.push(body);
     }
