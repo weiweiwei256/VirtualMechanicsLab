@@ -75,6 +75,7 @@ export default {
         this.friction = value.friction || this.friction
         this.restitution = value.restitution || this.restitution
       }
+      console.log('selectionCell', newCell)
     }
   },
   methods: {

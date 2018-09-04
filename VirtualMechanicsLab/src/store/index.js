@@ -119,7 +119,7 @@ export const store = new Vuex.Store({
                 break;
             }
             let massCenter = Vertices.centre(vertices);
-            bodyObject = Bodies.fromVertices(x + massCenter.x, y + massCenter.y, vertices);
+            bodyObject = Bodies.fromVertices(x + massCenter.x, y + massCenter.y, vertices, options);
             break;
           default:
             console.error('unknown body type' + type);

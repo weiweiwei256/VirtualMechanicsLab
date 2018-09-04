@@ -1,9 +1,9 @@
 <template>
   <div id='scene-running' style="height:100%">
     <div id='scene-running-toolbar'>
-      <el-button type="primary" size="mini" title="开始" @click='sceneStart' icon="el-icon-caret-right"></el-button>
-      <el-button type="primary" size="mini" title='暂停' @click='scenePause' icon="el-icon-circle-close"></el-button>
-      <el-button type="primary" size="mini" title='重置' @click='sceneReset' icon="el-icon-refresh"></el-button>
+      <i class="iconfont icon-start" title="开始" @click='sceneStart'></i>
+      <i class="iconfont icon-zanting" title='暂停' @click='scenePause'></i>
+      <i class="iconfont icon-restart" title='重置' @click='sceneReset'></i>
     </div>
     <div id='scene-running-render'></div>
     <div id='operation'>
