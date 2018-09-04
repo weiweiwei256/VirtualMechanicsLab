@@ -22,9 +22,6 @@ export default {
       this.addToolbarItem(vertex, icon);
     },
     addToolbarItem: function (prototype, image) {
-      // Function that is executed when the image is dropped on
-      // the graph. The cell argument points to the cell under
-      // the mousepointer if there is one.
       var funct = function (graph, evt, cell) {
         graph.stopEditing(false);
 
@@ -46,7 +43,6 @@ export default {
     this.addVertex('/static/imgs/rectangle.gif', 100, 40, '');
     this.addVertex('/static/imgs/rounded.gif', 100, 40, 'shape=rounded');
     this.addVertex('/static/imgs/triangle.gif', 40, 40, 'shape=triangle');
-    this.addVertex('/static/imgs/triangle.gif', 40, 40, 'shape=polygonShape');
   }
 }
 </script>

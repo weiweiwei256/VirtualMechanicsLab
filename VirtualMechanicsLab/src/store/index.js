@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 import * as types from '@/modules-constant.js';
 import { Engine, Render, World, Bodies, Events, MouseConstraint, Composite, Bounds, Vertices } from 'matter-js';
 import defaultScene from '@/store/default.scene';
-import matterDeCodec from './matter-decodec';
 import sceneCodec from './scene-codec';
 Vue.use(Vuex);
 export const store = new Vuex.Store({
@@ -94,21 +93,36 @@ export const store = new Vuex.Store({
       context.commit(types.SET_RUNNING_RENDER, runningRender);
       let sceneData = context.getters.sceneData;
       for (let i = 0; i < sceneData.bodies.length; i++) {
-        let bodyData = sceneData.bodies[i];
+        let { type, x, y, radius, width, height, direction, options } = sceneData.bodies[i];
         let bodyObject = null;
-        switch (bodyData.type) {
+        switch (type) {
           case types.RECTANGLE:
-            bodyObject = Bodies.rectangle(bodyData.x, bodyData.y, bodyData.width, bodyData.height, bodyData.options);
+            bodyObject = Bodies.rectangle(x, y, width, height, options);
             break;
           case types.CIRCLE:
-            bodyObject = Bodies.circle(bodyData.x, bodyData.y, bodyData.radius, bodyData.options);
+            bodyObject = Bodies.circle(x, y, radius, options);
             break;
           case types.TRIANGLE:
-            let massCenter = Vertices.centre(bodyData.vertices);
-            bodyObject = Bodies.fromVertices(massCenter.x, massCenter.y, bodyData.vertices);
+            let vertices;
+            switch (direction) {
+              case 1:
+                vertices = [{ x: 0, y: 0 }, { x: 0, y: height }, { x: width, y: height }];
+                break;
+              case 2:
+                vertices = [{ x: width, y: 0 }, { x: 0, y: height }, { x: width, y: height }];
+                break;
+              case 3:
+                vertices = [{ x: 0, y: 0 }, { x: width, y: 0 }, { x: width, y: height }];
+                break;
+              case 4:
+                vertices = [{ x: 0, y: 0 }, { x: 0, y: height }, { x: width, y: 0 }];
+                break;
+            }
+            let massCenter = Vertices.centre(vertices);
+            bodyObject = Bodies.fromVertices(x + massCenter.x, y + massCenter.y, vertices);
             break;
           default:
-            console.error('unknown body type' + bodyData.type);
+            console.error('unknown body type' + type);
         }
         if (bodyObject) {
           World.addBody(engine.world, bodyObject);

@@ -8,28 +8,30 @@
       "y": 100,
       "radius": 30,
       "options": {
-        "label": "circle"
+        "label": "circle1"
       }
     },
     {
       "type": "rectangle",
-      "x": 140,
+      "x": 200,
       "y": 40,
       "width": 80,
       "height": 80,
       "options": {
-        "label": "rectangle2",
+        "label": "rectangle1",
         "friction": 0,
         "restitution": 1
       }
     },
     {
       "type": "triangle",
-      "width": 80,
-      "height": 80,
-      "vertices": [{ "x": 0, "y": 0 }, { "x": 25, "y": 50 }, { "x": 50, "y": 0 }],
+      "x": 200,
+      "y": 200,
+      "width": 50,
+      "height": 50,
+      "direction": 1,
       "options": {
-        "label": "rectangle3",
+        "label": "triangle1",
         "friction": 0.2,
         "restitution": 0.1
       }

@@ -1,4 +1,5 @@
 import * as types from '@/modules-constant.js';
+import './shapes/custom-triangle.js';
 let SceneCodec = {
   /**
    *将jsonData解码到model
@@ -18,7 +19,7 @@ let SceneCodec = {
     for (let i in jsonData.bodies) {
       let mxCell = new window.mxCell();
       let { type } = jsonData.bodies[i];
-      let { x, y, radius, width, height, options } = jsonData.bodies[i];
+      let { x, y, radius, width, height, options, direction } = jsonData.bodies[i];
       let geometry;
       switch (type) {
         case types.RECTANGLE:
@@ -28,6 +29,11 @@ let SceneCodec = {
         case types.CIRCLE:
           geometry = new window.mxGeometry(x - radius, y - radius, 2 * radius, 2 * radius);
           mxCell.style = 'shape=ellipse';
+          break;
+        case types.TRIANGLE:
+          geometry = new window.mxGeometry(x, y, 50, 50);
+          mxCell.style = 'shape=CustomTriangle';
+          mxCell.direction = direction;
           break;
         default:
           console.error('unknown body type' + type);
