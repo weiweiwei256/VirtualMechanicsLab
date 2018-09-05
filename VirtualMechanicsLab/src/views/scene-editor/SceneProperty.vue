@@ -42,7 +42,7 @@
 <script>
 import * as types from '@/modules-constant.js'
 import utility from '@/common/utility.js'
-import defaultProperty from '@/store/default-property.json'
+import defaultProperty from '@/common/default/default-property.json'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 let options = defaultProperty.options;
 export default {
@@ -75,7 +75,6 @@ export default {
         this.friction = value.friction || this.friction
         this.restitution = value.restitution || this.restitution
       }
-      console.log('selectionCell', newCell)
     }
   },
   methods: {
@@ -97,7 +96,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this)
   },
   components: {
   }
