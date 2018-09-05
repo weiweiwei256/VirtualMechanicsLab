@@ -1,4 +1,4 @@
-class CustomTriangle extends mxShape {
+class Triangle extends mxShape {
   paintBackground(c, x, y, width, height) {
     let direction = this.state.cell.direction;
     let vertices;
@@ -28,5 +28,5 @@ class CustomTriangle extends mxShape {
     c.stroke();
   }
 }
-mxCellRenderer.registerShape('CustomTriangle', CustomTriangle);
-export default CustomTriangle;
+mxCellRenderer.registerShape('triangle', Triangle);
+export default Triangle;
