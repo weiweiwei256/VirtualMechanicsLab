@@ -27,10 +27,34 @@
         <el-menu-item index="about">
           <a href="#" target="_blank">关于</a>
         </el-menu-item>
-      </el-menu>
+      </el-menu>hover
     </div> -->
-    <header id='vml-header'>
-
+    <header id='vml-header' @mouseenter='showSceneBar' @mouseleave='hideSceneBar'>
+      <el-popover placement="bottom" width="200" trigger="hover">
+        <el-card class="box-card">
+          <div slot="header" shadow="hover">
+            <span>示例场景</span>
+          </div>
+          <div v-for="o in 4" :key="o" class="text item">
+            {{'列表内容 ' + o }}
+          </div>
+        </el-card>
+        <el-card class="box-card">
+          <div slot="header" shadow="hover">
+            <span>你的场景</span>
+          </div>
+          <div v-for="o in 4" :key="o" class="text item">
+            {{'列表内容 ' + o }}
+          </div>
+        </el-card>
+        <i slot="reference" :style="{display:sceneBarDisplay}" class="el-icon-circle-plus-outline"></i>
+      </el-popover>
+      <input id='scene-name-input' type="text" :value='fileName' @focus="focusSceneName"></input>
+      <el-popover placement="bottom" width="300" trigger="hover">
+        <el-input type="textarea" :rows="5" placeholder="场景描述" v-model="sceneDescription">
+        </el-input>
+        <i slot="reference" :style="{display:sceneBarDisplay}" class="el-icon-edit"></i>
+      </el-popover>
     </header>
     <circle-menu class='circle-menu-style' type="bottom" :number="4" animate="animated jello" circle>
       <a slot="item_btn" class="question el-icon-question" title="帮助"></a>
@@ -39,17 +63,12 @@
       <a slot="item_3" class='question-font'>建议</a>
       <a slot="item_4" class='question-font'>支持</a>
     </circle-menu>
-    <!-- <div id='workbench-toolbar'>
-      <el-button type="primary" size="mini" circle title="编辑" @click='sceneEdit' icon="el-icon-setting"></el-button>
-      <el-button type="primary" size="mini" circle title='编辑&运行' @click='sceneHalf' icon="el-icon-menu"></el-button>
-      <el-button type="primary" size="mini" circle title='运行' @click='sceneRunning' icon="el-icon-d-arrow-right"></el-button>
-    </div> -->
     <div id='main-workbench'>
       <el-row style="height:100%">
-        <el-col style="height:100%" :span="sceneEditorSpan">
+        <el-col style="height:100%" :span="12">
           <SceneEditor></SceneEditor>
         </el-col>
-        <el-col style="height:100%" :span="sceneRunningSpan">
+        <el-col style="height:100%" :span="12">
           <SceneRunning></SceneRunning>
         </el-col>
       </el-row>
@@ -68,8 +87,8 @@ export default {
   data: function () {
     return {
       storage: window.localStorage,
-      sceneEditorSpan: 12,
-      sceneRunningSpan: 12,
+      sceneDescription: '这是一个场景示例！',
+      sceneBarDisplay: 'none'
     }
   },
   computed: {
@@ -96,6 +115,23 @@ export default {
       initSceneEditor: types.INIT_SCENE_EDITOR,
       initSceneRunning: types.INIT_SCENE_RUNNING
     }),
+    focusSceneName: function () {
+      this.$notify({
+        title: '提示',
+        message: '命名场景即可保存；点击关闭不在提示',
+        offset: 15,
+        onClose: function () {
+          console.log('不在提示')
+          return true;
+        }
+      });
+    },
+    showSceneBar: function () {
+      this.sceneBarDisplay = 'inline-block';
+    },
+    hideSceneBar: function () {
+      this.sceneBarDisplay = 'none'
+    },
     handleSelect (key) {
       switch (key) {
         case 'createScene':
@@ -126,19 +162,6 @@ export default {
         self.updateSceneRunning({ fileName: file.name, sceneData: JSON.parse(this.result) })
       }
     },
-
-    sceneEdit: function () {
-      this.sceneEditorSpan = 24;
-      this.sceneRunningSpan = 0;
-    },
-    sceneHalf: function () {
-      this.sceneEditorSpan = 12;
-      this.sceneRunningSpan = 12;
-    },
-    sceneRunning: function () {
-      this.sceneEditorSpan = 0;
-      this.sceneRunningSpan = 24
-    },
     handleAbout: function () {
       this.$confirm('这是一个模拟物理场景的实验室！', '关于', {
         center: true,
@@ -164,6 +187,35 @@ export default {
 #vml-header {
   background-color: #3399cc;
   height: 30px;
+  text-align: center;
+}
+.el-card > .el-card__header {
+  padding: 5px 10px;
+  border-bottom: inherit;
+}
+.el-card > .el-card__body {
+  padding: 5px 30px;
+}
+.el-card__body > .item {
+  padding: 2px;
+}
+.el-card {
+  padding: 5px 30px;
+}
+#scene-name-input {
+  width: 150px;
+  height: 30px;
+  background-color: transparent;
+  border-width: 0px;
+  margin: 0 auto;
+  text-align: center;
+}
+#scene-name-input:focus {
+  outline: none;
+  background-color: transparent;
+}
+#scene-name-input:selection {
+  background: transparent;
 }
 .circle-menu-style {
   position: absolute;
@@ -206,7 +258,7 @@ export default {
 }
 #main-workbench {
   position: absolute;
-  top: 60px;
+  top: 30px;
   bottom: 0px;
   width: 100%;
 }

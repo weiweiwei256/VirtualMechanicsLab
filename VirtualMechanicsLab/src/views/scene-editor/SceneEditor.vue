@@ -1,9 +1,15 @@
 <template>
   <div id="scene-editor" style="height:100%">
     <div id='scene-running-toolbar'>
-      <i class="iconfont icon-delete" title='删除' @click='deleteBody'></i>
-      <i class="iconfont icon-chexiao" title='撤销' @click='undo'></i>
-      <i class="iconfont icon-redo" title='恢复' @click='redo'></i>
+      <el-tooltip effect="light" open-delay='500' hide-after='3000' content="删除" placement="top">
+        <i class="iconfont icon-delete" @click='deleteBody'></i>
+      </el-tooltip>
+      <el-tooltip effect="light" open-delay='500' hide-after='3000' content="撤销" placement="top">
+        <i class="iconfont icon-chexiao" @click='undo'></i>
+      </el-tooltip>
+      <el-tooltip effect="light" open-delay='500' hide-after='3000' content="恢复" placement="top">
+        <i class="iconfont icon-redo" @click='redo'></i>
+      </el-tooltip>
     </div>
     <el-row style="height:70%">
       <el-col style="height:100%" :span="4">

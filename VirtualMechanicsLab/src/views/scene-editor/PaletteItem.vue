@@ -1,7 +1,11 @@
 <template>
   <div class='palette-item' ref='item'>
-    <i class='iconfont' :class="icon" :title="name"></i>
-    <p>{{name}}</p>
+    <el-tooltip effect="light" open-delay='500' hide-after='3000' :content="name" placement="right">
+      <div>
+        <i class='iconfont' :class="icon" :title="name"></i>
+        <p>{{name}}</p>
+      </div>
+    </el-tooltip>
   </div>
 </template>
 
@@ -18,7 +22,7 @@ export default {
     }
   },
   methods: {
-    addVertex: function (graph, evt, cell) {
+    addPaletteItem: function (graph, evt, cell) {
       graph.stopEditing(false);
       var pt = graph.getPointForEvent(evt);
       var newCell = graph.getModel().cloneCell(this.protoCell);
@@ -28,7 +32,7 @@ export default {
     }
   },
   mounted: function () {
-    mxUtils.makeDraggable(this.$refs.item, this.editorGraph, this.addVertex);
+    mxUtils.makeDraggable(this.$refs.item, this.editorGraph, this.addPaletteItem);
   },
 }
 </script>

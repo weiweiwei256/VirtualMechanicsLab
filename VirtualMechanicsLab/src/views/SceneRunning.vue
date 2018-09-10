@@ -1,9 +1,15 @@
 <template>
   <div id='scene-running' style="height:100%">
     <div id='scene-running-toolbar'>
-      <i class="iconfont icon-start" title="开始" @click='sceneStart'></i>
-      <i class="iconfont icon-zanting" title='暂停' @click='scenePause'></i>
-      <i class="iconfont icon-restart" title='重置' @click='sceneReset'></i>
+      <el-tooltip effect="light" open-delay='500' hide-after='3000' content="开始" placement="top">
+        <i class="iconfont icon-start" @click='sceneStart'></i>
+      </el-tooltip>
+      <el-tooltip effect="light" open-delay='500' hide-after='3000' content="暂停" placement="top">
+        <i class="iconfont icon-zanting" @click='scenePause'></i>
+      </el-tooltip>
+      <el-tooltip effect="light" open-delay='500' hide-after='3000' content="刷新" placement="top">
+        <i class="iconfont icon-restart" @click='sceneReset'></i>
+      </el-tooltip>
     </div>
     <div id='scene-running-render'></div>
     <div id='operation'>
