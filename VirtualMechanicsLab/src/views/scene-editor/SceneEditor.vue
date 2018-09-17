@@ -1,13 +1,13 @@
 <template>
   <div id="scene-editor" style="height:100%">
     <div id='scene-running-toolbar'>
-      <el-tooltip effect="light" open-delay='500' hide-after='3000' content="删除" placement="top">
+      <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="删除" placement="top">
         <i class="iconfont icon-delete" @click='deleteBody'></i>
       </el-tooltip>
-      <el-tooltip effect="light" open-delay='500' hide-after='3000' content="撤销" placement="top">
+      <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="撤销" placement="top">
         <i class="iconfont icon-chexiao" @click='undo'></i>
       </el-tooltip>
-      <el-tooltip effect="light" open-delay='500' hide-after='3000' content="恢复" placement="top">
+      <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="恢复" placement="top">
         <i class="iconfont icon-redo" @click='redo'></i>
       </el-tooltip>
     </div>
@@ -38,12 +38,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['fileName', 'editorGraph', 'sceneData'])
+    ...mapGetters(['sceneName', 'editorGraph', 'sceneData'])
   },
   methods: {
-    ...mapActions({
-      initSceneEditor: types.INIT_SCENE_EDITOR
-    }),
     deleteBody: function () {
       console.log('delete')
     },

@@ -1,6 +1,6 @@
 <template>
   <div class='palette-item' ref='item'>
-    <el-tooltip effect="light" open-delay='500' hide-after='3000' :content="name" placement="right">
+    <el-tooltip effect="light" :open-delay='500' :hide-after='3000' :content="name" placement="right">
       <div>
         <i class='iconfont' :class="icon" :title="name"></i>
         <p>{{name}}</p>

@@ -30,7 +30,7 @@
       </el-menu>hover
     </div> -->
     <header id='vml-header' @mouseenter='showSceneBar' @mouseleave='hideSceneBar'>
-      <el-popover placement="bottom" width="200" trigger="hover">
+      <el-popover placement="bottom" width="200" trigger="click" @show='loadScene'>
         <el-card class="box-card">
           <div slot="header" shadow="hover">
             <span>示例场景</span>
@@ -43,15 +43,16 @@
           <div slot="header" shadow="hover">
             <span>你的场景</span>
           </div>
-          <div v-for="o in 4" :key="o" class="text item">
-            {{'列表内容 ' + o }}
+          <div v-for="scene in userScenes" :key="scene.sceneName" class="text item">
+            <span style='width:100%' :title="scene.sceneData.description" @ @click='selectScene(scene)'>{{scene.sceneName}}</span>
+            <i style='font-size: 15px;float:right' title='删除场景' class="iconfont icon-delete" @click='handleDeleteScene(scene.sceneName)'></i>
           </div>
         </el-card>
         <i slot="reference" :style="{display:sceneBarDisplay}" class="el-icon-circle-plus-outline"></i>
       </el-popover>
-      <input id='scene-name-input' type="text" :value='fileName' @focus="focusSceneName"></input>
-      <el-popover placement="bottom" width="300" trigger="hover">
-        <el-input type="textarea" :rows="5" placeholder="场景描述" v-model="sceneDescription">
+      <input id='scene-name-input' ref='sceneNameInput' type="text" :value='shortName' @focus="focusSceneName" @keyup.enter="saveSceneName" @blur="saveSceneName"></input>
+      <el-popover placement="bottom" width="300" trigger="hover" ::open-delay='500'>
+        <el-input type="textarea" :rows="5" placeholder="场景描述" v-model="sceneData.description" @blur='saveSceneDescription'>
         </el-input>
         <i slot="reference" :style="{display:sceneBarDisplay}" class="el-icon-edit"></i>
       </el-popover>
@@ -80,6 +81,7 @@
 import * as types from '@/modules-constant.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import SceneEditor from './scene-editor/SceneEditor.vue'
+import sceneManager from '@/common/scene-manager.js'
 import SceneRunning from './SceneRunning.vue'
 import CircleMenu from 'vue-circle-menu'
 export default {
@@ -87,34 +89,56 @@ export default {
   data: function () {
     return {
       storage: window.localStorage,
-      sceneDescription: '这是一个场景示例！',
-      sceneBarDisplay: 'none'
+      sceneBarDisplay: 'none',
+      defaultScenes: [],
+      userScenes: [],
     }
   },
   computed: {
     ...mapGetters([
-      'fileName',
+      'sceneName',
       'sceneData'
     ]),
-    storageFileNames: function () {
-      let storageFileNames = [];
-      for (let i = 0; i < this.storage.length; i++) {
-        storageFileNames.push(this.storage.key(i))
-      }
-      return storageFileNames;
-    }
+    shortName: function () {
+      return this.sceneName.substring(0, this.sceneName.indexOf('.scene'))
+    },
   },
   watch: {
     storageFileNames: function () { }
   },
   methods: {
     ...mapMutations({
-      updateSceneRunning: types.UPDATE_SCENE_RUNNING
+      setScene: types.SET_SCENE
     }),
     ...mapActions({
       initSceneEditor: types.INIT_SCENE_EDITOR,
-      initSceneRunning: types.INIT_SCENE_RUNNING
+      initSceneRunning: types.INIT_SCENE_RUNNING,
+      saveScene: types.SAVE_SCENE,
+      deleteScene: types.DELETE_SCENE
     }),
+    loadScene: function () {
+      this.defaultScenes = sceneManager.getDefaultScenes();
+      this.userScenes = sceneManager.getUserScenes();
+    },
+    selectScene: function (scene) {
+      console.log('select', scene.sceneData)
+      this.setScene({ sceneName: scene.sceneName, sceneData: scene.sceneData })
+    },
+    handleDeleteScene: function (sceneName) {
+      let deleteIndex = this.userScenes.findIndex(scene => scene.sceneName == sceneName)
+      this.userScenes.splice(this.userScenes, 1)
+      this.deleteScene(sceneName)
+    },
+    saveSceneName: function () {
+      let newSceneName = this.$refs.sceneNameInput.value
+      if (newSceneName == this.shortName) {
+        return;
+      }
+      this.saveScene({ sceneName: newSceneName + '.scene', sceneData: this.sceneData })
+    },
+    saveSceneDescription: function () {
+      this.saveScene({ sceneName: this.sceneName, sceneData: this.sceneData })
+    },
     focusSceneName: function () {
       this.$notify({
         title: '提示',
@@ -130,12 +154,13 @@ export default {
       this.sceneBarDisplay = 'inline-block';
     },
     hideSceneBar: function () {
+      this.saveSceneName();
       this.sceneBarDisplay = 'none'
     },
     handleSelect (key) {
       switch (key) {
         case 'createScene':
-          this.updateSceneRunning({ fileName: key, sceneData: this.storage.getItem(key) })
+          this.setScene({ sceneName: key, sceneData: this.storage.getItem(key) })
           break;
         case 'showScene':
           console.log(JSON.stringify(this.sceneData, null, 2))
@@ -144,7 +169,7 @@ export default {
           // do nothing.  handle by input event
           break;
         case 'saveScene':
-          this.storage.setItem(this.fileName, JSON.stringify(this.sceneData, null, 2));
+
           break;
         default:
           console.error('unknown menu key:' + key)
@@ -159,7 +184,7 @@ export default {
       reader.onload = function () {
         console.log(file.name)
         console.log(this.result)
-        self.updateSceneRunning({ fileName: file.name, sceneData: JSON.parse(this.result) })
+        self.setScene({ sceneName: file.name, sceneData: JSON.parse(this.result) })
       }
     },
     handleAbout: function () {
@@ -176,6 +201,7 @@ export default {
     this.initSceneEditor();
     this.initSceneRunning();
   },
+
   components: {
     SceneEditor,
     SceneRunning,
@@ -189,12 +215,15 @@ export default {
   height: 30px;
   text-align: center;
 }
+.el-card {
+  padding: 5px !important;
+}
 .el-card > .el-card__header {
-  padding: 5px 10px;
+  padding: 5px 5px;
   border-bottom: inherit;
 }
 .el-card > .el-card__body {
-  padding: 5px 30px;
+  padding: 5px 5px 5px 5px;
 }
 .el-card__body > .item {
   padding: 2px;

@@ -2,15 +2,25 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as types from '@/modules-constant.js';
 import { Engine, Render, World, Bodies, Events, MouseConstraint, Composite, Bounds, Vertices } from 'matter-js';
-import defaultScene from '@/store/default.scene';
+import sceneManager from '@/common/scene-manager.js';
+import defaultSetting from './default-setting.json';
 import sceneCodec from './scene-codec';
+
+let storage = window.localStorage;
+console.log('storage', storage);
+let setting = Object.assign(
+  {},
+  defaultSetting,
+  storage.getItem(types.SETTING) !== null ? JSON.parse(storage.getItem(types.SETTING)) : {}
+);
 Vue.use(Vuex);
-export const store = new Vuex.Store({
+const store = new Vuex.Store({
   state: function() {
     return {
       // file data
-      fileName: 'default.scene',
-      sceneData: defaultScene,
+      setting,
+      sceneName: setting.activeSceneName,
+      sceneData: sceneManager.getScene(setting.activeSceneName),
       // editor data
       editorGraph: null,
       editorSelectionCell: null,
@@ -19,8 +29,11 @@ export const store = new Vuex.Store({
     };
   },
   getters: {
-    fileName: state => {
-      return state.fileName;
+    setting: state => {
+      return state.setting;
+    },
+    sceneName: state => {
+      return state.sceneName;
     },
     editorGraph: state => {
       return state.editorGraph;
@@ -51,15 +64,31 @@ export const store = new Vuex.Store({
     [types.SET_EDITOR_SELECTION_CELL]: (state, cell) => {
       state.editorSelectionCell = cell;
     },
-    [types.UPDATE_SCENE_RUNNING]: (state, { fileName = state.fileName, sceneData }) => {
-      state.fileName = fileName;
+    [types.SET_SCENE]: (state, { sceneName = state.sceneName, sceneData }) => {
+      state.sceneName = sceneName;
       state.sceneData = sceneData;
     }
   },
   actions: {
+    [types.INIT_SCENE_EDITOR]: context => {
+      let graph = new mxGraph();
+      context.commit(types.SET_EDITOR_GRAPH, graph);
+      sceneCodec.decode(context.getters.sceneData, graph.getModel());
+      graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
+        let cell = graph.getSelectionCell();
+        context.commit(types.SET_EDITOR_SELECTION_CELL, cell);
+      });
+      // 从value中获取展示名
+      graph.convertValueToString = function(cell) {
+        return cell.value.label;
+      };
+      graph.valueForCellChanged = function(cell, newValue) {
+        cell.value.label = newValue;
+      };
+    },
     [types.INIT_SCENE_RUNNING]: context => {
       // update scene data
-      context.commit(types.UPDATE_SCENE_RUNNING, {
+      context.commit(types.SET_SCENE, {
         sceneData: sceneCodec.encode(context.getters.editorGraph.getModel())
       });
       let engine = Engine.create();
@@ -139,29 +168,23 @@ export const store = new Vuex.Store({
           }
         }
       });
-      // console.log('world', engine.world);
-      // console.log('World', World);
-      // console.log('runningRender', runningRender);
-      // console.log('Render', Render);
-      // console.log('engine', engine);
-      // console.log('Engine', Engine);
     },
-    [types.INIT_SCENE_EDITOR]: context => {
-      let graph = new mxGraph();
-      context.commit(types.SET_EDITOR_GRAPH, graph);
-      sceneCodec.decode(context.getters.sceneData, graph.getModel());
-      graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
-        let cell = graph.getSelectionCell();
-        context.commit(types.SET_EDITOR_SELECTION_CELL, cell);
-      });
-      // 从value中获取展示名
-      graph.convertValueToString = function(cell) {
-        return cell.value.label;
-      };
-      graph.valueForCellChanged = function(cell, newValue) {
-        cell.value.label = newValue;
-      };
-      console.log('model', graph.model);
+
+    [types.SAVE_SCENE]: (context, { sceneName, sceneData }) => {
+      context.commit(types.SET_SCENE, { sceneName, sceneData });
+      storage.setItem(sceneName, JSON.stringify(sceneData, null, 2));
+    },
+    [types.DELETE_SCENE]: (context, sceneName) => {
+      storage.removeItem(sceneName);
+    },
+    [types.SAVE_SETTING]: context => {
+      let setting = context.getters.setting;
+      setting.activeSceneName = context.getters.sceneName;
+      storage.setItem(types.SETTING, JSON.stringify(setting));
     }
   }
 });
+window.onbeforeunload = () => {
+  // store.dispatch(types.SAVE_SETTING);
+};
+export default store;

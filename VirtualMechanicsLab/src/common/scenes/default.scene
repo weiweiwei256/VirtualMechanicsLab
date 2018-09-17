@@ -1,6 +1,6 @@
 {
   "name": "scene-demo",
-  "description": "This is a test scene file",
+  "description": "This is a default scene file",
   "bodies": [
     {
       "type": "circle",
