@@ -1,5 +1,4 @@
 {
-  "name": "scene-demo",
   "description": "This is a default scene file",
   "bodies": [
     {
@@ -51,10 +50,5 @@
         "restitution": 1
       }
     }
-  ],
-  "gravity": {
-    "scale": 0.01,
-    "x": 0,
-    "y": 1
-  }
+  ]
 }

@@ -8,13 +8,6 @@ let SceneCodec = {
    * @param {*} model
    */
   decode(jsonData, model) {
-    // 1.0 将全局信息设置到model
-    for (let i in jsonData) {
-      if (!(jsonData[i] instanceof Object)) {
-        model[i] = jsonData[i];
-      }
-    }
-    // 2.0 将物体设置为mxCell
     let parentCell = model.root.children[0];
     for (let i in jsonData.bodies) {
       let mxCell = utility.getMxCell(jsonData.bodies[i].type, jsonData.bodies[i]);
@@ -24,7 +17,7 @@ let SceneCodec = {
   },
 
   encode(model) {
-    let jsonData = { name: '', description: '', bodies: [] };
+    let jsonData = { bodies: [] };
     // 获取全局属性
     let newModel = new window.mxGraphModel();
     for (let i in model) {

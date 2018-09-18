@@ -1,36 +1,7 @@
 <template>
   <div class="vml-workbench" style="height:100%:width:100%">
-    <!-- <div id='menu'>
-      <el-menu mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-        <el-submenu index="scene">
-          <template slot="title">场景</template>
-          <el-menu-item index="createScene">新建</el-menu-item>
-          <el-menu-item index="showScene">查看</el-menu-item>
-          <el-submenu index="2">
-            <template slot="title">打开</template>
-            <el-menu-item :index="item" v-for="(item, index) in storageFileNames" :key='index'>{{item}}</el-menu-item>
-            <el-menu-item index="importScene">
-              <span class="fileinput-button">
-                <span>导入</span>
-                <input type="file" id="import-scene-input" @change="importScene" />
-              </span>
-            </el-menu-item>
-          </el-submenu>
-          <el-menu-item index="saveScene">保存</el-menu-item>
-        </el-submenu>
-        <el-submenu index="edit">
-          <template slot="title">编辑</template>
-          <el-menu-item index="2-1">仅编辑</el-menu-item>
-          <el-menu-item index="2-2">编辑&运行</el-menu-item>
-          <el-menu-item index="2-3">运行</el-menu-item>
-        </el-submenu>
-        <el-menu-item index="about">
-          <a href="#" target="_blank">关于</a>
-        </el-menu-item>
-      </el-menu>hover
-    </div> -->
     <header id='vml-header' @mouseenter='showSceneBar' @mouseleave='hideSceneBar'>
-      <el-popover placement="bottom" width="200" trigger="click" @show='loadScene'>
+      <el-popover placement="bottom-end" width="200" trigger="click" @show='loadScene'>
         <el-card class="box-card">
           <div slot="header" shadow="hover">
             <span>示例场景</span>
@@ -48,13 +19,13 @@
             <i style='font-size: 15px;float:right' title='删除场景' class="iconfont icon-delete" @click='handleDeleteScene(scene.sceneName)'></i>
           </div>
         </el-card>
-        <i slot="reference" :style="{display:sceneBarDisplay}" class="el-icon-circle-plus-outline"></i>
+        <i slot="reference" title='打开场景' :style="{display:sceneBarDisplay}" class="el-icon-circle-plus-outline"></i>
       </el-popover>
-      <input id='scene-name-input' ref='sceneNameInput' type="text" :value='shortName' @focus="focusSceneName" @keyup.enter="saveSceneName" @blur="saveSceneName"></input>
-      <el-popover placement="bottom" width="300" trigger="hover" ::open-delay='500'>
-        <el-input type="textarea" :rows="5" placeholder="场景描述" v-model="sceneData.description" @blur='saveSceneDescription'>
+      <input id='scene-name-input' ref='sceneNameInput' type="text" :value='shortName' @focus="focusSceneName" @keyup.enter="saveSceneName($event.target.value)" @mouseout="saveSceneName($event.target.value)"></input>
+      <el-popover placement="bottom" width="300" trigger="click" :open-delay='500'>
+        <el-input type="textarea" :rows="5" placeholder="场景描述" :value="sceneDescription" @blur='saveSceneDescription($event.target.value)'>
         </el-input>
-        <i slot="reference" :style="{display:sceneBarDisplay}" class="el-icon-edit"></i>
+        <i slot="reference" title='编辑描述' :style="{display:sceneBarDisplay}" class="el-icon-edit"></i>
       </el-popover>
     </header>
     <circle-menu class='circle-menu-style' type="bottom" :number="4" animate="animated jello" circle>
@@ -97,21 +68,22 @@ export default {
   computed: {
     ...mapGetters([
       'sceneName',
+      'sceneDescription',
       'sceneData'
     ]),
     shortName: function () {
       return this.sceneName.substring(0, this.sceneName.indexOf('.scene'))
     },
   },
-  watch: {
-    storageFileNames: function () { }
-  },
   methods: {
     ...mapMutations({
-      setScene: types.SET_SCENE
+      setSceneDescription: types.SET_SCENE_DESCRIPTION,
+      setScene: types.SET_SCENE,
     }),
     ...mapActions({
       initSceneEditor: types.INIT_SCENE_EDITOR,
+      reloadSceneEditor: types.RELOAD_SCENE_EDITOR,
+      reloadSceneRunning: types.RELOAD_SCENE_RUNNING,
       initSceneRunning: types.INIT_SCENE_RUNNING,
       saveScene: types.SAVE_SCENE,
       deleteScene: types.DELETE_SCENE
@@ -123,21 +95,24 @@ export default {
     selectScene: function (scene) {
       console.log('select', scene.sceneData)
       this.setScene({ sceneName: scene.sceneName, sceneData: scene.sceneData })
+      this.reloadSceneEditor();
+      this.reloadSceneRunning();
     },
     handleDeleteScene: function (sceneName) {
       let deleteIndex = this.userScenes.findIndex(scene => scene.sceneName == sceneName)
       this.userScenes.splice(this.userScenes, 1)
       this.deleteScene(sceneName)
     },
-    saveSceneName: function () {
-      let newSceneName = this.$refs.sceneNameInput.value
-      if (newSceneName == this.shortName) {
+    saveSceneName: function (newName) {
+      this.$refs.sceneNameInput.blur();
+      if (newName == this.shortName) {
         return;
       }
-      this.saveScene({ sceneName: newSceneName + '.scene', sceneData: this.sceneData })
+      this.saveScene(newName + '.scene')
     },
-    saveSceneDescription: function () {
-      this.saveScene({ sceneName: this.sceneName, sceneData: this.sceneData })
+    saveSceneDescription: function (desc) {
+      this.setSceneDescription(desc)
+      this.saveScene()
     },
     focusSceneName: function () {
       this.$notify({
@@ -154,7 +129,6 @@ export default {
       this.sceneBarDisplay = 'inline-block';
     },
     hideSceneBar: function () {
-      this.saveSceneName();
       this.sceneBarDisplay = 'none'
     },
     handleSelect (key) {
