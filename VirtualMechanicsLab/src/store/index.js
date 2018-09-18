@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as types from '@/modules-constant.js';
-import { Engine, Render, World, Bodies, Events, MouseConstraint, Composite, Bounds, Vertices } from 'matter-js';
+import { Common, Engine, Render, World, Bodies, Events, MouseConstraint, Composite, Bounds, Vertices } from 'matter-js';
 import sceneManager from '@/common/scene-manager.js';
 import defaultSetting from './default-setting.json';
 import sceneCodec from './scene-codec';
@@ -100,6 +100,8 @@ const store = new Vuex.Store({
       };
     },
     [types.RELOAD_SCENE_RUNNING]: context => {
+      Common._nextId = 0;
+      Common._seed = 0;
       let world = context.getters.world;
       let engine = context.getters.engine;
       World.clear(world, false);

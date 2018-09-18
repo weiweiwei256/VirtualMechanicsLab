@@ -55,7 +55,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      initSceneRunning: types.INIT_SCENE_RUNNING
+      setScene: types.SAVE_SCENE,
+      reloadSceneRunning: types.RELOAD_SCENE_RUNNING
     }),
     sceneStart: function () {
       Runner.start(this.runner, this.engine);
@@ -64,14 +65,8 @@ export default {
       Runner.stop(this.runner);
     },
     sceneReset: function () {
-      // 回收全局常量
-      Common._nextId = 0;
-      Common._seed = 0;
-      Render.stop(this.runningRender);
-      Runner.stop(this.runner);
-      this.runningRender.canvas.parentElement.removeChild(this.runningRender.canvas)
-      this.initSceneRunning();
-      this.renderScene();
+      this.setScene();
+      this.reloadSceneRunning();
     },
     renderScene: function () {
       // 设置matter尺寸。
@@ -87,7 +82,7 @@ export default {
   },
   mounted () {
     this.renderDom = $('#scene-running-render')[0]
-    this.initSceneRunning();
+    this.reloadSceneRunning();
     this.renderScene();
   },
 }
