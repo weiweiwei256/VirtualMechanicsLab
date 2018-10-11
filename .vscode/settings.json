@@ -1,0 +1,41 @@
+{
+  // 必需配置
+
+  // 使用两个空格缩进
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  // 自定义文件后缀关联语言
+  "files.associations": {
+    "*.lfc": "json",
+    "*.csd": "json",
+    "*.csp": "json",
+    "*.xm": "json",
+    "*.ade": "json",
+    ".project": "xml"
+  },
+  // 字符串使用单引号
+  "prettier.singleQuote": true,
+  // vue代码格式化相关
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": {
+      "wrap_attributes": "force-aligned"
+    }
+  },
+  // 单行最大字符数
+  "prettier.printWidth": 120,
+
+  // 推荐配置
+
+  // 在vue文件中使用 emmet 快速生成代码
+  "emmet.syntaxProfiles": {
+    "vue-html": "html",
+    "vue": "html"
+  },
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "vue": "html"
+  },
+  "git.autofetch": true
+}
