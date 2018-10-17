@@ -1,6 +1,6 @@
 <template>
-  <div id="scene-editor" style="">
-    <div id='scene-running-toolbar'>
+  <div id="scene-editor">
+    <!-- <div id='scene-running-toolbar'>
       <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="删除" placement="top">
         <i class="iconfont icon-delete" @click='deleteBody'></i>
       </el-tooltip>
@@ -10,7 +10,7 @@
       <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="恢复" placement="top">
         <i class="iconfont icon-redo" @click='redo'></i>
       </el-tooltip>
-    </div>
+    </div> -->
     <el-row style="height:70%">
       <el-col style="height:100%" :span="4">
         <scene-palette></scene-palette>
@@ -29,7 +29,7 @@
 import * as types from '@/modules-constant.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import sceneCodec from '@/store/scene-codec.js'
-import ScenePalette from './ScenePalette.vue'
+import ScenePalette from './palette/ScenePalette.vue'
 import SceneProperty from './SceneProperty.vue'
 export default {
   name: "scene-editor",

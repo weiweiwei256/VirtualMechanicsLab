@@ -1,6 +1,6 @@
 <template>
   <div id='scene-running' style="height:100%">
-    <div id='scene-running-toolbar'>
+    <!-- <div id='scene-running-toolbar'>
       <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="开始" placement="top">
         <i class="iconfont icon-start" @click='sceneStart'></i>
       </el-tooltip>
@@ -10,8 +10,10 @@
       <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="刷新" placement="top">
         <i class="iconfont icon-restart" @click='sceneReset'></i>
       </el-tooltip>
-    </div>
-    <div id='scene-running-render'></div>
+    </div> -->
+    <div id='scene-running-render' @contextmenu="showMenu"></div>
+    <vue-context-menu :contextMenuData="contextMenuData" @savedata="savedata" @newdata="newdata">
+    </vue-context-menu>
     <div id='operation'>
       <el-button @click='handleAdd'>add object</el-button>
       <span>view x:</span>
@@ -36,6 +38,29 @@ export default {
       viewPort: {
         min: { x: 0, y: 0 },
         max: { x: 800, y: 600 }
+      },
+      // contextmenu data (菜单数据)
+      contextMenuData: {
+        // the contextmenu name(@1.4.1 updated)
+        menuName: 'demo',
+        // The coordinates of the display(菜单显示的位置)
+        axis: {
+          x: null,
+          y: null
+        },
+        // Menu options (菜单选项)
+        menulists: [
+          {
+            fnHandler: 'savedata', // Binding events(绑定事件)
+            icoName: 'fa fa-home fa-fw', // icon (icon图标 )
+            btnName: 'Save' // The name of the menu option (菜单名称)
+          },
+          {
+            fnHandler: 'newdata',
+            icoName: 'fa fa-home fa-fw',
+            btnName: 'New'
+          }
+        ]
       }
     }
   },
@@ -54,6 +79,21 @@ export default {
     }
   },
   methods: {
+    showMenu () {
+      event.preventDefault()
+      var x = event.clientX
+      var y = event.clientY
+      // Get the current location
+      this.contextMenuData.axis = {
+        x, y
+      }
+    },
+    savedata () {
+      alert(1)
+    },
+    newdata () {
+      console.log('newdata!')
+    },
     ...mapActions({
       setScene: types.SAVE_SCENE,
       reloadSceneRunning: types.RELOAD_SCENE_RUNNING
