@@ -1,15 +1,9 @@
 <template>
-  <div class="vml-workbench" style="height:100%:width:100%">
+  <div id="vml-workbench">
     <vml-header></vml-header>
     <div id='main-workbench'>
-      <el-row style="height:100%">
-        <el-col style="height:100%" :span="12">
-          <scene-editor></scene-editor>
-        </el-col>
-        <el-col style="height:100%" :span="12">
-          <scene-running></scene-running>
-        </el-col>
-      </el-row>
+      <scene-editor class='flex-item'></scene-editor>
+      <scene-running class='flex-item'></scene-running>
     </div>
   </div>
 </template>
@@ -19,7 +13,7 @@ import * as types from '@/modules-constant.js'
 import { mapActions } from 'vuex'
 import VmlHeader from './vml-header/VmlHeader'
 import SceneEditor from './scene-editor/SceneEditor.vue'
-import SceneRunning from './SceneRunning.vue'
+import SceneRunning from './scene-running/SceneRunning.vue'
 export default {
   name: 'vml-workbench',
   data: function () {
@@ -44,11 +38,30 @@ export default {
   }
 }
 </script>
-<style>
-#main-workbench {
-  position: absolute;
-  top: 30px;
-  bottom: 0px;
+<style scoped>
+#vml-workbench {
+  position: relative;
+  height: 100%;
   width: 100%;
+}
+#main-workbench {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  top: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  /* 自左至右 */
+  flex-direction: row;
+  /* 不换行 */
+  flex-wrap: nowrap;
+  /* 对齐方式 */
+  justify-content: space-around;
+}
+.flex-item {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
 }
 </style>

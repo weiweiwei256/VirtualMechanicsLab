@@ -238,12 +238,6 @@ export default {
   line-height: 40px;
   color: #020e1a;
 }
-#main-workbench {
-  position: absolute;
-  top: 30px;
-  bottom: 0px;
-  width: 100%;
-}
 
 .fileinput-button {
   position: relative;

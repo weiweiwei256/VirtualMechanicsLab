@@ -1,5 +1,5 @@
 <template>
-  <div id="scene-editor" style="height:100%">
+  <div id="scene-editor" style="">
     <div id='scene-running-toolbar'>
       <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="删除" placement="top">
         <i class="iconfont icon-delete" @click='deleteBody'></i>
@@ -64,6 +64,10 @@ export default {
 </script>
 
 <style scoped>
+#scene-editor {
+  overflow: hidden;
+  height: 100%;
+}
 #graph-container {
   position: relative;
   overflow: auto;
