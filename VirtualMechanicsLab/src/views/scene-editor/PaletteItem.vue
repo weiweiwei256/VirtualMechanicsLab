@@ -2,8 +2,7 @@
   <div class='palette-item' ref='item'>
     <el-tooltip effect="light" :open-delay='500' :hide-after='3000' :content="name" placement="right">
       <div>
-        <i class='iconfont' :class="icon" :title="name"></i>
-        <p>{{name}}</p>
+        <i class='iconfont' style=" font-size: 60px;" :class="icon"></i>
       </div>
     </el-tooltip>
   </div>
@@ -36,6 +35,3 @@ export default {
   },
 }
 </script>
-
-<style>
-</style>
