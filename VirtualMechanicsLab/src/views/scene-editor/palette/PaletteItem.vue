@@ -1,7 +1,7 @@
 <template>
   <div class='palette-item' ref='item'>
-    <el-tooltip effect="light" :open-delay='500' :hide-after='3000' :content="name" placement="right">
-      <div>
+    <el-tooltip effect="light" :open-delay='500' :hide-after='3000' :content=" name" placement="right">
+      <div style="text-align:center;">
         <i class='iconfont' style=" font-size: 60px;" :class="icon"></i>
       </div>
     </el-tooltip>

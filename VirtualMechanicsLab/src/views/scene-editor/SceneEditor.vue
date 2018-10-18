@@ -11,17 +11,18 @@
         <i class="iconfont icon-redo" @click='redo'></i>
       </el-tooltip>
     </div> -->
-    <el-row style="height:70%">
-      <el-col style="height:100%" :span="4">
+    <div id='editor-main' style="height:70%">
+      <div id='editor-left' style="width:100px;height:100%;float:left;position:relative">
         <scene-palette></scene-palette>
-        <p>缩略图</p>
-        <div id='outline'></div>
-      </el-col>
-      <el-col style="height:100%" :span="20">
+        <scene-outline ref='outline'></scene-outline>
+      </div>
+      <div id='editor-content' style='width:calc(100% - 100px);height:100%;float:right'>
         <div id="graph-container"></div>
-      </el-col>
-    </el-row>
-    <scene-property></scene-property>
+      </div>
+    </div>
+    <div id='editor-property' style="height:30%">
+      <scene-property></scene-property>
+    </div>
   </div>
 </template>
 
@@ -30,6 +31,7 @@ import * as types from '@/modules-constant.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import sceneCodec from '@/store/scene-codec.js'
 import ScenePalette from './palette/ScenePalette.vue'
+import SceneOutline from './outline/SceneOutline.vue'
 import SceneProperty from './SceneProperty.vue'
 export default {
   name: "scene-editor",
@@ -54,11 +56,12 @@ export default {
   mounted () {
     this.editorGraph.init($("#graph-container")[0]) // 数据与渲染分离
     this.editorGraph.view.refresh();
-    new mxOutline(this.editorGraph, $('#outline')[0]);
+    this.$refs.outline.outlineInit();
   },
   components: {
     ScenePalette,
-    SceneProperty
+    SceneProperty,
+    SceneOutline
   }
 };
 </script>
