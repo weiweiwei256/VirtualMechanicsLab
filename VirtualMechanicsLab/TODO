@@ -1,0 +1,10 @@
+project:
+  SceneEditor:
+    Property:
+      ☐ 属性读取改造与form有更深度结合 @started(18-10-18 23:59)
+      ☐ 支持初始条件编辑
+      ☐ 支持样式编辑
+      ☐ 可拖动，缩放调整视野
+  SceneRuning:
+    ☐ 可拖动，缩放调整视野
+  
