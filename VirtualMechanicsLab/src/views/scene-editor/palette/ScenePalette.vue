@@ -1,6 +1,7 @@
 <template>
   <div id="scene-editor-palette">
     <div id='object-palette'>
+      <p style='text-align:center'>物体列表</p>
       <palette-item icon='icon-rectangle' :type='types.RECTANGLE' name='矩形'></palette-item>
       <palette-item icon='icon-circle' :type='types.CIRCLE' name='圆形'></palette-item>
       <palette-item icon='icon-left-bottom-triangle' :type='types.TRIANGLE' name='直角三角形'></palette-item>

@@ -1,5 +1,5 @@
 {
-  "name": "virtualMechanicsLab",
+  "name": "virtual-mechanics-lab",
   "version": "1.0.0",
   "description": "This web project purpose is to simulate normal mechanics scene for students and teacher.",
   "author": "RUNNERUP <raj2011@163.com>",
@@ -45,6 +45,7 @@
     "url-loader": "^0.5.7",
     "vue": "^2.5.2",
     "vue-circle-menu": "^1.1.1",
+    "vue-contextmenu": "^1.5.4",
     "vue-loader": "^11.1.4",
     "vue-style-loader": "^2.0.0",
     "vue-template-compiler": "^2.5.2",

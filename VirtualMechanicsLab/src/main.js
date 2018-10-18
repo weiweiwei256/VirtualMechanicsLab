@@ -10,6 +10,9 @@ import '@/shapes';
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 /* eslint-disable no-new */
+import VueContextMenu from 'vue-contextmenu';
+import 'vue-contextmenu/style/css/font-awesome.min.css';
+Vue.use(VueContextMenu);
 new Vue({
   el: '#app',
   store,
