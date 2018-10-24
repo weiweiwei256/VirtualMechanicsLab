@@ -14,13 +14,6 @@
     <div id='scene-running-render' @contextmenu="showMenu"></div>
     <vue-context-menu :contextMenuData="contextMenuData" @savedata="savedata" @newdata="newdata">
     </vue-context-menu>
-    <div id='operation'>
-      <el-button @click='handleAdd'>add object</el-button>
-      <span>view x:</span>
-      <el-slider v-model="viewPort.max.x" :max='1920'></el-slider>
-      <span>view y:</span>
-      <el-slider v-model="viewPort.max.y" :max='1080'></el-slider>
-    </div>
   </div>
 </template>
 

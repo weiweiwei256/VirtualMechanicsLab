@@ -163,11 +163,7 @@ export default {
 }
 </script>
 <style>
-#vml-header {
-  background-color: #3399cc;
-  height: 30px;
-  text-align: center;
-}
+
 .el-card {
   padding: 5px !important;
 }
