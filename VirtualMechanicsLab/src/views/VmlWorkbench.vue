@@ -60,12 +60,12 @@ export default {
 #main-workbench {
   width: 100%;
   position: absolute;
-  bottom: 234px;
+  bottom: 240px;
   top: 30px;
 }
 #bottom-workbench {
   position: absolute;
-  height: 234px;
+  height: 240px;
   width: 100%;
   bottom: 0px;
 }

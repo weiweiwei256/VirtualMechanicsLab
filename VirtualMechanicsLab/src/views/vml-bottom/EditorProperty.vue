@@ -1,27 +1,30 @@
 <template>
   <div id="scene-editor-property">
-    <el-tabs v-model="activeTabName" style='margin-left: 6px;margin-top: 3px' @tab-click="handleClick">
+    <el-tabs v-model="activeTabName" style='margin-left: 6px;margin-top: 3px'>
       <el-tab-pane label="通用属性" name="generalProperty">
-        <el-form label-width="100px" label-position="right">
+        <el-form label-width="80px" label-position="right">
           <el-form-item label="物体名称：">
-            <el-input placeholder="请输入名称" v-model="label" @blur="modifyAttribute('label')"></el-input>
+            <el-input v-model="label" placeholder="请输入名称" @blur="modifyAttribute('label')"></el-input>
+          </el-form-item>
+          <el-form-item label="物体描述：">
+            <el-input v-model="description" placeholder="请输入描述" type="textarea" :rows="3" @blur="modifyAttribute('description')"></el-input>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="物理属性" name="physicalProperty">
-        <el-form label-width="100px" label-position="right">
-          <el-form-item label="是否静止">
+        <el-form label-width="80px" label-position="right">
+          <el-form-item label="是否静止：">
             <el-switch v-model="isStatic" @change="modifyAttribute('isStatic')">
             </el-switch>
           </el-form-item>
-          <el-form-item label="质量:">
-            <el-input-number v-model="mass" style='width:100%' @change="modifyAttribute('mass')" :min="0" :step="1" :precision="2" controls-position="right"></el-input-number>
+          <el-form-item label="质量：">
+            <el-input-number v-model="mass" style='width:100%' @change="modifyAttribute('mass')" :min="0" :step="1" :precision="2"></el-input-number>
           </el-form-item>
-          <el-form-item label="摩擦力:">
-            <el-input-number v-model="friction" style='width:100%' @change="modifyAttribute('friction')" :min="0" :max="1" :step="0.1" :precision="2" controls-position="right"></el-input-number>
+          <el-form-item label="摩擦力：">
+            <el-slider v-model="friction" :max='1' :step='0.1' show-input @change="modifyAttribute('friction')"></el-slider>
           </el-form-item>
-          <el-form-item label="恢复系数:">
-            <el-input-number v-model="restitution" style='width:100%' @change="modifyAttribute('restitution')" :min="0" :max="1" :step="0.1" :precision="2" controls-position="right"></el-input-number>
+          <el-form-item label="恢复系数：">
+            <el-slider v-model="friction" :max='1' :step='0.1' show-input @change="modifyAttribute('restitution')"></el-slider>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -43,6 +46,7 @@ export default {
     return {
       activeTabName: 'generalProperty',
       label: "Body",
+      description: '物体描述',
       isStatic: false,
       mass: 1,
       friction: 0.1,
@@ -87,9 +91,6 @@ export default {
         }
       }
     },
-    handleClick (tab, event) {
-      console.log(tab, event);
-    }
   },
   mounted () {
   },
@@ -98,8 +99,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #scene-editor-property /deep/ .el-form-item {
   margin-bottom: 5px;
+}
+#scene-editor-property /deep/ .el-form-item__label {
+  padding-right: 0px;
+  height: 100%;
+}
+#scene-editor-property /deep/ .el-form-item__content {
+  margin-right: 10px;
+  height: 100%;
 }
 </style>
