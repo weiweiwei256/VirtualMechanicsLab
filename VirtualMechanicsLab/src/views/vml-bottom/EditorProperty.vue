@@ -24,11 +24,22 @@
             <el-slider v-model="friction" :max='1' :step='0.1' show-input @change="modifyAttribute('friction')"></el-slider>
           </el-form-item>
           <el-form-item label="恢复系数：">
-            <el-slider v-model="friction" :max='1' :step='0.1' show-input @change="modifyAttribute('restitution')"></el-slider>
+            <el-slider v-model="restitution" :max='1' :step='0.1' show-input @change="modifyAttribute('restitution')"></el-slider>
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="初始条件" name="initialCondition">初始条件</el-tab-pane>
+      <el-tab-pane label="条件属性" name="initialCondition">
+        <el-form label-width="80px" label-position="right">
+          <el-form-item label="初始X位置:">
+          </el-form-item>
+          <el-form-item label="初始Y位置:">
+          </el-form-item>
+          <el-form-item label="初始速度：">
+          </el-form-item>
+          <el-form-item label="所受恒力：">
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
       <el-tab-pane label="样式属性" name="styleProperty">样式属性</el-tab-pane>
     </el-tabs>
   </div>

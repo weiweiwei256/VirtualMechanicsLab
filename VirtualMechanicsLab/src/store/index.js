@@ -90,6 +90,7 @@ const store = new Vuex.Store({
       graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
         let cell = graph.getSelectionCell();
         context.commit(types.SET_EDITOR_SELECTION_CELL, cell);
+        console.log('selectedCell', cell);
       });
       // 从value中获取展示名
       graph.convertValueToString = function(cell) {
