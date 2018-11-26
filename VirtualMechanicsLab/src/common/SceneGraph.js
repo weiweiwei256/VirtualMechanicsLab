@@ -10,3 +10,4 @@ mxCell.prototype.setAttribute = function(name, value) {
   var cellValue = this.getValue();
   cellValue[name] = value;
 };
+

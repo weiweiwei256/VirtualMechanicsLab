@@ -1,11 +1,12 @@
 {
-  "type": "triangle",
+  "type": "rectangle",
   "x": 50,
   "y": 50,
   "width": 50,
   "height": 50,
   "direction": 1,
   "options": {
-    "label": "triangle"
+    "label": "rectangle",
+    "des": "这是一个矩形"
   }
 }

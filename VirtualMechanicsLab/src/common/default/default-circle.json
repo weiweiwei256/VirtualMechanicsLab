@@ -4,6 +4,7 @@
   "y": 30,
   "radius": 30,
   "options": {
-    "label": "circle"
+    "label": "circle",
+    "des": "这是一个三角形"
   }
 }

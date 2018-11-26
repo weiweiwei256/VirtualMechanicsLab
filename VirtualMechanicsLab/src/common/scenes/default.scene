@@ -7,7 +7,8 @@
       "y": 100,
       "radius": 30,
       "options": {
-        "label": "circle1"
+        "label": "circle1",
+        "des": "这是一个圆"
       }
     },
     {
@@ -18,6 +19,7 @@
       "height": 80,
       "options": {
         "label": "rectangle1",
+        "des": "这是一个矩形",
         "friction": 0,
         "restitution": 1
       }
@@ -30,6 +32,7 @@
       "height": 30,
       "options": {
         "label": "ground",
+        "des": "这是矩形充当地面",
         "isStatic": true,
         "friction": 0,
         "frictionAir": 0,

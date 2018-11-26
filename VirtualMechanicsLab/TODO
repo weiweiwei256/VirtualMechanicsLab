@@ -2,8 +2,8 @@ project:
   SceneEditor:
     Property:
       ✔ 属性读取改造与form有更深度结合 @started(18-10-18 23:59) @done(18-10-25 01:58) @lasted(6d1h59m5s)
+      ☐ 属性类型与属性区保持一致(通用，物理，初始，样式)
       ☐ 支持初始条件编辑 
-          ☐ mxGraph绘制位置基于重心
       ☐ 支持样式编辑 
     editorArea:
       ☐ 可拖动，缩放调整视野
