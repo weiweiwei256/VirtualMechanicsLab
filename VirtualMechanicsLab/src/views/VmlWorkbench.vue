@@ -1,9 +1,13 @@
 <template>
   <div id="vml-workbench">
-    <vml-header></vml-header>
+    <vml-header id='top-workbench'></vml-header>
     <div id='main-workbench'>
-      <scene-editor class='flex-item'></scene-editor>
-      <scene-running class='flex-item'></scene-running>
+      <scene-editor style='float:left;width:50%'></scene-editor>
+      <scene-running style='float:right;width:50%'></scene-running>
+    </div>
+    <div id='bottom-workbench'>
+      <EditorProperty style='float:left;width:50%'></EditorProperty>
+      <RunningWatcher style='float:right;width:50%'></RunningWatcher>
     </div>
   </div>
 </template>
@@ -12,8 +16,10 @@
 import * as types from '@/modules-constant.js'
 import { mapActions } from 'vuex'
 import VmlHeader from './vml-header/VmlHeader'
-import SceneEditor from './scene-editor/SceneEditor.vue'
-import SceneRunning from './scene-running/SceneRunning.vue'
+import SceneEditor from './vml-main/scene-editor/SceneEditor.vue'
+import SceneRunning from './vml-main/scene-running/SceneRunning.vue'
+import EditorProperty from './vml-bottom/EditorProperty.vue'
+import RunningWatcher from './vml-bottom/RunningWatcher'
 export default {
   name: 'vml-workbench',
   data: function () {
@@ -33,12 +39,19 @@ export default {
 
   components: {
     VmlHeader,
+    EditorProperty,
     SceneEditor,
     SceneRunning,
+    RunningWatcher
   }
 }
 </script>
 <style scoped>
+#top-workbench {
+  background-color: #3399cc;
+  height: 30px;
+  text-align: center;
+}
 #vml-workbench {
   position: relative;
   height: 100%;
@@ -47,21 +60,13 @@ export default {
 #main-workbench {
   width: 100%;
   position: absolute;
-  bottom: 0px;
+  bottom: 240px;
   top: 30px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  /* 自左至右 */
-  flex-direction: row;
-  /* 不换行 */
-  flex-wrap: nowrap;
-  /* 对齐方式 */
-  justify-content: space-around;
 }
-.flex-item {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
+#bottom-workbench {
+  position: absolute;
+  height: 240px;
+  width: 100%;
+  bottom: 0px;
 }
 </style>

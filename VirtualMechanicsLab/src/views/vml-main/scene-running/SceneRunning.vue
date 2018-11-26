@@ -1,6 +1,6 @@
 <template>
   <div id='scene-running' style="height:100%">
-    <!-- <div id='scene-running-toolbar'>
+    <div id='scene-running-toolbar'>
       <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="开始" placement="top">
         <i class="iconfont icon-start" @click='sceneStart'></i>
       </el-tooltip>
@@ -10,17 +10,10 @@
       <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="刷新" placement="top">
         <i class="iconfont icon-restart" @click='sceneReset'></i>
       </el-tooltip>
-    </div> -->
+    </div>
     <div id='scene-running-render' @contextmenu="showMenu"></div>
     <vue-context-menu :contextMenuData="contextMenuData" @savedata="savedata" @newdata="newdata">
     </vue-context-menu>
-    <div id='operation'>
-      <el-button @click='handleAdd'>add object</el-button>
-      <span>view x:</span>
-      <el-slider v-model="viewPort.max.x" :max='1920'></el-slider>
-      <span>view y:</span>
-      <el-slider v-model="viewPort.max.y" :max='1080'></el-slider>
-    </div>
   </div>
 </template>
 
