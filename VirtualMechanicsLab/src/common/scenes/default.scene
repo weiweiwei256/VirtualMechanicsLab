@@ -23,19 +23,6 @@
       }
     },
     {
-      "type": "triangle",
-      "x": 200,
-      "y": 200,
-      "width": 50,
-      "height": 50,
-      "direction": 1,
-      "options": {
-        "label": "triangle1",
-        "friction": 0.2,
-        "restitution": 0.1
-      }
-    },
-    {
       "type": "rectangle",
       "x": 0,
       "y": 600,
