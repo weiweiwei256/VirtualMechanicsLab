@@ -88,7 +88,6 @@ export default {
       console.log('newdata!')
     },
     ...mapActions({
-      setScene: types.SAVE_SCENE,
       reloadSceneRunning: types.RELOAD_SCENE_RUNNING
     }),
     sceneStart: function () {
@@ -98,7 +97,6 @@ export default {
       Runner.stop(this.runner);
     },
     sceneReset: function () {
-      this.setScene();
       this.reloadSceneRunning();
     },
     renderScene: function () {

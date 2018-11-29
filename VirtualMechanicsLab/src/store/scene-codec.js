@@ -10,7 +10,7 @@ let SceneCodec = {
   decode(jsonData, model) {
     let parentCell = model.root.children[0];
     for (let i in jsonData.bodies) {
-      let mxCell = utility.getMxCell(jsonData.bodies[i].type, jsonData.bodies[i]);
+      let mxCell = utility.generateCellData(jsonData.bodies[i].general.type, jsonData.bodies[i]);
       parentCell.insert(mxCell);
     }
     model.setRoot(model.root);

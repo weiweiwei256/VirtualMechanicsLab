@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as types from '@/modules-constant.js';
 import { Common, Engine, Render, World, Bodies, Events, MouseConstraint, Composite, Bounds, Vertices } from 'matter-js';
-import sceneManager from '@/common/scene-manager.js';
+import defaultScene from '@/common/scenes/default.scene';
 import defaultSetting from './default-setting.json';
 import sceneCodec from './scene-codec';
 
@@ -12,7 +12,6 @@ let setting = Object.assign(
   defaultSetting,
   storage.getItem(types.SETTING) !== null ? JSON.parse(storage.getItem(types.SETTING)) : {}
 );
-let sceneData = sceneManager.getScene(setting.activeSceneName);
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: function() {
@@ -20,8 +19,8 @@ const store = new Vuex.Store({
       // file data
       setting,
       sceneName: setting.activeSceneName,
-      sceneDescription: sceneData.description,
-      sceneData,
+      sceneDescription: defaultScene.description,
+      sceneData: defaultScene,
       // editor data
       editorGraph: null,
       editorSelectionCell: null,
@@ -108,33 +107,17 @@ const store = new Vuex.Store({
       World.clear(world, false);
       let sceneData = context.getters.sceneData;
       for (let i = 0; i < sceneData.bodies.length; i++) {
-        let { type, x, y, radius, width, height, direction, options } = sceneData.bodies[i];
+        let { general, geometry, physics, condition, style } = sceneData.bodies[i];
+        let type = general.type;
         let bodyObject = null;
         switch (type) {
           case types.RECTANGLE:
-            bodyObject = Bodies.rectangle(x, y, width, height, options);
+            var { x, y, width, height } = geometry;
+            bodyObject = Bodies.rectangle(x, y, width, height, physics);
             break;
           case types.CIRCLE:
-            bodyObject = Bodies.circle(x, y, radius, options);
-            break;
-          case types.TRIANGLE:
-            let vertices;
-            switch (direction) {
-              case 1:
-                vertices = [{ x: 0, y: 0 }, { x: 0, y: height }, { x: width, y: height }];
-                break;
-              case 2:
-                vertices = [{ x: width, y: 0 }, { x: 0, y: height }, { x: width, y: height }];
-                break;
-              case 3:
-                vertices = [{ x: 0, y: 0 }, { x: width, y: 0 }, { x: width, y: height }];
-                break;
-              case 4:
-                vertices = [{ x: 0, y: 0 }, { x: 0, y: height }, { x: width, y: 0 }];
-                break;
-            }
-            let massCenter = Vertices.centre(vertices);
-            bodyObject = Bodies.fromVertices(x + massCenter.x, y + massCenter.y, vertices, options);
+            var { x, y, radius } = geometry;
+            bodyObject = Bodies.circle(x, y, radius, physics);
             break;
           default:
             console.error('unknown body type' + type);

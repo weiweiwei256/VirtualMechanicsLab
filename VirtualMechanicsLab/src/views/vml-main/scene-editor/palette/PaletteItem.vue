@@ -17,7 +17,7 @@ export default {
   computed: {
     ...mapGetters(['editorGraph']),
     protoCell: function () {
-      return utility.getMxCell(this.type)
+      return utility.generateCellData(this.type)
     }
   },
   methods: {

@@ -2,43 +2,60 @@
   "description": "This is a default scene file",
   "bodies": [
     {
-      "type": "circle",
-      "x": 100,
-      "y": 100,
-      "radius": 30,
-      "options": {
+      "general": {
+        "type": "circle",
         "label": "circle1",
         "des": "这是一个圆"
-      }
+      },
+      "geometry": {
+        "x": 100,
+        "y": 100,
+        "radius": 30
+      },
+      "physics": {},
+      "condition": {},
+      "style": {}
     },
     {
-      "type": "rectangle",
-      "x": 200,
-      "y": 40,
-      "width": 80,
-      "height": 80,
-      "options": {
+      "general": {
+        "type": "rectangle",
         "label": "rectangle1",
-        "des": "这是一个矩形",
+        "des": "这是一个矩形"
+      },
+      "geometry": {
+        "x": 200,
+        "y": 40,
+        "width": 80,
+        "height": 80
+      },
+      "physics": {
         "friction": 0,
         "restitution": 1
-      }
+      },
+      "condition": {},
+      "style": {}
     },
     {
-      "type": "rectangle",
-      "x": 0,
-      "y": 600,
-      "width": 810,
-      "height": 30,
-      "options": {
+      "general": {
+        "type": "rectangle",
         "label": "ground",
-        "des": "这是矩形充当地面",
+        "des": "这是矩形充当地面"
+      },
+      "geometry": {
+        "x": 0,
+        "y": 600,
+        "width": 810,
+        "height": 30
+      },
+      "physics": {
         "isStatic": true,
         "friction": 0,
         "frictionAir": 0,
         "frictionStatic": 1,
         "restitution": 1
-      }
+      },
+      "condition": {},
+      "style": {}
     }
   ]
 }

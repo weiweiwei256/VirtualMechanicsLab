@@ -4,27 +4,30 @@
       <el-tab-pane label="通用属性" name="generalProperty">
         <el-form :model="cellData" label-width="80px" label-position="right">
           <el-form-item label="物体名称：">
-            <el-input v-model="cellData.label" placeholder="请输入名称" @blur="modifyAttribute('label')"></el-input>
+            <el-input v-model="cellData.general.label" placeholder="请输入名称" @blur="modifyAttribute('label')"></el-input>
           </el-form-item>
           <el-form-item label="物体描述：">
-            <el-input v-model="cellData.des" placeholder="请输入描述" type="textarea" :rows="3" @blur="modifyAttribute('description')"></el-input>
+            <el-input v-model="cellData.general.des" placeholder="请输入描述" type="textarea" :rows="3" @blur="modifyAttribute('description')"></el-input>
           </el-form-item>
         </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="几何属性" name="geometryProperty">
+        <p>几何属性</p>
       </el-tab-pane>
       <el-tab-pane label="物理属性" name="physicalProperty">
         <el-form :model="cellData" label-width="80px" label-position="right">
           <el-form-item label="是否静止：">
-            <el-switch v-model="cellData.isStatic" @change="modifyAttribute('isStatic')">
+            <el-switch v-model="cellData.physics.isStatic" @change="modifyAttribute('isStatic')">
             </el-switch>
           </el-form-item>
           <el-form-item label="质量：">
-            <el-input-number v-model="cellData.mass" style='width:100%' @change="modifyAttribute('mass')" :min="0" :step="1" :precision="2"></el-input-number>
+            <el-input-number v-model="cellData.physics.mass" style='width:100%' @change="modifyAttribute('mass')" :min="0" :step="1" :precision="2"></el-input-number>
           </el-form-item>
           <el-form-item label="摩擦力：">
-            <el-slider v-model="cellData.friction" :max='1' :step='0.1' show-input @change="modifyAttribute('friction')"></el-slider>
+            <el-slider v-model="cellData.physics.friction" :max='1' :step='0.1' show-input @change="modifyAttribute('friction')"></el-slider>
           </el-form-item>
           <el-form-item label="恢复系数：">
-            <el-slider v-model="cellData.restitution" :max='1' :step='0.1' show-input @change="modifyAttribute('restitution')"></el-slider>
+            <el-slider v-model="cellData.physics.restitution" :max='1' :step='0.1' show-input @change="modifyAttribute('restitution')"></el-slider>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -55,13 +58,17 @@ export default {
     return {
       activeTabName: 'generalProperty',
       cellData: {
-        label: '',
-        description: '',
-        isStatic: false,
-        mass: 1,
-        friction: 0.1,
-        restitution: 0
-      }
+        general: {
+          type: "",
+          label: "",
+          des: ""
+        },
+        geometry: {
+        },
+        physics: {},
+        condition: {},
+        style: {}
+      },
     }
   },
   computed: {

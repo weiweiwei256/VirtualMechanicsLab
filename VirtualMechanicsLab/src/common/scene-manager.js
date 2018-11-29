@@ -2,13 +2,11 @@ import defaultScene from './scenes/default.scene';
 let storage = window.localStorage;
 let sceneManager = {
   getScene: function(sceneName) {
-    // 暂时注释  一直应用默认场景
-    // if (!storage.getItem(sceneName)) {
-    //   console.error(sceneName + ' 未存在， 将默认场景作为其内容');
-    //   storage.setItem(sceneName, JSON.stringify(defaultScene));
-    // }
-    // return JSON.parse(storage.getItem(sceneName));
-    return defaultScene;
+    if (!storage.getItem(sceneName)) {
+      console.error(sceneName + ' 未存在， 将默认场景作为其内容');
+      storage.setItem(sceneName, JSON.stringify(defaultScene));
+    }
+    return JSON.parse(storage.getItem(sceneName));
   },
   getUserScenes: function() {
     let userScenes = [];
