@@ -25,8 +25,6 @@ let utility = {
       default:
         console.error('unknown body type:' + type);
     }
-    // 与默认属性混合
-    mxCell.type = type;
     return mxCell;
   }
 };

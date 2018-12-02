@@ -4,30 +4,46 @@
       <el-tab-pane label="通用属性" name="generalProperty">
         <el-form :model="cellData" label-width="80px" label-position="right">
           <el-form-item label="物体名称：">
-            <el-input v-model="cellData.general.label" placeholder="请输入名称" @blur="modifyAttribute('label')"></el-input>
+            <el-input v-model="cellData.general.label" placeholder="请输入名称"></el-input>
           </el-form-item>
           <el-form-item label="物体描述：">
-            <el-input v-model="cellData.general.des" placeholder="请输入描述" type="textarea" :rows="3" @blur="modifyAttribute('description')"></el-input>
+            <el-input v-model="cellData.general.des" placeholder="请输入描述" type="textarea" :rows="3"></el-input>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="几何属性" name="geometryProperty">
-        <p>几何属性</p>
+        <el-form :model="cellData" label-width="80px" label-position="right">
+          <el-form-item label="x：">
+            <el-input-number v-model="cellData.geometry.x" style='width:100%' @change="updateGemotry" :min="0" :step="5"></el-input-number>
+          </el-form-item>
+          <el-form-item label="y：">
+            <el-input-number v-model="cellData.geometry.y" style='width:100%' @change="updateGemotry" :min="0" :step="5"></el-input-number>
+          </el-form-item>
+          <el-form-item v-if='cellType==types.RECTANGLE' label="宽度：">
+            <el-input-number v-model="cellData.geometry.width" style='width:100%' @change="updateGemotry" :min="0" :step="1"></el-input-number>
+          </el-form-item>
+          <el-form-item v-if='cellType==types.RECTANGLE' label="高度：">
+            <el-input-number v-model="cellData.geometry.height" style='width:100%' @change="updateGemotry" :min="0" :step="1"></el-input-number>
+          </el-form-item>
+          <el-form-item v-if='cellType==types.CIRCLE' label="半径：">
+            <el-input-number v-model="cellData.geometry.radius" style='width:100%' @change="updateGemotry" :min="0" :step="1"></el-input-number>
+          </el-form-item>
+        </el-form>
       </el-tab-pane>
       <el-tab-pane label="物理属性" name="physicalProperty">
         <el-form :model="cellData" label-width="80px" label-position="right">
           <el-form-item label="是否静止：">
-            <el-switch v-model="cellData.physics.isStatic" @change="modifyAttribute('isStatic')">
+            <el-switch v-model="cellData.physics.isStatic">
             </el-switch>
           </el-form-item>
           <el-form-item label="质量：">
-            <el-input-number v-model="cellData.physics.mass" style='width:100%' @change="modifyAttribute('mass')" :min="0" :step="1" :precision="2"></el-input-number>
+            <el-input-number v-model="cellData.physics.mass" style='width:100%' :min="0" :step="1" :precision="2"></el-input-number>
           </el-form-item>
           <el-form-item label="摩擦力：">
-            <el-slider v-model="cellData.physics.friction" :max='1' :step='0.1' show-input @change="modifyAttribute('friction')"></el-slider>
+            <el-slider v-model="cellData.physics.friction" :max='1' :step='0.1' show-input></el-slider>
           </el-form-item>
           <el-form-item label="恢复系数：">
-            <el-slider v-model="cellData.physics.restitution" :max='1' :step='0.1' show-input @change="modifyAttribute('restitution')"></el-slider>
+            <el-slider v-model="cellData.physics.restitution" :max='1' :step='0.1' show-input></el-slider>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -56,7 +72,8 @@ export default {
   name: 'scene-property',
   data: function () {
     return {
-      activeTabName: 'generalProperty',
+      types,
+      activeTabName: 'geometryProperty',
       cellData: {
         general: {
           type: "",
@@ -72,7 +89,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ selectionCell: 'editorSelectionCell', graph: 'editorGraph' })
+    ...mapGetters({ selectionCell: 'editorSelectionCell', graph: 'editorGraph' }),
+    cellType: function () {
+      return this.selectionCell && this.selectionCell.value.general.type;
+    }
   },
   watch: {
     selectionCell: function (newCell, oldCell) {
@@ -80,24 +100,32 @@ export default {
     }
   },
   methods: {
-    modifyAttribute: function (attrName) {
-      let oldValue = this.selectionCell.getAttribute(attrName, options[attrName]);
-      let newValue = this[attrName]
-      if (newValue != oldValue) {
-        this.graph.getModel().beginUpdate();
-        try {
-          let edit = new mxCellAttributeChange(
-            this.selectionCell, attrName,
-            newValue);
-          this.graph.getModel().execute(edit);
-        }
-        finally {
-          this.graph.getModel().endUpdate();
-        }
+    updateGemotry: function () {
+      let newGeometry;
+      switch (this.cellType) {
+        case types.RECTANGLE:
+          var { x, y, width, height } = this.selectionCell.value.geometry;
+          newGeometry = new window.mxGeometry(x - width / 2, y - height / 2, width, height);
+          break;
+        case types.CIRCLE:
+          var { x, y, radius } = this.selectionCell.value.geometry;
+          newGeometry = new window.mxGeometry(x - radius, y - radius, 2 * radius, 2 * radius);
+          break;
+        default:
       }
+      this.graph.getModel().setGeometry(this.selectionCell, newGeometry)
     },
-  },
-  mounted () {
+    // updateGemotry: function () {
+    //   switch (this.cellType) {
+    //     case types.RECTANGLE:
+    //       var { x, y, width, height } = this.selectionCell.value.geometry;
+    //       this.selectionCell.geometry.translate(x - width / 2, y - height / 2);
+    //     case types.CIRCLE:
+    //       var { x, y, radius } = this.selectionCell.value.geometry;
+    //       this.selectionCell.geometry.translate(x - radius, y - radius);
+    //     default:
+    //   }
+    // }
   },
   components: {
   }
