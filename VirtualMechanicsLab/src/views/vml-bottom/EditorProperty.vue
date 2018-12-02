@@ -115,17 +115,6 @@ export default {
       }
       this.graph.getModel().setGeometry(this.selectionCell, newGeometry)
     },
-    // updateGemotry: function () {
-    //   switch (this.cellType) {
-    //     case types.RECTANGLE:
-    //       var { x, y, width, height } = this.selectionCell.value.geometry;
-    //       this.selectionCell.geometry.translate(x - width / 2, y - height / 2);
-    //     case types.CIRCLE:
-    //       var { x, y, radius } = this.selectionCell.value.geometry;
-    //       this.selectionCell.geometry.translate(x - radius, y - radius);
-    //     default:
-    //   }
-    // }
   },
   components: {
   }

@@ -81,6 +81,18 @@ const store = new Vuex.Store({
       let graph = context.getters.editorGraph;
       graph.removeCells(graph.model.root.children[0].children); //清空已有物体
       sceneCodec.decode(context.getters.sceneData, graph.model);
+      graph.addListener(mxEvent.MOVE_CELLS, (graph, event) => {
+        let {
+          properties: {
+            cells: [cell],
+            dx,
+            dy
+          }
+        } = event;
+        let geometry = cell.value.geometry;
+        geometry.x += dx;
+        geometry.y += dy;
+      });
     },
     [types.INIT_SCENE_EDITOR]: context => {
       let graph = new mxGraph();
@@ -88,8 +100,7 @@ const store = new Vuex.Store({
       context.dispatch(types.RELOAD_SCENE_EDITOR);
       graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
         let cell = graph.getSelectionCell();
-        context.commit(types.SET_EDITOR_SELECTION_CELL, cell);
-        console.log('selectedCell', cell);
+        cell && context.commit(types.SET_EDITOR_SELECTION_CELL, cell);
       });
       // 从value中获取展示名
       graph.convertValueToString = function(cell) {
