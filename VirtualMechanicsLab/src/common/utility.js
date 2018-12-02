@@ -20,7 +20,7 @@ let utility = {
       case types.CIRCLE:
         var { x, y, radius } = geometry;
         mxCell.geometry = new window.mxGeometry(x - radius, y - radius, 2 * radius, 2 * radius);
-        mxCell.style = 'shape=ellipse';
+        mxCell.style = 'shape=MyCircle';
         break;
       default:
         console.error('unknown body type:' + type);
