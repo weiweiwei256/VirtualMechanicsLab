@@ -13,10 +13,10 @@
       </el-tab-pane>
       <el-tab-pane label="几何属性" name="geometryProperty">
         <el-form :model="cellData" label-width="80px" label-position="right">
-          <el-form-item label="x：">
+          <el-form-item label="重心x：">
             <el-input-number v-model="cellData.geometry.x" style='width:100%' @change="updateGemotry" :min="0" :step="5"></el-input-number>
           </el-form-item>
-          <el-form-item label="y：">
+          <el-form-item label="重心y：">
             <el-input-number v-model="cellData.geometry.y" style='width:100%' @change="updateGemotry" :min="0" :step="5"></el-input-number>
           </el-form-item>
           <el-form-item v-if='cellType==types.RECTANGLE' label="宽度：">

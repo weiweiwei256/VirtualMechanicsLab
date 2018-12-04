@@ -81,6 +81,7 @@ const store = new Vuex.Store({
       let graph = context.getters.editorGraph;
       graph.removeCells(graph.model.root.children[0].children); //清空已有物体
       sceneCodec.decode(context.getters.sceneData, graph.model);
+      // 监听graph事件 并将修改值同步到 cell.value
       graph.addListener(mxEvent.MOVE_CELLS, (graph, event) => {
         let {
           properties: {
@@ -92,6 +93,34 @@ const store = new Vuex.Store({
         let geometry = cell.value.geometry;
         geometry.x += dx;
         geometry.y += dy;
+      });
+      graph.addListener(mxEvent.CELLS_RESIZED, (graph, event) => {
+        let {
+          properties: {
+            cells: [cell],
+            bounds: [mxGeometry]
+          }
+        } = event;
+        let { x, y, width, height } = mxGeometry;
+        let type = cell.value.general.type;
+        let geometry = cell.value.geometry;
+        switch (type) {
+          case types.RECTANGLE:
+            geometry.x = x + width / 2;
+            geometry.y = y + height / 2;
+            geometry.width = width;
+            geometry.height = height;
+            break;
+          case types.CIRCLE:
+            let radius = Math.min(mxGeometry.width, mxGeometry.height) / 2;
+            mxGeometry.width = radius * 2;
+            mxGeometry.height = radius * 2;
+            geometry.x += radius;
+            geometry.y += radius;
+            geometry.radius = radius;
+            break;
+        }
+        console.log(event);
       });
     },
     [types.INIT_SCENE_EDITOR]: context => {
