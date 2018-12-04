@@ -9,7 +9,8 @@ let utility = {
     mxCell.vertex = true;
     mxCell.value = body;
     // 物理属性混合
-    mxCell.value.physics = Object.assign({}, defaultProperty, mxCell.value.physics);
+    mxCell.value.physics = Object.assign({}, defaultProperty.physics, mxCell.value.physics);
+    mxCell.value.condition = Object.assign({}, defaultProperty.condition, mxCell.value.condition);
     let { general, geometry, physics, condition, style } = body;
     switch (type) {
       case types.RECTANGLE:

@@ -97,6 +97,7 @@ export default {
       Runner.stop(this.runner);
     },
     sceneReset: function () {
+      Runner.stop(this.runner);
       this.reloadSceneRunning();
     },
     renderScene: function () {

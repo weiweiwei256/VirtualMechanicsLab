@@ -1,7 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as types from '@/modules-constant.js';
-import { Common, Engine, Render, World, Bodies, Events, MouseConstraint, Composite, Bounds, Vertices } from 'matter-js';
+import {
+  Common,
+  Engine,
+  Render,
+  World,
+  Bodies,
+  Body,
+  Events,
+  MouseConstraint,
+  Composite,
+  Bounds,
+  Vertices
+} from 'matter-js';
 import defaultScene from '@/common/scenes/default.scene';
 import defaultSetting from './default-setting.json';
 import sceneCodec from './scene-codec';
@@ -120,7 +132,6 @@ const store = new Vuex.Store({
             geometry.radius = radius;
             break;
         }
-        console.log(event);
       });
     },
     [types.INIT_SCENE_EDITOR]: context => {
@@ -163,6 +174,7 @@ const store = new Vuex.Store({
             console.error('unknown body type' + type);
         }
         if (bodyObject) {
+          condition && condition.velocity && Body.setVelocity(bodyObject, condition.velocity);
           World.addBody(world, bodyObject);
         }
       }

@@ -1,8 +1,24 @@
 {
-  "label": "Body",
-  "isStatic": false,
-  "mass": 1,
-  "friction": 0.1,
-  "restitution": 0,
-  "angle": 0
+  "general": {
+    "type": "",
+    "label": "Body",
+    "des": "这是一个物体"
+  },
+  "geometry": {
+    "x": 0,
+    "y": 0
+  },
+  "physics": {
+    "isStatic": false,
+    "mass": 100,
+    "friction": 0,
+    "restitution": 1
+  },
+
+  "condition": {
+    "velocity": {
+      "x": 0,
+      "y": 0
+    }
+  }
 }

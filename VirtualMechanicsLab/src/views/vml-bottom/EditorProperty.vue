@@ -14,10 +14,10 @@
       <el-tab-pane label="几何属性" name="geometryProperty">
         <el-form :model="cellData" label-width="80px" label-position="right">
           <el-form-item label="重心x：">
-            <el-input-number v-model="cellData.geometry.x" style='width:100%' @change="updateGemotry" :min="0" :step="5"></el-input-number>
+            <el-input-number v-model="cellData.geometry.x" style='width:100%' @change="updateGemotry" :step="5"></el-input-number>
           </el-form-item>
           <el-form-item label="重心y：">
-            <el-input-number v-model="cellData.geometry.y" style='width:100%' @change="updateGemotry" :min="0" :step="5"></el-input-number>
+            <el-input-number v-model="cellData.geometry.y" style='width:100%' @change="updateGemotry" :step="5"></el-input-number>
           </el-form-item>
           <el-form-item v-if='cellType==types.RECTANGLE' label="宽度：">
             <el-input-number v-model="cellData.geometry.width" style='width:100%' @change="updateGemotry" :min="0" :step="1"></el-input-number>
@@ -49,11 +49,12 @@
       </el-tab-pane>
       <el-tab-pane label="条件属性" name="initialCondition">
         <el-form :model="cellData" label-width="80px" label-position="right">
-          <el-form-item label="初始X位置:">
           </el-form-item>
-          <el-form-item label="初始Y位置:">
+          <el-form-item label="初始速度x：">
+            <el-input-number v-model="cellData.condition.velocity.x" style='width:100%' :step="1"></el-input-number>
           </el-form-item>
-          <el-form-item label="初始速度：">
+          <el-form-item label="初始速度y：">
+            <el-input-number v-model="cellData.condition.velocity.y" style='width:100%' :step="1"></el-input-number>
           </el-form-item>
           <el-form-item label="所受恒力：">
           </el-form-item>
@@ -68,24 +69,14 @@
 import * as types from '@/modules-constant.js'
 import utility from '@/common/utility.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import defaultProperty from '@/common/default/default-property.json';
 export default {
   name: 'scene-property',
   data: function () {
     return {
       types,
       activeTabName: 'geometryProperty',
-      cellData: {
-        general: {
-          type: "",
-          label: "",
-          des: ""
-        },
-        geometry: {
-        },
-        physics: {},
-        condition: {},
-        style: {}
-      },
+      cellData: defaultProperty,
     }
   },
   computed: {
