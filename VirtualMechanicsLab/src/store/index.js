@@ -190,12 +190,9 @@ const store = new Vuex.Store({
       let engine = context.getters.engine
       World.clear(world, false)
       let sceneData = context.getters.sceneData
-      let ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true })
-      let bodies = []
       let bodiesForce = new Map()
       for (let i = 0; i < sceneData.bodies.length; i++) {
         let { general, geometry, physics, condition, style } = sceneData.bodies[i]
-        console.log(general.label)
         let type = general.type
         var body = undefined
         physics = Object.assign({}, defaultProperty.physics, physics)
@@ -216,11 +213,9 @@ const store = new Vuex.Store({
           condition && condition.velocity && Body.setVelocity(body, condition.velocity)
           condition && condition.force && bodiesForce.set(body, condition.force)
           physics && physics.isStatic && Body.setStatic(body, physics)
-          bodies.push(body)
+          World.addBody(world, body)
         }
       }
-      World.add(world, bodies)
-      console.log(world)
       //选中事件绑定
       Events.on(engine, 'beforeUpdate', function(event) {
         bodiesForce.forEach((force, body) => {
