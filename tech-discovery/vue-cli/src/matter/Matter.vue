@@ -44,14 +44,14 @@ export default {
   },
   mounted () {
     this.renderDom = $('#matter-render')[0]
-    console.log([this.renderDom])
     this.engine = Engine.create();
     this.render = Render.create({
       element: this.renderDom,
       engine: this.engine
     });
-    let boxA = Bodies.rectangle(400, 200, 80, 80);
-    let boxB = Bodies.rectangle(450, 50, 80, 80);
+    let boxA = Bodies.circle(400, 200, 80, { mass:1,inertia:Infinity,frictionAir: 0, friction: 0, restitution: 1});
+    let boxB = Bodies.rectangle(200, 50, 80, 80,{ mass:1,inertia:Infinity,frictionAir: 0, friction: 0, restitution: 1});
+    console.log(boxA)
     let ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
     World.add(this.engine.world, [boxA, boxB, ground]);
     //选中监听  暂只支持选中body  

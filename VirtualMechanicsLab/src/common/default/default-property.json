@@ -10,8 +10,10 @@
   },
   "physics": {
     "isStatic": false,
-    "mass": 100,
+    "mass": 1,
     "friction": 0,
+    "frictionStatic": 0,
+    "frictionAir": 0,
     "restitution": 1
   },
 

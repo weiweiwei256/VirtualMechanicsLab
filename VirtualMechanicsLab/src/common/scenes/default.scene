@@ -8,25 +8,17 @@
         "des": "这是一个圆"
       },
       "geometry": {
-        "x": 100,
-        "y": 100,
-        "radius": 30
+        "x": 400,
+        "y": 200,
+        "radius": 80
       },
       "physics": {
+        "mass": 1,
+        "frictionAir": 0,
         "friction": 0,
-        "restitution": 1,
-        "mass": 1000
+        "restitution": 1
       },
-      "condition": {
-        "velocity": {
-          "x": 0,
-          "y": -5
-        },
-        "force": {
-          "x": 0.07,
-          "y": -0.07
-        }
-      },
+      "condition": {},
       "style": {}
     },
     {
@@ -37,20 +29,17 @@
       },
       "geometry": {
         "x": 200,
-        "y": 40,
+        "y": 50,
         "width": 80,
         "height": 80
       },
       "physics": {
+        "mass": 1,
+        "frictionAir": 0,
         "friction": 0,
         "restitution": 1
       },
-      "condition": {
-        "force": {
-          "x": -0.03,
-          "y": 0
-        }
-      },
+      "condition": {},
       "style": {}
     },
     {
@@ -60,16 +49,13 @@
         "des": "这是矩形充当地面"
       },
       "geometry": {
-        "x": 0,
-        "y": 600,
+        "x": 400,
+        "y": 610,
         "width": 810,
-        "height": 30
+        "height": 60
       },
       "physics": {
-        "isStatic": true,
-        "friction": 0,
-        "frictionAir": 0,
-        "restitution": 1
+        "isStatic": true
       },
       "condition": {},
       "style": {}
