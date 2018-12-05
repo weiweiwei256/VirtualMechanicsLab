@@ -14,12 +14,17 @@
       },
       "physics": {
         "friction": 0,
-        "restitution": 1
+        "restitution": 1,
+        "mass": 1000
       },
       "condition": {
         "velocity": {
           "x": 0,
           "y": -5
+        },
+        "force": {
+          "x": 0.07,
+          "y": -0.07
         }
       },
       "style": {}
@@ -40,7 +45,12 @@
         "friction": 0,
         "restitution": 1
       },
-      "condition": {},
+      "condition": {
+        "force": {
+          "x": -0.03,
+          "y": 0
+        }
+      },
       "style": {}
     },
     {

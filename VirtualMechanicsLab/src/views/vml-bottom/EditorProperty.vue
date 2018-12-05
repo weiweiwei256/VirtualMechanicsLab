@@ -56,7 +56,11 @@
           <el-form-item label="初始速度y：">
             <el-input-number v-model="cellData.condition.velocity.y" style='width:100%' :step="1"></el-input-number>
           </el-form-item>
-          <el-form-item label="所受恒力：">
+          <el-form-item label="所受恒力x：">
+            <el-input-number v-model="cellData.condition.force.x" style='width:100%' :step="1"></el-input-number>
+          </el-form-item>
+          <el-form-item label="所受恒力y：">
+            <el-input-number v-model="cellData.condition.force.y" style='width:100%' :step="1"></el-input-number>
           </el-form-item>
         </el-form>
       </el-tab-pane>

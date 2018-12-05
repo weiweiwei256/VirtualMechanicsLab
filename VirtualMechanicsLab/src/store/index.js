@@ -157,6 +157,7 @@ const store = new Vuex.Store({
       let engine = context.getters.engine;
       World.clear(world, false);
       let sceneData = context.getters.sceneData;
+      let bodiesForce = new Map();
       for (let i = 0; i < sceneData.bodies.length; i++) {
         let { general, geometry, physics, condition, style } = sceneData.bodies[i];
         let type = general.type;
@@ -175,26 +176,18 @@ const store = new Vuex.Store({
         }
         if (bodyObject) {
           condition && condition.velocity && Body.setVelocity(bodyObject, condition.velocity);
+          condition && condition.force && bodiesForce.set(bodyObject, condition.force);
           World.addBody(world, bodyObject);
         }
       }
       //选中事件绑定
-      Events.on(MouseConstraint.create(engine), 'mousedown', event => {
-        let mousePosition = event.mouse.mousedownPosition;
-        let bodies = Composite.allBodies(engine.world);
-        for (let i = 0; i < bodies.length; i++) {
-          let body = bodies[i];
-          if (Bounds.contains(body.bounds, mousePosition) && Vertices.contains(body.vertices, mousePosition)) {
-            console.log(body);
-          }
-        }
+      Events.on(engine, 'beforeUpdate', function(event) {
+        bodiesForce.forEach((force, body) => {
+          Body.applyForce(body, body.position, force);
+        });
       });
     },
     [types.INIT_SCENE_RUNNING]: context => {
-      // update scene data
-      // context.commit(types.SET_SCENE, {
-      //   sceneData: sceneCodec.encode(context.getters.editorGraph.getModel())
-      // });
       let engine = Engine.create();
       let runningRender = Render.create({
         engine: engine,
