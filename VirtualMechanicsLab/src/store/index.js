@@ -199,6 +199,7 @@ const store = new Vuex.Store({
         let type = general.type
         var body = undefined
         physics = Object.assign({}, defaultProperty.physics, physics)
+        physics.inertia = Infinity
         switch (type) {
           case types.RECTANGLE:
             var { x, y, width, height } = geometry
