@@ -8,7 +8,7 @@
         "des": "这是一个圆"
       },
       "geometry": {
-        "x": 400,
+        "x": 200,
         "y": 200,
         "radius": 80
       },
@@ -19,7 +19,10 @@
         "restitution": 1
       },
       "condition": {},
-      "style": {}
+      "style": {
+        "fillColor": "#ff0000",
+        "fontColor": "#000000"
+      }
     },
     {
       "general": {
@@ -28,7 +31,7 @@
         "des": "这是一个矩形"
       },
       "geometry": {
-        "x": 200,
+        "x": 100,
         "y": 50,
         "width": 80,
         "height": 80

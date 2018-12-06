@@ -143,7 +143,6 @@ const store = new Vuex.Store({
         let cell = graph.getSelectionCell()
         cell && context.commit(types.SET_EDITOR_SELECTION_CELL, cell)
       })
-  
     },
     [types.INIT_SCENE_RUNNING]: context => {
       let engine = Engine.create()
@@ -204,6 +203,7 @@ const store = new Vuex.Store({
             console.error('unknown body type' + type)
         }
         if (body) {
+          body.render.fillStyle = 'red'
           condition && condition.velocity && Body.setVelocity(body, condition.velocity)
           condition && condition.force && bodiesForce.set(body, condition.force)
           physics && physics.isStatic && Body.setStatic(body, physics)

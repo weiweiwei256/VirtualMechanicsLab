@@ -16,7 +16,6 @@
     "frictionAir": 0,
     "restitution": 1
   },
-
   "condition": {
     "velocity": {
       "x": 0,
@@ -26,5 +25,9 @@
       "x": 0,
       "y": 0
     }
+  },
+  "style": {
+    "fillColor": "#C3D9FF",
+    "fontColor": "#774400"
   }
 }

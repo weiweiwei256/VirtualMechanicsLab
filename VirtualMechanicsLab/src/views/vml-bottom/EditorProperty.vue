@@ -49,7 +49,6 @@
       </el-tab-pane>
       <el-tab-pane label="条件属性" name="initialCondition">
         <el-form :model="cellData" label-width="80px" label-position="right">
-          </el-form-item>
           <el-form-item label="初始速度x：">
             <el-input-number v-model="cellData.condition.velocity.x" style='width:100%' :step="1"></el-input-number>
           </el-form-item>
@@ -64,7 +63,16 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="样式属性" name="styleProperty">样式属性</el-tab-pane>
+      <el-tab-pane label="样式属性" name="styleProperty" v-if='showStyle'>
+        <el-form :model="cellData" label-width="80px" label-position="right">
+          <el-form-item label="填充颜色：">
+            <el-color-picker ref='colorPick' v-model="cellData.style.fillColor" @change='updateStyle'></el-color-picker>
+          </el-form-item>
+          <el-form-item label="字体颜色：">
+            <el-color-picker v-model="cellData.style.fontColor" @change='updateStyle'></el-color-picker>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -79,7 +87,9 @@ export default {
   data: function () {
     return {
       types,
-      activeTabName: 'geometryProperty',
+      showStyle: true,
+      fillColor: '#000000',
+      activeTabName: 'styleProperty',
       cellData: defaultProperty,
     }
   },
@@ -110,6 +120,12 @@ export default {
       }
       this.graph.getModel().setGeometry(this.selectionCell, newGeometry)
     },
+    updateStyle: function () {
+      let style = this.graph.getModel().getStyle(this.selectionCell)
+      style = mxUtils.setStyle(style, 'fillColor', this.selectionCell.value.style.fillColor)
+      style = mxUtils.setStyle(style, 'fontColor', this.selectionCell.value.style.fontColor)
+      this.graph.getModel().setStyle(this.selectionCell, style)
+    }
   },
   components: {
   }
