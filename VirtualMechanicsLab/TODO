@@ -20,12 +20,13 @@ project:
         ✔ 不存在的属性会继承上一个物体的属性 @started(18-12-06 01:28) @done(18-12-06 01:33) @lasted(5m31s)
     editorArea:
       ☐ 可拖动，缩放调整视野
-      ☐ 图形上显示物体label
+      ✔ 图形上显示物体label @started(18-12-07 00:17) @done(18-12-07 00:25) @lasted(8m9s)
       ☐ 物体可删除  mxGraph contexticons
       ☐ 拖动创建物体还存在bug
     ☐ 单位校准
   SceneRuning:
     ☐ 可拖动，缩放调整视野
+    ☐ 图形上显示物体label
     ✔ 引入与SceneEditor相同的默认属性 @done(18-12-06 01:38)
     数据监测:
       ☐ 输出数据

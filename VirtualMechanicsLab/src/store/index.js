@@ -143,13 +143,7 @@ const store = new Vuex.Store({
         let cell = graph.getSelectionCell()
         cell && context.commit(types.SET_EDITOR_SELECTION_CELL, cell)
       })
-      // 从value中获取展示名
-      graph.convertValueToString = function(cell) {
-        return cell.value.label
-      }
-      graph.valueForCellChanged = function(cell, newValue) {
-        cell.value.label = newValue
-      }
+  
     },
     [types.INIT_SCENE_RUNNING]: context => {
       let engine = Engine.create()
