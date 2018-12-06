@@ -185,10 +185,11 @@ const store = new Vuex.Store({
       let sceneData = context.getters.sceneData
       let bodiesForce = new Map()
       for (let i = 0; i < sceneData.bodies.length; i++) {
+        let body = undefined // 物体对象
         let { general, geometry, physics, condition, style } = sceneData.bodies[i]
         let type = general.type
-        var body = undefined
-        physics = Object.assign({}, defaultProperty.physics, physics)
+        // 设置物理属性
+        physics = Object.assign({ label: general.label }, defaultProperty.physics, physics)
         physics.inertia = Infinity
         switch (type) {
           case types.RECTANGLE:
@@ -202,13 +203,16 @@ const store = new Vuex.Store({
           default:
             console.error('unknown body type' + type)
         }
-        if (body) {
-          body.render.fillStyle = 'red'
-          condition && condition.velocity && Body.setVelocity(body, condition.velocity)
-          condition && condition.force && bodiesForce.set(body, condition.force)
-          physics && physics.isStatic && Body.setStatic(body, physics)
-          World.addBody(world, body)
-        }
+        physics && physics.isStatic && Body.setStatic(body, physics)
+        // 设置样式属性
+        style = Object.assign({}, defaultProperty.style, style)
+        body.render.fillStyle = style.fillColor
+        body.render.fontColor = style.fontColor
+        // body.render.
+        // 设置条件属性
+        body.condition && condition.velocity && Body.setVelocity(body, condition.velocity)
+        condition && condition.force && bodiesForce.set(body, condition.force)
+        World.addBody(world, body)
       }
       //选中事件绑定
       Events.on(engine, 'beforeUpdate', function(event) {

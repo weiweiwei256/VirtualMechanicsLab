@@ -1,18 +1,19 @@
-import Vue from 'vue';
-import App from './App';
-import router from './router';
-import store from './store';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import '@/common/SceneGraph.js';
-import '@/shapes';
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+import store from './store'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import '@/common/SceneGraph.js'
+import '@/common/SceneMatter.js'
+import '@/shapes'
 /* eslint-disable no-unused-vars */
-Vue.config.productionTip = false;
-Vue.use(ElementUI);
+Vue.config.productionTip = false
+Vue.use(ElementUI)
 /* eslint-disable no-new */
-import VueContextMenu from 'vue-contextmenu';
-import 'vue-contextmenu/style/css/font-awesome.min.css';
-Vue.use(VueContextMenu);
+import VueContextMenu from 'vue-contextmenu'
+import 'vue-contextmenu/style/css/font-awesome.min.css'
+Vue.use(VueContextMenu)
 new Vue({
   el: '#app',
   store,
@@ -20,4 +21,4 @@ new Vue({
   template: '<App/>',
   components: { App },
   strict: false
-});
+})

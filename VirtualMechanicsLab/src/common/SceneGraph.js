@@ -1,3 +1,4 @@
+// 重写原有方法
 mxCell.prototype.getAttribute = function(name, defaultValue) {
   let cellValue = this.getValue()
   return cellValue[name] || defaultValue
