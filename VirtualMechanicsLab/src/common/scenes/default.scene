@@ -1,5 +1,11 @@
 {
+  "name": "默认场景",
   "description": "This is a default scene file",
+  "author": "",
+  "gravity": {
+    "x": 0,
+    "y": 1
+  },
   "bodies": [
     {
       "general": {
@@ -8,26 +14,21 @@
         "des": "这是一个圆"
       },
       "geometry": {
-        "x": 100,
+        "x": 250,
         "y": 100,
-        "radius": 30
+        "radius": 50
       },
       "physics": {
+        "mass": 1,
+        "frictionAir": 0,
         "friction": 0,
-        "restitution": 1,
-        "mass": 1000
+        "restitution": 1
       },
-      "condition": {
-        "velocity": {
-          "x": 0,
-          "y": -5
-        },
-        "force": {
-          "x": 0.07,
-          "y": -0.07
-        }
-      },
-      "style": {}
+      "condition": {},
+      "style": {
+        "fillColor": "#ff0000",
+        "fontColor": "#000000"
+      }
     },
     {
       "general": {
@@ -36,21 +37,18 @@
         "des": "这是一个矩形"
       },
       "geometry": {
-        "x": 200,
-        "y": 40,
+        "x": 100,
+        "y": 50,
         "width": 80,
         "height": 80
       },
       "physics": {
+        "mass": 1,
+        "frictionAir": 0,
         "friction": 0,
         "restitution": 1
       },
-      "condition": {
-        "force": {
-          "x": -0.03,
-          "y": 0
-        }
-      },
+      "condition": {},
       "style": {}
     },
     {
@@ -60,16 +58,13 @@
         "des": "这是矩形充当地面"
       },
       "geometry": {
-        "x": 0,
-        "y": 600,
+        "x": 400,
+        "y": 610,
         "width": 810,
-        "height": 30
+        "height": 60
       },
       "physics": {
-        "isStatic": true,
-        "friction": 0,
-        "frictionAir": 0,
-        "restitution": 1
+        "isStatic": true
       },
       "condition": {},
       "style": {}

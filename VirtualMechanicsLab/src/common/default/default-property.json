@@ -1,4 +1,11 @@
 {
+  "name": "场景名称",
+  "description": "场景描述",
+  "author": "",
+  "gravity": {
+    "x": 0,
+    "y": 1
+  },
   "general": {
     "type": "",
     "label": "Body",
@@ -10,11 +17,12 @@
   },
   "physics": {
     "isStatic": false,
-    "mass": 100,
+    "mass": 1,
     "friction": 0,
+    "frictionStatic": 0,
+    "frictionAir": 0,
     "restitution": 1
   },
-
   "condition": {
     "velocity": {
       "x": 0,
@@ -24,5 +32,9 @@
       "x": 0,
       "y": 0
     }
+  },
+  "style": {
+    "fillColor": "#C3D9FF",
+    "fontColor": "#774400"
   }
 }

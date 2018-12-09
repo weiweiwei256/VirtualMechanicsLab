@@ -1,6 +1,24 @@
 <template>
   <div id="scene-editor-property">
-    <el-tabs v-model="activeTabName" style='margin-left: 6px;margin-top: 3px'>
+    <el-tabs v-if='isRootCell' value="globalProperty" style='margin-left: 6px;margin-top: 3px'>
+      <el-tab-pane label="全局属性" name="globalProperty">
+        <el-form :model="cellData" label-width="80px" label-position="right">
+          <el-form-item label="场景名称：">
+            <el-input v-model="cellData.name" placeholder="请输入名称"></el-input>
+          </el-form-item>
+          <el-form-item label="场景描述：">
+            <el-input v-model="cellData.description" placeholder="请输入描述" type="textarea" :rows="1"></el-input>
+          </el-form-item>
+          <el-form-item label="重力方向x：">
+            <el-input-number v-model="cellData.gravity.x" style='width:100%' :step="1"></el-input-number>
+          </el-form-item>
+          <el-form-item label="重力方向y：">
+            <el-input-number v-model="cellData.gravity.y" style='width:100%' :step="1"></el-input-number>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+    </el-tabs>
+    <el-tabs v-if='!isRootCell' v-model="activeTabName" style='margin-left: 6px;margin-top: 3px'>
       <el-tab-pane label="通用属性" name="generalProperty">
         <el-form :model="cellData" label-width="80px" label-position="right">
           <el-form-item label="物体名称：">
@@ -49,7 +67,6 @@
       </el-tab-pane>
       <el-tab-pane label="条件属性" name="initialCondition">
         <el-form :model="cellData" label-width="80px" label-position="right">
-          </el-form-item>
           <el-form-item label="初始速度x：">
             <el-input-number v-model="cellData.condition.velocity.x" style='width:100%' :step="1"></el-input-number>
           </el-form-item>
@@ -64,7 +81,16 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="样式属性" name="styleProperty">样式属性</el-tab-pane>
+      <el-tab-pane label="样式属性" name="styleProperty">
+        <el-form :model="cellData" label-width="80px" label-position="right">
+          <el-form-item label="填充颜色：">
+            <el-color-picker ref='colorPick' v-model="cellData.style.fillColor" @change='updateStyle'></el-color-picker>
+          </el-form-item>
+          <el-form-item label="字体颜色：">
+            <el-color-picker v-model="cellData.style.fontColor" @change='updateStyle'></el-color-picker>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -73,31 +99,30 @@
 import * as types from '@/modules-constant.js'
 import utility from '@/common/utility.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import defaultProperty from '@/common/default/default-property.json';
 export default {
   name: 'scene-property',
   data: function () {
     return {
       types,
-      activeTabName: 'geometryProperty',
-      cellData: defaultProperty,
+      activeTabName: 'generalProperty',
     }
   },
   computed: {
     ...mapGetters({ selectionCell: 'editorSelectionCell', graph: 'editorGraph' }),
+    isRootCell: function () {
+      return this.selectionCell.id == '1';
+    },
+    cellData: function () {
+      return this.selectionCell.value;
+    },
     cellType: function () {
-      return this.selectionCell && this.selectionCell.value.general.type;
-    }
-  },
-  watch: {
-    selectionCell: function (newCell, oldCell) {
-      newCell && (this.cellData = newCell.value);
-    }
+      return this.cellData.general.type;
+    },
   },
   methods: {
     updateGemotry: function () {
       let newGeometry;
-      switch (this.cellType) {
+      switch (this.selectionCell.value.general.type) {
         case types.RECTANGLE:
           var { x, y, width, height } = this.selectionCell.value.geometry;
           newGeometry = new window.mxGeometry(x - width / 2, y - height / 2, width, height);
@@ -110,6 +135,12 @@ export default {
       }
       this.graph.getModel().setGeometry(this.selectionCell, newGeometry)
     },
+    updateStyle: function () {
+      let style = this.graph.getModel().getStyle(this.selectionCell)
+      style = mxUtils.setStyle(style, 'fillColor', this.selectionCell.value.style.fillColor)
+      style = mxUtils.setStyle(style, 'fontColor', this.selectionCell.value.style.fontColor)
+      this.graph.getModel().setStyle(this.selectionCell, style)
+    }
   },
   components: {
   }
