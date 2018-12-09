@@ -1,10 +1,7 @@
 import * as types from '@/modules-constant.js'
 import defaultProperty from '@/common/default/default-property.json'
-import defaultRectangle from './default/default-rectangle.json'
-import defaultCircle from './default/default-circle.json'
-import defaultTriangle from './default/default-triangle.json'
 let utility = {
-  generateCellData(type, body = {}) {
+  generateCellData(type, body) {
     let mxCell = new window.mxCell()
     mxCell.vertex = true
     mxCell.value = body

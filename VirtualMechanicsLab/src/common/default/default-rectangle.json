@@ -1,12 +1,11 @@
 {
-  "type": "rectangle",
-  "x": 50,
-  "y": 50,
-  "width": 50,
-  "height": 50,
-  "direction": 1,
-  "options": {
+  "general": {
+    "type": "rectangle",
     "label": "rectangle",
-    "des": "这是一个矩形"
+    "des": "这是一个新矩形"
+  },
+  "geometry": {
+    "width": 100,
+    "height": 80
   }
 }

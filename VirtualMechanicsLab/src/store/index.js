@@ -190,7 +190,7 @@ const store = new Vuex.Store({
       World.clear(world, false)
       let sceneData = context.getters.sceneData
       // 设置重力
-      world.gravity = Object.assign({}, defaultProperty.gravity, sceneData.gravity)
+      world.gravity = Object.assign({}, sceneData.gravity)
       let bodiesForce = new Map()
       for (let i = 0; i < sceneData.bodies.length; i++) {
         let body = undefined // 物体对象

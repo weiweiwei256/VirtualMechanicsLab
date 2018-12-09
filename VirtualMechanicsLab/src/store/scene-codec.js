@@ -21,39 +21,10 @@ let SceneCodec = {
   encode(model) {
     // 从rootCell中提取属性
     let { name, description, gravity } = model.root.children[0].value
-    jsonData = { name, description, gravity, bodies: [] }
+    let jsonData = { name, description, gravity, bodies: [] }
     // 获取组件属性
     for (let i in model.root.children[0].children) {
-      let mxCell = model.root.children[0].children[i]
-      let { geometry, value, type, direction } = mxCell
-      let { x, y, width, height } = geometry
-      let body = {}
-      body.options = value
-      body.type = type
-      switch (type) {
-        case types.RECTANGLE:
-          body.x = x + width / 2
-          body.y = y + height / 2
-          body.width = width
-          body.height = height
-          break
-        case types.CIRCLE:
-          let radius = width / 2
-          body.x = x + radius
-          body.y = y + radius
-          body.radius = radius
-          break
-        case types.TRIANGLE:
-          body.x = x
-          body.y = y
-          body.width = width
-          body.height = height
-          body.direction = direction
-          break
-        default:
-          console.error('unknown body type:' + type)
-      }
-      jsonData.bodies.push(body)
+      jsonData.bodies.push(model.root.children[0].children[i].value)
     }
     return jsonData
   }

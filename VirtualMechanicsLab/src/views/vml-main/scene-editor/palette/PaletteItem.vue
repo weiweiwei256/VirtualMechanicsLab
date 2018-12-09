@@ -9,25 +9,38 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import * as types from '@/modules-constant.js'
 import utility from '@/common/utility.js';
+import defaultRectangle from '@/common/default/default-rectangle.json'
+import defaultCircle from '@/common/default/default-circle.json'
 export default {
   name: 'palette-item',
   props: ['icon', 'type', 'name'],
   computed: {
     ...mapGetters(['editorGraph']),
-    protoCell: function () {
-      return utility.generateCellData(this.type)
-    }
   },
   methods: {
+    ...mapActions({
+      saveScene: types.SAVE_SCENE,
+    }),
     addPaletteItem: function (graph, evt, cell) {
       graph.stopEditing(false);
-      var pt = graph.getPointForEvent(evt);
-      var newCell = graph.getModel().cloneCell(this.protoCell);
-      newCell.geometry.x = pt.x;
-      newCell.geometry.y = pt.y;
+      let { x, y } = graph.getPointForEvent(evt);
+      let newCellData;
+      switch (this.type) {
+        case types.RECTANGLE:
+          newCellData = utility.deepClone(defaultRectangle);
+          break;
+        case types.CIRCLE:
+          newCellData = utility.deepClone(defaultCircle);
+          break;
+      }
+      newCellData.geometry.x = x;
+      newCellData.geometry.y = y;
+      var newCell = utility.generateCellData(this.type, newCellData);
       graph.setSelectionCells(graph.importCells([newCell], 0, 0, cell));
+      this.saveScene();
     }
   },
   mounted: function () {
