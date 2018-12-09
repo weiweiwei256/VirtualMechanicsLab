@@ -1,8 +1,12 @@
 project:
   SceneDemo:
     ☐ 滑动场景
+    ☐ 
   SceneEditor:
     Property:
+      全局属性:
+        ☐ 场景描述 @started(18-12-10 00:54)
+        ☐ 重力设置
       通用属性:
         ✔ 属性读取改造与form有更深度结合 @started(18-10-18 23:59) @done(18-10-25 01:58) @lasted(6d1h59m5s)
         ✔ 属性类型与属性区保持一致(通用，几何,物理，初始，样式) @started(18-11-30 01:46) @done(18-11-30 02:31) @lasted(45m53s)
@@ -38,6 +42,7 @@ decision:
   ✔ 暂时移除三角形: @done(18-11-26 22:17)
 experence:
   mxGraph:
-  mxCell.style = 'shape=rectangle;fillColor=red'
+    mxCell.style = 'shape=rectangle;fillColor=red'
+    以id='1' 作为根节点的识别标准
   matter:
     ✔ 当设置物体为静止物体后,就不要设置其他物理属性了 否则会出现矛盾  或者  通过API setStatic设置 @done(18-12-06 01:20)

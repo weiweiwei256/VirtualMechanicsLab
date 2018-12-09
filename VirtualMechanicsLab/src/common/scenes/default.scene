@@ -1,5 +1,11 @@
 {
+  "name": "默认场景",
   "description": "This is a default scene file",
+  "author": "",
+  "gravity": {
+    "x": 0,
+    "y": 1
+  },
   "bodies": [
     {
       "general": {
@@ -8,9 +14,9 @@
         "des": "这是一个圆"
       },
       "geometry": {
-        "x": 200,
-        "y": 200,
-        "radius": 80
+        "x": 250,
+        "y": 100,
+        "radius": 50
       },
       "physics": {
         "mass": 1,

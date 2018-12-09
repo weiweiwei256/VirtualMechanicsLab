@@ -94,6 +94,21 @@ const store = new Vuex.Store({
       let graph = context.getters.editorGraph
       graph.removeCells(graph.model.root.children[0].children) //清空已有物体
       sceneCodec.decode(context.getters.sceneData, graph.model)
+    },
+    [types.INIT_SCENE_EDITOR]: context => {
+      let graph = new mxGraph()
+      context.commit(types.SET_EDITOR_GRAPH, graph)
+      context.dispatch(types.RELOAD_SCENE_EDITOR)
+      context.commit(types.SET_EDITOR_SELECTION_CELL, graph.model.root.children[0])
+      graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
+        let cell = graph.getSelectionCell()
+        if (cell) {
+          context.commit(types.SET_EDITOR_SELECTION_CELL, cell)
+        } else {
+          // 什么都没选中 则认为
+          context.commit(types.SET_EDITOR_SELECTION_CELL, graph.model.root.children[0])
+        }
+      })
       // 监听graph事件 并将修改值同步到 cell.value
       graph.addListener(mxEvent.MOVE_CELLS, (graph, event) => {
         let {
@@ -135,15 +150,6 @@ const store = new Vuex.Store({
         }
       })
     },
-    [types.INIT_SCENE_EDITOR]: context => {
-      let graph = new mxGraph()
-      context.commit(types.SET_EDITOR_GRAPH, graph)
-      context.dispatch(types.RELOAD_SCENE_EDITOR)
-      graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
-        let cell = graph.getSelectionCell()
-        cell && context.commit(types.SET_EDITOR_SELECTION_CELL, cell)
-      })
-    },
     [types.INIT_SCENE_RUNNING]: context => {
       let engine = Engine.create()
       let runningRender = Render.create({
@@ -183,6 +189,8 @@ const store = new Vuex.Store({
       let engine = context.getters.engine
       World.clear(world, false)
       let sceneData = context.getters.sceneData
+      // 设置重力
+      world.gravity = Object.assign({}, defaultProperty.gravity, sceneData.gravity)
       let bodiesForce = new Map()
       for (let i = 0; i < sceneData.bodies.length; i++) {
         let body = undefined // 物体对象

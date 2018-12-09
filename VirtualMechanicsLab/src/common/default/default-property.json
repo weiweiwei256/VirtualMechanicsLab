@@ -1,4 +1,11 @@
 {
+  "name": "场景名称",
+  "description": "场景描述",
+  "author": "",
+  "gravity": {
+    "x": 0,
+    "y": 1
+  },
   "general": {
     "type": "",
     "label": "Body",
