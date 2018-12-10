@@ -97,9 +97,16 @@ const store = new Vuex.Store({
     },
     [types.INIT_SCENE_EDITOR]: context => {
       let graph = new mxGraph()
+      graph.autoSizeCells = false
       context.commit(types.SET_EDITOR_GRAPH, graph)
       context.dispatch(types.RELOAD_SCENE_EDITOR)
       context.commit(types.SET_EDITOR_SELECTION_CELL, graph.model.root.children[0])
+      // 双击编辑赋值
+      graph.labelChanged = function(cell, newValue, trigger) {
+        cell.value.general.label = newValue
+        graph.cellLabelChanged(cell, cell.value, false) // 刷新显示
+      }
+
       graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
         let cell = graph.getSelectionCell()
         if (cell) {
@@ -109,6 +116,7 @@ const store = new Vuex.Store({
           context.commit(types.SET_EDITOR_SELECTION_CELL, graph.model.root.children[0])
         }
       })
+
       // 监听graph事件 并将修改值同步到 cell.value
       graph.addListener(mxEvent.MOVE_CELLS, (graph, event) => {
         let {
