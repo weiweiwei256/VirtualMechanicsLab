@@ -92,7 +92,7 @@ const store = new Vuex.Store({
   actions: {
     [types.RELOAD_SCENE_EDITOR]: context => {
       let graph = context.getters.editorGraph
-      graph.removeCells(graph.model.root.children[0].children) //清空已有物体
+      graph.getModel().setRoot(graph.getModel().createRoot()) //清空已有物体
       sceneCodec.decode(context.getters.sceneData, graph.model)
     },
     [types.INIT_SCENE_EDITOR]: context => {

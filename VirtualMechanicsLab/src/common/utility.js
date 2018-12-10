@@ -36,7 +36,3 @@ let utility = {
   }
 }
 export default utility
-// var styles = ['shadow', 'dashed', 'dashPattern', 'fontFamily', 'fontSize', 'fontColor', 'align', 'startFill',
-// 'startSize', 'endFill', 'endSize', 'strokeColor', 'strokeWidth', 'fillColor', 'gradientColor',
-// 'html', 'part', 'noEdgeStyle', 'edgeStyle', 'elbow', 'childLayout'
-// ];
