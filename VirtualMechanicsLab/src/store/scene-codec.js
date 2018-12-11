@@ -18,7 +18,7 @@ let SceneCodec = {
     model.setRoot(model.root)
   },
 
-  encode(model) {
+   encode(model) {
     // 从rootCell中提取属性
     let { name, description, gravity } = model.root.children[0].value
     let jsonData = { name, description, gravity, bodies: [] }

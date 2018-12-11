@@ -1,3 +1,4 @@
+import utility from '@/common/utility.js'
 // 重写原有方法
 mxCell.prototype.getAttribute = function(name, defaultValue) {
   let cellValue = this.getValue()
@@ -6,6 +7,9 @@ mxCell.prototype.getAttribute = function(name, defaultValue) {
 mxCell.prototype.setAttribute = function(name, value) {
   let cellValue = this.getValue()
   cellValue[name] = value
+}
+mxCell.prototype.cloneValue = function() {
+  return utility.deepClone(this.getValue())
 }
 mxVertexHandler.prototype.singleSizer = true
 // 从value中获取展示名

@@ -27,6 +27,8 @@ project:
         ✔ 不存在的属性会继承上一个物体的属性 @started(18-12-06 01:28) @done(18-12-06 01:33) @lasted(5m31s)
     editorArea:
       ☐ 可拖动，缩放调整视野
+      ✔ ctrl+拖动 复制,粘贴物体 @done(18-12-12 01:34)
+      ☐ 热键辅助粘贴
       ✔ 图形上显示物体label @started(18-12-07 00:17) @done(18-12-07 00:25) @lasted(8m9s)
       ☐ 物体可删除  mxGraph contexticons
       ☐ 拖动创建物体还存在bug
@@ -45,7 +47,7 @@ decision:
   ✔ 暂时移除三角形: @done(18-11-26 22:17)
 experence:
   mxGraph:
-    ☐ mxGraph demo学习
+    ☐ mxGraph demo学习 @started(18-12-12 01:05)
     以id='1' 作为根节点的识别标准
   matter:
     ✔ 当设置物体为静止物体后,就不要设置其他物理属性了 否则会出现矛盾  或者  通过API setStatic设置 @done(18-12-06 01:20)

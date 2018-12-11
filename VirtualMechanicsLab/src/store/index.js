@@ -157,6 +157,10 @@ const store = new Vuex.Store({
             break
         }
       })
+      // 添加物体
+      graph.addListener(mxEvent.CELLS_ADDED, (graph, event) => {
+        context.dispatch(types.SAVE_SCENE)
+      })
     },
     [types.INIT_SCENE_RUNNING]: context => {
       let engine = Engine.create()

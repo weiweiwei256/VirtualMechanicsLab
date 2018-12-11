@@ -40,7 +40,6 @@ export default {
       newCellData.geometry.y = y;
       var newCell = utility.generateCellData(this.type, newCellData);
       graph.setSelectionCells(graph.importCells([newCell], 0, 0, cell));
-      this.saveScene();
     }
   },
   mounted: function () {
