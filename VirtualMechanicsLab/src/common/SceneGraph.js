@@ -15,3 +15,9 @@ mxGraph.prototype.convertValueToString = function(cell) {
 mxGraph.prototype.valueForCellChanged = function(cell, newValue) {
   cell.value.general.label = newValue
 }
+// 拖动辅助
+mxGraphHandler.prototype.guidesEnabled = true
+// Alt 使拖动辅助失效
+mxGuide.prototype.isEnabledForEvent = function(evt) {
+  return !mxEvent.isAltDown(evt)
+}

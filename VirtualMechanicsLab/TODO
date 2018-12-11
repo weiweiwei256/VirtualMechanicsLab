@@ -1,7 +1,10 @@
 project:
+  移动端浏览器支持:
+    safari:
+    firefox:
+    chrome:  
   SceneDemo:
     ☐ 滑动场景
-    ☐ 
   SceneEditor:
     Property:
       全局属性:
@@ -42,7 +45,7 @@ decision:
   ✔ 暂时移除三角形: @done(18-11-26 22:17)
 experence:
   mxGraph:
-    mxCell.style = 'shape=rectangle;fillColor=red'
+    ☐ mxGraph demo学习
     以id='1' 作为根节点的识别标准
   matter:
     ✔ 当设置物体为静止物体后,就不要设置其他物理属性了 否则会出现矛盾  或者  通过API setStatic设置 @done(18-12-06 01:20)
