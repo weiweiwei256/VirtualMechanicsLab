@@ -28,6 +28,7 @@ project:
     editorArea:
       ☐ 可拖动，缩放调整视野
       ✔ ctrl+拖动 复制,粘贴物体 @done(18-12-12 01:34)
+      ✔ tooltip @started(18-12-12 01:37) @done(18-12-12 01:43) @lasted(6m5s)
       ☐ 热键辅助粘贴
       ✔ 图形上显示物体label @started(18-12-07 00:17) @done(18-12-07 00:25) @lasted(8m9s)
       ☐ 物体可删除  mxGraph contexticons

@@ -97,7 +97,10 @@ const store = new Vuex.Store({
     },
     [types.INIT_SCENE_EDITOR]: context => {
       let graph = new mxGraph()
-      graph.autoSizeCells = false
+      graph.setTooltips(true)
+      graph.getTooltip = function(state) {
+        return state.cell.value.general.des
+      }
       context.commit(types.SET_EDITOR_GRAPH, graph)
       context.dispatch(types.RELOAD_SCENE_EDITOR)
       context.commit(types.SET_EDITOR_SELECTION_CELL, graph.model.root.children[0])
