@@ -18,7 +18,7 @@ import defaultScene from '@/common/scenes/default.scene'
 import defaultProperty from '@/common/default/default-property.json'
 import defaultSetting from './default-setting.json'
 import sceneCodec from './scene-codec'
-
+import BodyToolHandler from './BodyToolHandler'
 let storage = window.localStorage
 let setting = Object.assign(
   {},
@@ -100,6 +100,12 @@ const store = new Vuex.Store({
       graph.setTooltips(true)
       graph.getTooltip = function(state) {
         return state.cell.value.general.des
+      }
+      graph.createHandler = function(state) {
+        if (state != null && this.model.isVertex(state.cell)) {
+          return new BodyToolHandler(state)
+        }
+        return mxGraph.prototype.createHandler.apply(this, arguments)
       }
       context.commit(types.SET_EDITOR_GRAPH, graph)
       context.dispatch(types.RELOAD_SCENE_EDITOR)
