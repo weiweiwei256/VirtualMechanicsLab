@@ -17,8 +17,8 @@ import {
 import defaultScene from '@/common/scenes/default.scene'
 import defaultProperty from '@/common/default/default-property.json'
 import defaultSetting from './default-setting.json'
-import sceneCodec from './scene-codec'
-import BodyToolHandler from './BodyToolHandler'
+import sceneCodec from '@/common/scene-codec'
+import BodyToolHandler from '@/common/BodyToolHandler'
 let storage = window.localStorage
 let setting = Object.assign(
   {},
@@ -97,6 +97,10 @@ const store = new Vuex.Store({
     },
     [types.INIT_SCENE_EDITOR]: context => {
       let graph = new mxGraph()
+      // 拖动
+      graph.panningHandler.useLeftButtonForPanning = true
+      graph.setPanning(true)
+
       graph.setTooltips(true)
       graph.getTooltip = function(state) {
         return state.cell.value.general.des
