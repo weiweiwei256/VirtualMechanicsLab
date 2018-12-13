@@ -278,6 +278,15 @@ const store = new Vuex.Store({
         case ['Ctrl', 'wheel', 'down'].toString():
           editorGraph.zoomOut()
           break
+        case ['Ctrl', 'x'].toString():
+          mxClipboard.cut(editorGraph)
+          break
+        case ['Ctrl', 'c'].toString():
+          mxClipboard.copy(editorGraph)
+          break
+        case ['Ctrl', 'v'].toString():
+          mxClipboard.paste(editorGraph)
+          break
         default:
           console.warn('unknwn hotkey:' + hotKey.toString())
       }
