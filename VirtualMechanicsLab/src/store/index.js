@@ -264,6 +264,19 @@ const store = new Vuex.Store({
       let setting = context.getters.setting
       setting.activeSceneName = context.getters.sceneName
       storage.setItem(types.SETTING, JSON.stringify(setting))
+    },
+    [types.HANDLE_HOTKEY]: (context, hotKey) => {
+      let editorGraph = context.getters.editorGraph
+      switch (hotKey.toString()) {
+        case ['Ctrl', 'wheel', 'up'].toString():
+          editorGraph.zoomIn()
+          break
+        case ['Ctrl', 'wheel', 'down'].toString():
+          editorGraph.zoomOut()
+          break
+        default:
+          console.warn('unknwn hotkey:' + hotKey.toString())
+      }
     }
   }
 })

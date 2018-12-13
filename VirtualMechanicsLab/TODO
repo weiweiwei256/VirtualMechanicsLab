@@ -35,6 +35,7 @@ project:
       ✔ 图形上显示物体label @started(18-12-07 00:17) @done(18-12-07 00:25) @lasted(8m9s)
       ☐ 物体可删除  mxGraph contexticons
       ☐ 拖动创建物体还存在bug
+      ✔ 热键监听分发 @started(18-12-14 01:29) @done(18-12-14 01:48) @lasted(19m21s)
     ☐ 单位校准
   SceneRuning:
     ☐ 可拖动，缩放调整视野
