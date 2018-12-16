@@ -174,6 +174,21 @@ const store = new Vuex.Store({
       graph.addListener(mxEvent.CELLS_ADDED, (graph, event) => {
         context.dispatch(types.SAVE_SCENE)
       })
+
+      graph.popupMenuHandler.autoExpand = true
+
+      // 右键菜单设置
+      graph.popupMenuHandler.factoryMethod = function(menu, cell, evt) {
+        if (cell != null) {
+          menu.addItem('delete', null, function() {
+            graph.removeCells([cell])
+          })
+        } else {
+          menu.addItem('global setting', null, function() {
+            console.log(cell)
+          })
+        }
+      }
     },
     [types.INIT_SCENE_RUNNING]: context => {
       let engine = Engine.create()

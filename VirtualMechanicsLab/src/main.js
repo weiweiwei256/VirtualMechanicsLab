@@ -23,3 +23,7 @@ new Vue({
   components: { App },
   strict: false
 })
+// 禁用浏览器右键
+document.oncontextmenu = function() {
+  return false
+}
