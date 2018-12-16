@@ -1,3 +1,4 @@
+import * as types from '@/modules-constant.js'
 class BodyToolHandler extends mxVertexHandler {
   init() {
     super.init()
@@ -21,9 +22,8 @@ class BodyToolHandler extends mxVertexHandler {
   }
   redrawTools() {
     if (this.state != null && this.domNode != null) {
-      var dy = mxClient.IS_VML && document.compatMode == 'CSS1Compat' ? 20 : 4
-      this.domNode.style.left = this.state.x + this.state.width + 'px'
-      this.domNode.style.top = this.state.y + this.state.height + dy + 'px'
+      this.domNode.style.left = this.state.x + this.state.width - 25 + 'px'
+      this.domNode.style.top = this.state.y + this.state.height + 'px'
     }
   }
   redraw() {
@@ -37,5 +37,24 @@ class BodyToolHandler extends mxVertexHandler {
       this.domNode = null
     }
   }
+  // createSelectionShape(bounds) {
+  //   console.log(this)
+  //   let type = this.state.cell.value.general.type
+  //   let shape
+  //   if (type == types.CIRCLE) {
+  //     let radius = 10
+  //     this.bounds.height = radius
+  //     this.bounds.width = radius
+  //     shape = new mxEllipse(bounds, '@990099', '#000000')
+  //   } else {
+  //     shape = new mxRectangleShape(bounds, null, '#000000')
+  //   }
+  //   shape.apply(this.state)
+  //   shape.outline = true
+  //   shape.strokewidth = this.getSelectionStrokeWidth()
+  //   shape.isDashed = this.isSelectionDashed()
+  //   shape.isShadow = false
+  //   return shape
+  // }
 }
 export default BodyToolHandler
