@@ -37,24 +37,18 @@ class BodyToolHandler extends mxVertexHandler {
       this.domNode = null
     }
   }
-  // createSelectionShape(bounds) {
-  //   console.log(this)
-  //   let type = this.state.cell.value.general.type
-  //   let shape
-  //   if (type == types.CIRCLE) {
-  //     let radius = 10
-  //     this.bounds.height = radius
-  //     this.bounds.width = radius
-  //     shape = new mxEllipse(bounds, '@990099', '#000000')
-  //   } else {
-  //     shape = new mxRectangleShape(bounds, null, '#000000')
-  //   }
-  //   shape.apply(this.state)
-  //   shape.outline = true
-  //   shape.strokewidth = this.getSelectionStrokeWidth()
-  //   shape.isDashed = this.isSelectionDashed()
-  //   shape.isShadow = false
-  //   return shape
-  // }
+  createSelectionShape(bounds) {
+    let type = this.state.cell.value.general.type
+    let shape
+    if (type == types.CIRCLE) {
+      shape = new mxEllipse(bounds, null, this.getSelectionColor())
+    } else {
+      shape = new mxRectangleShape(bounds, null, this.getSelectionColor())
+    }
+    shape.strokewidth = this.getSelectionStrokeWidth()
+    shape.isDashed = this.isSelectionDashed()
+
+    return shape
+  }
 }
 export default BodyToolHandler
