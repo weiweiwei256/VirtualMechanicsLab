@@ -22,7 +22,7 @@ class BodyToolHandler extends mxVertexHandler {
   }
   redrawTools() {
     if (this.state != null && this.domNode != null) {
-      this.domNode.style.left = this.state.x + this.state.width - 25 + 'px'
+      this.domNode.style.left = this.state.x + 'px'
       this.domNode.style.top = this.state.y + this.state.height + 'px'
     }
   }

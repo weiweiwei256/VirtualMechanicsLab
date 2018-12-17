@@ -35,14 +35,11 @@ mxVertexHandler.prototype.union = function(bounds, dx, dy, index, gridEnabled, s
   }
   var x = bounds.x + bounds.width + dx
   var y = bounds.y + bounds.height + dy
-
   if (gridEnabled) {
     x = this.graph.snap(x / scale) * scale
     y = this.graph.snap(y / scale) * scale
   }
-
   var rect = new mxRectangle(bounds.x, bounds.y, 0, 0)
   rect.add(new mxRectangle(x, y, 0, 0))
-
   return rect
 }
