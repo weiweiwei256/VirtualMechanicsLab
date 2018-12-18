@@ -26,7 +26,6 @@
 <script>
 import * as types from '@/modules-constant.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import sceneCodec from '@/store/scene-codec.js'
 import ScenePalette from './palette/ScenePalette.vue'
 import SceneOutline from './outline/SceneOutline.vue'
 export default {
@@ -50,6 +49,7 @@ export default {
     },
   },
   mounted () {
+    $("#graph-container")[0].style.cursor = 'pointer'
     this.editorGraph.init($("#graph-container")[0]) // 数据与渲染分离
     this.editorGraph.view.refresh();
     this.$refs.outline.outlineInit();

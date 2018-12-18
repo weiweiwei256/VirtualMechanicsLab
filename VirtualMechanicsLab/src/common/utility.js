@@ -1,10 +1,7 @@
 import * as types from '@/modules-constant.js'
 import defaultProperty from '@/common/default/default-property.json'
-import defaultRectangle from './default/default-rectangle.json'
-import defaultCircle from './default/default-circle.json'
-import defaultTriangle from './default/default-triangle.json'
 let utility = {
-  generateCellData(type, body = {}) {
+  generateCellData(type, body) {
     let mxCell = new window.mxCell()
     mxCell.vertex = true
     mxCell.value = body
@@ -22,7 +19,7 @@ let utility = {
       case types.RECTANGLE:
         var { x, y, width, height } = geometry
         mxCell.geometry = new window.mxGeometry(x - width / 2, y - height / 2, width, height)
-        mxCell.style += ';shape=rectangle;'
+        mxCell.style += ';shape=rectangle'
         break
       case types.CIRCLE:
         var { x, y, radius } = geometry
@@ -32,6 +29,7 @@ let utility = {
       default:
         console.error('unknown body type:' + type)
     }
+    mxCell.style += ';cursor=pointer'
     return mxCell
   },
   deepClone(obj) {
@@ -39,7 +37,3 @@ let utility = {
   }
 }
 export default utility
-// var styles = ['shadow', 'dashed', 'dashPattern', 'fontFamily', 'fontSize', 'fontColor', 'align', 'startFill',
-// 'startSize', 'endFill', 'endSize', 'strokeColor', 'strokeWidth', 'fillColor', 'gradientColor',
-// 'html', 'part', 'noEdgeStyle', 'edgeStyle', 'elbow', 'childLayout'
-// ];

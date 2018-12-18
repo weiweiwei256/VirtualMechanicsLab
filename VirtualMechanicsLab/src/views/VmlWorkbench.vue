@@ -1,5 +1,6 @@
 <template>
   <div id="vml-workbench">
+    <GlobalSetting></GlobalSetting>
     <vml-header id='top-workbench'></vml-header>
     <div id='main-workbench'>
       <scene-editor style='float:left;width:50%'></scene-editor>
@@ -15,6 +16,7 @@
 <script>
 import * as types from '@/modules-constant.js'
 import { mapActions } from 'vuex'
+import GlobalSetting from './vml-main/GlobalSetting'
 import VmlHeader from './vml-header/VmlHeader'
 import SceneEditor from './vml-main/scene-editor/SceneEditor.vue'
 import SceneRunning from './vml-main/scene-running/SceneRunning.vue'
@@ -38,6 +40,7 @@ export default {
   },
 
   components: {
+    GlobalSetting,
     VmlHeader,
     EditorProperty,
     SceneEditor,

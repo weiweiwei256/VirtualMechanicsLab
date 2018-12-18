@@ -17,8 +17,8 @@ import {
 import defaultScene from '@/common/scenes/default.scene'
 import defaultProperty from '@/common/default/default-property.json'
 import defaultSetting from './default-setting.json'
-import sceneCodec from './scene-codec'
-
+import sceneCodec from '@/common/scene-codec'
+import BodyToolHandler from '@/common/BodyToolHandler'
 let storage = window.localStorage
 let setting = Object.assign(
   {},
@@ -31,6 +31,7 @@ const store = new Vuex.Store({
     return {
       // file data
       setting,
+      showSetting: false, // global setting dialog show flag
       sceneName: setting.activeSceneName,
       sceneDescription: defaultScene.description,
       sceneData: defaultScene,
@@ -44,6 +45,9 @@ const store = new Vuex.Store({
   getters: {
     setting: state => {
       return state.setting
+    },
+    showSetting: state => {
+      return state.showSetting
     },
     sceneName: state => {
       return state.sceneName
@@ -71,6 +75,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    [types.SET_SHOW_SETTING]: (state, flag) => {
+      state.showSetting = flag
+    },
     [types.SET_RUNNING_RENDER]: (state, runningRender) => {
       state.runningRender = runningRender
     },
@@ -92,14 +99,34 @@ const store = new Vuex.Store({
   actions: {
     [types.RELOAD_SCENE_EDITOR]: context => {
       let graph = context.getters.editorGraph
-      graph.removeCells(graph.model.root.children[0].children) //清空已有物体
+      graph.getModel().setRoot(graph.getModel().createRoot()) //清空已有物体
       sceneCodec.decode(context.getters.sceneData, graph.model)
     },
     [types.INIT_SCENE_EDITOR]: context => {
       let graph = new mxGraph()
+      // 拖动
+      graph.panningHandler.useLeftButtonForPanning = true
+      graph.setPanning(true)
+
+      graph.setTooltips(true)
+      graph.getTooltip = function(state) {
+        return state.cell.value.general.des
+      }
+      graph.createHandler = function(state) {
+        if (state != null && this.model.isVertex(state.cell)) {
+          return new BodyToolHandler(state)
+        }
+        return mxGraph.prototype.createHandler.apply(this, arguments)
+      }
       context.commit(types.SET_EDITOR_GRAPH, graph)
       context.dispatch(types.RELOAD_SCENE_EDITOR)
       context.commit(types.SET_EDITOR_SELECTION_CELL, graph.model.root.children[0])
+      // 双击编辑赋值
+      graph.labelChanged = function(cell, newValue, trigger) {
+        cell.value.general.label = newValue
+        graph.cellLabelChanged(cell, cell.value, false) // 刷新显示
+      }
+
       graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
         let cell = graph.getSelectionCell()
         if (cell) {
@@ -109,6 +136,7 @@ const store = new Vuex.Store({
           context.commit(types.SET_EDITOR_SELECTION_CELL, graph.model.root.children[0])
         }
       })
+
       // 监听graph事件 并将修改值同步到 cell.value
       graph.addListener(mxEvent.MOVE_CELLS, (graph, event) => {
         let {
@@ -149,6 +177,25 @@ const store = new Vuex.Store({
             break
         }
       })
+      // 添加物体
+      graph.addListener(mxEvent.CELLS_ADDED, (graph, event) => {
+        context.dispatch(types.SAVE_SCENE)
+      })
+
+      graph.popupMenuHandler.autoExpand = true
+
+      // 右键菜单设置
+      graph.popupMenuHandler.factoryMethod = function(menu, cell, evt) {
+        if (cell != null) {
+          menu.addItem('delete', null, function() {
+            graph.removeCells([cell])
+          })
+        } else {
+          // menu.addItem('设置', null, function() {
+          // context.commit(types.SET_SHOW_SETTING, true)
+          // })
+        }
+      }
     },
     [types.INIT_SCENE_RUNNING]: context => {
       let engine = Engine.create()
@@ -190,7 +237,7 @@ const store = new Vuex.Store({
       World.clear(world, false)
       let sceneData = context.getters.sceneData
       // 设置重力
-      world.gravity = Object.assign({}, defaultProperty.gravity, sceneData.gravity)
+      world.gravity = Object.assign({}, sceneData.gravity)
       let bodiesForce = new Map()
       for (let i = 0; i < sceneData.bodies.length; i++) {
         let body = undefined // 物体对象
@@ -243,6 +290,28 @@ const store = new Vuex.Store({
       let setting = context.getters.setting
       setting.activeSceneName = context.getters.sceneName
       storage.setItem(types.SETTING, JSON.stringify(setting))
+    },
+    [types.HANDLE_HOTKEY]: (context, hotKey) => {
+      let editorGraph = context.getters.editorGraph
+      switch (hotKey.toString()) {
+        case ['Ctrl', 'wheel', 'up'].toString():
+          editorGraph.zoomIn()
+          break
+        case ['Ctrl', 'wheel', 'down'].toString():
+          editorGraph.zoomOut()
+          break
+        case ['Ctrl', 'x'].toString():
+          mxClipboard.cut(editorGraph)
+          break
+        case ['Ctrl', 'c'].toString():
+          mxClipboard.copy(editorGraph)
+          break
+        case ['Ctrl', 'v'].toString():
+          mxClipboard.paste(editorGraph)
+          break
+        default:
+          console.warn('unknwn hotkey:' + hotKey.toString())
+      }
     }
   }
 })

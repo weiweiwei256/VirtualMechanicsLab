@@ -22,7 +22,7 @@
       <el-tab-pane label="通用属性" name="generalProperty">
         <el-form :model="cellData" label-width="80px" label-position="right">
           <el-form-item label="物体名称：">
-            <el-input v-model="cellData.general.label" placeholder="请输入名称"></el-input>
+            <el-input v-model="cellData.general.label" placeholder="请输入名称" @change="updateLabel"></el-input>
           </el-form-item>
           <el-form-item label="物体描述：">
             <el-input v-model="cellData.general.des" placeholder="请输入描述" type="textarea" :rows="3"></el-input>
@@ -120,6 +120,9 @@ export default {
     },
   },
   methods: {
+    updateLabel: function () {
+      this.graph.cellLabelChanged(this.selectionCell, this.selectionCell.value, false)
+    },
     updateGemotry: function () {
       let newGeometry;
       switch (this.selectionCell.value.general.type) {

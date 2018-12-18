@@ -6,6 +6,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/common/SceneGraph.js'
 import '@/common/SceneMatter.js'
+import '@/common/hotkey.js'
 import '@/shapes'
 /* eslint-disable no-unused-vars */
 Vue.config.productionTip = false
@@ -22,3 +23,7 @@ new Vue({
   components: { App },
   strict: false
 })
+// 禁用浏览器右键
+document.oncontextmenu = function() {
+  return false
+}
