@@ -1,0 +1,80 @@
+{
+  "name": "默认场景",
+  "description": "This is a default scene file",
+  "gravity": {
+    "x": 0,
+    "y": 1
+  },
+  "bodies": [
+    {
+      "general": {
+        "type": "rectangle",
+        "label": "rectangle1",
+        "des": "这是一个矩形"
+      },
+      "geometry": {
+        "x": 100,
+        "y": 50,
+        "width": 80,
+        "height": 80
+      },
+      "physics": {
+        "isStatic": false,
+        "mass": 1,
+        "friction": 0,
+        "frictionStatic": 0,
+        "frictionAir": 0,
+        "restitution": 1
+      },
+      "condition": {
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "force": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "style": {
+        "fillColor": "#C3D9FF",
+        "fontColor": "#774400"
+      }
+    },
+    {
+      "general": {
+        "type": "rectangle",
+        "label": "ground",
+        "des": "这是矩形充当地面"
+      },
+      "geometry": {
+        "x": 400,
+        "y": 610,
+        "width": 810,
+        "height": 60
+      },
+      "physics": {
+        "isStatic": true,
+        "mass": 1,
+        "friction": 0,
+        "frictionStatic": 0,
+        "frictionAir": 0,
+        "restitution": 1
+      },
+      "condition": {
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "force": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "style": {
+        "fillColor": "#C3D9FF",
+        "fontColor": "#774400"
+      }
+    }
+  ]
+}

@@ -19,6 +19,7 @@ import defaultProperty from '@/common/default/default-property.json'
 import defaultSetting from './default-setting.json'
 import sceneCodec from '@/common/scene-codec'
 import BodyToolHandler from '@/common/BodyToolHandler'
+import { debug } from 'util'
 let storage = window.localStorage
 let setting = Object.assign(
   {},
@@ -261,15 +262,19 @@ const store = new Vuex.Store({
           default:
             console.error('unknown body type' + type)
         }
-        physics && physics.isStatic && Body.setStatic(body, physics)
+        if (physics && physics.isStatic) {
+          Body.setStatic(body, true)
+          body.restitution = physics.restitution
+        }
         // 设置样式属性
         style = Object.assign({}, defaultProperty.style, style)
         body.render.fillStyle = style.fillColor
         body.render.fontColor = style.fontColor
-        // body.render.
+
         // 设置条件属性
-        body.condition && condition.velocity && Body.setVelocity(body, condition.velocity)
+        condition && condition.velocity && Body.setVelocity(body, condition.velocity)
         condition && condition.force && bodiesForce.set(body, condition.force)
+        console.log(body.label, body.restitution)
         World.addBody(world, body)
       }
       //选中事件绑定

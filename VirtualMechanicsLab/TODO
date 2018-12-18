@@ -5,7 +5,7 @@ project:
     chrome:  
     dragsource.html 兼容touch 拖动
   SceneDemo:
-    ☐ 滑动场景
+    ☐ 滑动场景  
   SceneEditor:
     Property:
       场景信息:
@@ -53,6 +53,9 @@ project:
     数据监测:
       ☐ 输出数据
       ☐ 可视化展示
+  bug:
+    ☐ 删除物体   但matter依旧存在
+    ☐ 平滑存在跳动  待测试
 discuss:
   1. undo,rodo操作是否必须   暂不支持
 decision:    
@@ -60,7 +63,6 @@ decision:
 experence:
   mxGraph:
     ☐ mxGraph demo学习 @started(18-12-12 01:05)
-    
   matter:
     ✔ 当设置物体为静止物体后,就不要设置其他物理属性了 否则会出现矛盾  或者  通过API setStatic设置 @done(18-12-06 01:20)
 ontebook:
