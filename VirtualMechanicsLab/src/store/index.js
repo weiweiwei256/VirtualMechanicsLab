@@ -31,6 +31,7 @@ const store = new Vuex.Store({
     return {
       // file data
       setting,
+      showSetting: false, // global setting dialog show flag
       sceneName: setting.activeSceneName,
       sceneDescription: defaultScene.description,
       sceneData: defaultScene,
@@ -44,6 +45,9 @@ const store = new Vuex.Store({
   getters: {
     setting: state => {
       return state.setting
+    },
+    showSetting: state => {
+      return state.showSetting
     },
     sceneName: state => {
       return state.sceneName
@@ -71,6 +75,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    [types.SET_SHOW_SETTING]: (state, flag) => {
+      state.showSetting = flag
+    },
     [types.SET_RUNNING_RENDER]: (state, runningRender) => {
       state.runningRender = runningRender
     },
@@ -184,9 +191,9 @@ const store = new Vuex.Store({
             graph.removeCells([cell])
           })
         } else {
-          menu.addItem('global setting', null, function() {
-            console.log(cell)
-          })
+          // menu.addItem('设置', null, function() {
+          // context.commit(types.SET_SHOW_SETTING, true)
+          // })
         }
       }
     },

@@ -64,3 +64,5 @@ experence:
     ✔ 当设置物体为静止物体后,就不要设置其他物理属性了 否则会出现矛盾  或者  通过API setStatic设置 @done(18-12-06 01:20)
 ontebook:
   以id='1' 作为根节点的识别标准
+nextVersion:
+  ☐ 全局设置  
