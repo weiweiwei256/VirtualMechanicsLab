@@ -1,10 +1,13 @@
 {
   "name": "默认场景",
-  "description": "This is a default scene file",
+  "description": "这是一简单场景",
   "author": "",
-  "gravity": {
-    "x": 0,
-    "y": 1
+  "global": {
+    "gravity": {
+      "x": 0,
+      "y": 1
+    },
+    "allowRotate": false
   },
   "bodies": [
     {

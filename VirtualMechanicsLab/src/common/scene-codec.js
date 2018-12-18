@@ -9,8 +9,8 @@ let SceneCodec = {
    */
   decode(jsonData, model) {
     let parentCell = model.root.children[0]
-    let { name, description, gravity } = jsonData
-    parentCell.value = { name, description, gravity }
+    let { name, description, global } = jsonData
+    parentCell.value = { name, description, global }
     for (let i in jsonData.bodies) {
       let mxCell = utility.generateCellData(jsonData.bodies[i].general.type, jsonData.bodies[i])
       parentCell.insert(mxCell)
@@ -20,8 +20,8 @@ let SceneCodec = {
 
    encode(model) {
     // 从rootCell中提取属性
-    let { name, description, gravity } = model.root.children[0].value
-    let jsonData = { name, description, gravity, bodies: [] }
+    let { name, description, global } = model.root.children[0].value
+    let jsonData = { name, description, global, bodies: [] }
     // 获取组件属性
     for (let i in model.root.children[0].children) {
       jsonData.bodies.push(model.root.children[0].children[i].value)

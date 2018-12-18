@@ -237,7 +237,7 @@ const store = new Vuex.Store({
       World.clear(world, false)
       let sceneData = context.getters.sceneData
       // 设置重力
-      world.gravity = Object.assign({}, sceneData.gravity)
+      world.gravity = Object.assign({}, sceneData.global.gravity)
       let bodiesForce = new Map()
       for (let i = 0; i < sceneData.bodies.length; i++) {
         let body = undefined // 物体对象
@@ -245,7 +245,10 @@ const store = new Vuex.Store({
         let type = general.type
         // 设置物理属性
         physics = Object.assign({ label: general.label }, defaultProperty.physics, physics)
-        physics.inertia = Infinity
+        // 设置所有物体是否可旋转
+        if (!sceneData.global.allowRotate) {
+          physics.inertia = Infinity
+        }
         switch (type) {
           case types.RECTANGLE:
             var { x, y, width, height } = geometry

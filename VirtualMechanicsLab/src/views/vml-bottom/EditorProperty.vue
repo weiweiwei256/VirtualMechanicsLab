@@ -1,19 +1,28 @@
 <template>
   <div id="scene-editor-property">
-    <el-tabs v-if='isRootCell' value="globalProperty" style='margin-left: 6px;margin-top: 3px'>
-      <el-tab-pane label="全局属性" name="globalProperty">
+    <el-tabs v-if='isRootCell' value="sceneInfo" style='margin-left: 6px;margin-top: 3px'>
+      <el-tab-pane label="场景信息" name="sceneInfo">
         <el-form :model="cellData" label-width="80px" label-position="right">
           <el-form-item label="场景名称：">
             <el-input v-model="cellData.name" placeholder="请输入名称"></el-input>
           </el-form-item>
           <el-form-item label="场景描述：">
-            <el-input v-model="cellData.description" placeholder="请输入描述" type="textarea" :rows="1"></el-input>
+            <el-input v-model="cellData.description" placeholder="请输入描述" type="textarea" :rows="5"></el-input>
           </el-form-item>
+
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="全局属性" name="globalProperty">
+        <el-form :model="cellData" label-width="80px" label-position="right">
           <el-form-item label="重力方向x：">
-            <el-input-number v-model="cellData.gravity.x" style='width:100%' :step="1"></el-input-number>
+            <el-input-number v-model="cellData.global.gravity.x" style='width:100%' :step="1"></el-input-number>
           </el-form-item>
           <el-form-item label="重力方向y：">
-            <el-input-number v-model="cellData.gravity.y" style='width:100%' :step="1"></el-input-number>
+            <el-input-number v-model="cellData.global.gravity.y" style='width:100%' :step="1"></el-input-number>
+          </el-form-item>
+          <el-form-item label="允许旋转：">
+            <el-switch v-model="cellData.global.allowRotate">
+            </el-switch>
           </el-form-item>
         </el-form>
       </el-tab-pane>
