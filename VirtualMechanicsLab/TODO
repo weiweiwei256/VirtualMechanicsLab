@@ -56,6 +56,8 @@ project:
   bug:
     ☐ 删除物体   但matter依旧存在
     ☐ 平滑存在跳动  待测试
+    ☐ 圆形位置和实际位置存在差异
+    ☐ 恒力为1 对于质量为1 的物体太大了
 discuss:
   1. undo,rodo操作是否必须   暂不支持
 decision:    

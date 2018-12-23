@@ -1,16 +1,5 @@
 <template>
   <div id="scene-editor">
-    <!-- <div id='scene-running-toolbar'>
-      <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="删除" placement="top">
-        <i class="iconfont icon-delete" @click='deleteBody'></i>
-      </el-tooltip>
-      <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="撤销" placement="top">
-        <i class="iconfont icon-chexiao" @click='undo'></i>
-      </el-tooltip>
-      <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="恢复" placement="top">
-        <i class="iconfont icon-redo" @click='redo'></i>
-      </el-tooltip>
-    </div> -->
     <div id='editor-main' style="height:100%">
       <div id='editor-left' style="width:100px;height:100%;float:left;position:relative">
         <scene-palette></scene-palette>
@@ -38,6 +27,9 @@ export default {
     ...mapGetters(['sceneName', 'editorGraph', 'sceneData'])
   },
   methods: {
+    ...mapActions({
+      initSceneEditor: types.INIT_SCENE_EDITOR,
+    }),
     deleteBody: function () {
       console.log('delete')
     },
@@ -48,8 +40,11 @@ export default {
       console.log('redo')
     },
   },
+  beforeMount: function () {
+    this.initSceneEditor();
+  },
   mounted () {
-    $("#graph-container")[0].style.cursor = 'pointer'
+    $("#graph-container")[0].style.cursor = 'pointer';
     this.editorGraph.init($("#graph-container")[0]) // 数据与渲染分离
     this.editorGraph.view.refresh();
     this.$refs.outline.outlineInit();

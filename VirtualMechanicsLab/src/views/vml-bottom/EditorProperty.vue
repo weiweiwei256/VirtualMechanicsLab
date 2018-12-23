@@ -117,7 +117,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ selectionCell: 'editorSelectionCell', graph: 'editorGraph' }),
+    ...mapGetters({ selectionCell: 'selectionCell', graph: 'editorGraph' }),
     isRootCell: function () {
       return this.selectionCell.id == '1';
     },

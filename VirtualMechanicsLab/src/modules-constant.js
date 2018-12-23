@@ -11,7 +11,7 @@ export const SET_SCENE_DESCRIPTION = 'vml/mutations/setSceneDescription'
 // scene running operation
 export const INIT_SCENE_RUNNING = 'vml/actions/initScenceRunning'
 export const RELOAD_SCENE_RUNNING = 'vml/actions/reloadSceneRunning'
-export const SET_RUNNING_RENDER = 'vml/mutations/setRunningRender'
+export const SET_RENDER = 'vml/mutations/setRunningRender'
 // scene editor operation
 export const SET_SHOW_SETTING = 'vml/mutations/setShowSetting'
 export const INIT_SCENE_EDITOR = 'vml/actions/initSceneEditor'

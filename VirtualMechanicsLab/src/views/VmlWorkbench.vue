@@ -3,8 +3,8 @@
     <GlobalSetting></GlobalSetting>
     <vml-header id='top-workbench'></vml-header>
     <div id='main-workbench'>
-      <scene-editor style='float:left;width:50%'></scene-editor>
-      <scene-running style='float:right;width:50%'></scene-running>
+      <scene-editor style='float:left;width:50%;height:100%'></scene-editor>
+      <scene-running style='float:right;width:50%;height:100%'></scene-running>
     </div>
     <div id='bottom-workbench'>
       <EditorProperty style='float:left;width:50%'></EditorProperty>
@@ -15,7 +15,6 @@
 
 <script>
 import * as types from '@/modules-constant.js'
-import { mapActions } from 'vuex'
 import GlobalSetting from './vml-main/GlobalSetting'
 import VmlHeader from './vml-header/VmlHeader'
 import SceneEditor from './vml-main/scene-editor/SceneEditor.vue'
@@ -28,17 +27,6 @@ export default {
     return {
     }
   },
-  methods: {
-    ...mapActions({
-      initSceneEditor: types.INIT_SCENE_EDITOR,
-      initSceneRunning: types.INIT_SCENE_RUNNING,
-    }),
-  },
-  beforeMount: function () {
-    this.initSceneEditor();
-    this.initSceneRunning();
-  },
-
   components: {
     GlobalSetting,
     VmlHeader,

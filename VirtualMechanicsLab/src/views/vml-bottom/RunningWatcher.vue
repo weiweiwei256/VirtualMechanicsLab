@@ -1,10 +1,6 @@
 <template>
   <div id='running-watcher'>
-    <span>view x:</span>
-    <el-slider v-model="viewPort.max.x" :max='1920'></el-slider>
-    <span>view y:</span>
-    <el-slider v-model="viewPort.max.y" :max='1080'></el-slider>
-    <el-switch v-model="watchFlag" @change='handleWatch'>watch</el-switch>
+    <!-- <el-switch v-model="watchFlag" @change='handleWatch'>watch</el-switch> -->
   </div>
 </template>
 
@@ -16,25 +12,15 @@ export default {
     return {
       watchFlag: false,
       watcher: undefined,
-      viewPort: {
-        min: { x: 0, y: 0 },
-        max: { x: 800, y: 600 }
-      },
     }
   },
   computed: {
     ...mapGetters([
-      'runningRender',
+      'render',
       'world'
     ])
   },
   watch: {
-    viewPort: {
-      handler: function () {
-        Render.lookAt(this.runningRender, this.viewPort);
-      },
-      deep: true
-    }
   },
   methods: {
     handleWatch: function () {

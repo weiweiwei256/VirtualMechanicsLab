@@ -9,6 +9,7 @@ import {
   Bodies,
   Body,
   Events,
+  Mouse,
   MouseConstraint,
   Composite,
   Bounds,
@@ -38,9 +39,9 @@ const store = new Vuex.Store({
       sceneData: defaultScene,
       // editor data
       editorGraph: null,
-      editorSelectionCell: null,
+      selectionCell: null,
       // running data
-      runningRender: null
+      render: null
     }
   },
   getters: {
@@ -59,34 +60,34 @@ const store = new Vuex.Store({
     editorGraph: state => {
       return state.editorGraph
     },
-    editorSelectionCell: state => {
-      return state.editorSelectionCell
+    selectionCell: state => {
+      return state.selectionCell
     },
     sceneData: state => {
       return state.sceneData
     },
-    runningRender: state => {
-      return state.runningRender
+    render: state => {
+      return state.render
     },
     engine: state => {
-      return state.runningRender.engine
+      return state.render.engine
     },
     world: state => {
-      return state.runningRender.engine.world
+      return state.render.engine.world
     }
   },
   mutations: {
     [types.SET_SHOW_SETTING]: (state, flag) => {
       state.showSetting = flag
     },
-    [types.SET_RUNNING_RENDER]: (state, runningRender) => {
-      state.runningRender = runningRender
+    [types.SET_RENDER]: (state, render) => {
+      state.render = render
     },
     [types.SET_EDITOR_GRAPH]: (state, graph) => {
       state.editorGraph = graph
     },
     [types.SET_EDITOR_SELECTION_CELL]: (state, cell) => {
-      state.editorSelectionCell = cell
+      state.selectionCell = cell
     },
     [types.SET_SCENE_DESCRIPTION]: (state, description) => {
       state.sceneDescription = description
@@ -198,11 +199,14 @@ const store = new Vuex.Store({
         }
       }
     },
-    [types.INIT_SCENE_RUNNING]: context => {
+    [types.INIT_SCENE_RUNNING]: (context, renderDom) => {
       let engine = Engine.create()
-      let runningRender = Render.create({
+      let render = Render.create({
         engine: engine,
+        canvas: null,
         options: {
+          width: renderDom.clientWidth,
+          height: renderDom.clientHeight,
           pixelRatio: 1,
           background: 'gray',
           wireframeBackground: 'blue',
@@ -227,26 +231,29 @@ const store = new Vuex.Store({
           showMousePosition: false
         }
       })
-      context.commit(types.SET_RUNNING_RENDER, runningRender)
+      context.commit(types.SET_RENDER, render)
       context.dispatch(types.RELOAD_SCENE_RUNNING)
     },
     [types.RELOAD_SCENE_RUNNING]: context => {
       Common._nextId = 0
       Common._seed = 0
+      let render = context.getters.render
       let world = context.getters.world
       let engine = context.getters.engine
       World.clear(world, false)
+      // 1.0 初始化matter信息
       let sceneData = context.getters.sceneData
-      // 设置重力
+      // 1.1 设置环境参数:重力
       world.gravity = Object.assign({}, sceneData.global.gravity)
+      // 1.2 设置物体信息
       let bodiesForce = new Map()
       for (let i = 0; i < sceneData.bodies.length; i++) {
         let body = undefined // 物体对象
         let { general, geometry, physics, condition, style } = sceneData.bodies[i]
         let type = general.type
-        // 设置物理属性
+        // 1.2.1 设置物理属性
         physics = Object.assign({ label: general.label }, defaultProperty.physics, physics)
-        // 设置所有物体是否可旋转
+        // 1.2.2 设置所有物体是否可旋转
         if (!sceneData.global.allowRotate) {
           physics.inertia = Infinity
         }
@@ -266,22 +273,40 @@ const store = new Vuex.Store({
           Body.setStatic(body, true)
           body.restitution = physics.restitution
         }
-        // 设置样式属性
+        // 1.2.3 设置样式属性
         style = Object.assign({}, defaultProperty.style, style)
         body.render.fillStyle = style.fillColor
         body.render.fontColor = style.fontColor
 
-        // 设置条件属性
+        // 1.2.4 设置条件属性
         condition && condition.velocity && Body.setVelocity(body, condition.velocity)
         condition && condition.force && bodiesForce.set(body, condition.force)
-        console.log(body.label, body.restitution)
         World.addBody(world, body)
       }
-      //选中事件绑定
+
+      // 1.2.5 循环设置每个物体的恒力
       Events.on(engine, 'beforeUpdate', function(event) {
         bodiesForce.forEach((force, body) => {
           Body.applyForce(body, body.position, force)
         })
+      })
+      // 2.0 matter视野变换
+      let mouse = Mouse.create(render.canvas)
+      let mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+          stiffness: 0.2,
+          render: {
+            visible: false
+          }
+        }
+      })
+      Events.on(mouseConstraint, 'mousedown', function(event) {
+        var mousePosition = event.mouse.position
+        console.log('mousedown at ' + mousePosition.x + ' ' + mousePosition.y)
+      })
+      Events.on(mouseConstraint, 'mousewheel', function(event) {
+        console.log(event.mouse)
       })
     },
 

@@ -1,5 +1,5 @@
 <template>
-  <div id='scene-running' style="height:100%">
+  <div id='scene-running'>
     <div id='scene-running-toolbar'>
       <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="开始" placement="top">
         <i class="iconfont icon-start" @click='sceneStart'></i>
@@ -28,10 +28,6 @@ export default {
     return {
       renderDom: undefined,
       runner: Runner.create(),
-      viewPort: {
-        min: { x: 0, y: 0 },
-        max: { x: 800, y: 600 }
-      },
       // contextmenu data (菜单数据)
       contextMenuData: {
         // the contextmenu name(@1.4.1 updated)
@@ -59,19 +55,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'runningRender',
+      'render',
       'engine',
     ])
   },
-  watch: {
-    viewPort: {
-      handler: function () {
-        Render.lookAt(this.runningRender, this.viewPort);
-      },
-      deep: true
-    }
-  },
   methods: {
+    ...mapActions({
+      initSceneRunning: types.INIT_SCENE_RUNNING,
+    }),
     showMenu () {
       event.preventDefault()
       var x = event.clientX
@@ -102,23 +93,32 @@ export default {
     },
     renderScene: function () {
       // 设置matter尺寸。
-      this.renderDom.appendChild(this.runningRender.canvas);
-      Render.lookAt(this.runningRender, this.viewPort);
-      // 在渲染之后调整大小
-      this.runningRender.canvas.width = this.renderDom.clientWidth;
-      this.runningRender.canvas.height = this.renderDom.clientHeight;
-      Render.run(this.runningRender);
+      this.renderDom.appendChild(this.render.canvas);
+      Render.lookAt(this.render, {
+        min: { x: 0, y: 0 },
+        max: { x: this.renderDom.clientWidth, y: this.renderDom.clientHeight }
+      });
+      Render.run(this.render);
     },
     handleAdd: function () {
     }
   },
   mounted () {
     this.renderDom = $('#scene-running-render')[0]
+    this.initSceneRunning(this.renderDom);
     this.reloadSceneRunning();
     this.renderScene();
+    this.renderDom.addEventListener("mousewheel", (event) => {
+      console.log(event)
+    }, true);
   },
 }
 </script>
 
 <style>
+#scene-running-render {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 </style>
