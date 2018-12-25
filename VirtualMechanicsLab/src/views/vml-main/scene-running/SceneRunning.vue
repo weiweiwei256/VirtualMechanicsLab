@@ -20,7 +20,7 @@
 <script>
 import * as types from '@/modules-constant.js'
 import '@/common/decomp.js'
-import { Render, Engine, Runner, Common } from 'matter-js'
+import { Render, Engine, Runner, Common, Bounds } from 'matter-js'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'scene-running',
@@ -28,6 +28,7 @@ export default {
     return {
       renderDom: undefined,
       runner: Runner.create(),
+      scale: 1,
       // contextmenu data (菜单数据)
       contextMenuData: {
         // the contextmenu name(@1.4.1 updated)
@@ -109,7 +110,12 @@ export default {
     this.reloadSceneRunning();
     this.renderScene();
     this.renderDom.addEventListener("mousewheel", (event) => {
-      console.log(event)
+      // mouse wheel controls zoom
+      let scaleFactor = event.wheelDelta * 0.002;
+      this.scale += scaleFactor;
+      this.render.bounds.max.x = this.render.bounds.min.x + this.render.options.width * this.scale;
+      this.render.bounds.max.y = this.render.bounds.min.y + this.render.options.height * this.scale;
+
     }, true);
   },
 }
