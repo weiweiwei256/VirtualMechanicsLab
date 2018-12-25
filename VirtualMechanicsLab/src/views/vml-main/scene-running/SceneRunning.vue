@@ -29,6 +29,9 @@ export default {
       renderDom: undefined,
       runner: Runner.create(),
       scale: 1,
+      dragFlag: false,
+      originX: 0,
+      originY: 0,
       // contextmenu data (菜单数据)
       contextMenuData: {
         // the contextmenu name(@1.4.1 updated)
@@ -106,16 +109,34 @@ export default {
   },
   mounted () {
     this.renderDom = $('#scene-running-render')[0]
+    this.renderDom.style.cursor = 'pointer';
     this.initSceneRunning(this.renderDom);
     this.reloadSceneRunning();
     this.renderScene();
     this.renderDom.addEventListener("mousewheel", (event) => {
-      // mouse wheel controls zoom
       let scaleFactor = event.wheelDelta * 0.002;
       this.scale += scaleFactor;
       this.render.bounds.max.x = this.render.bounds.min.x + this.render.options.width * this.scale;
       this.render.bounds.max.y = this.render.bounds.min.y + this.render.options.height * this.scale;
-
+    }, true);
+    this.renderDom.addEventListener("mousedown", (event) => {
+      this.dragFlag = true;
+      this.originX = event.offsetX;
+      this.originY = event.offsetY;
+    }, true);
+    this.renderDom.addEventListener("mousemove", (event) => {
+      if (this.dragFlag) {
+        let translate = {
+          x: this.originX - event.offsetX,
+          y: this.originY - event.offsetY
+        }
+        Bounds.translate(this.render.bounds, translate);
+        this.originX = event.offsetX;
+        this.originY = event.offsetY;
+      }
+    }, true);
+    this.renderDom.addEventListener("mouseup", (event) => {
+      this.dragFlag = false;
     }, true);
   },
 }
