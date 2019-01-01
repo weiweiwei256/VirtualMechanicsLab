@@ -127,8 +127,8 @@ export default {
     this.renderDom.addEventListener("mousemove", (event) => {
       if (this.dragFlag) {
         let translate = {
-          x: this.originX - event.offsetX,
-          y: this.originY - event.offsetY
+          x: (this.originX - event.offsetX) * this.scale,
+          y: (this.originY - event.offsetY) * this.scale
         }
         Bounds.translate(this.render.bounds, translate);
         this.originX = event.offsetX;
