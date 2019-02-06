@@ -133,6 +133,7 @@ const store = new Vuex.Store({
         let cell = graph.getSelectionCell()
         if (cell) {
           context.commit(types.SET_EDITOR_SELECTION_CELL, cell)
+          console.log(cell)
         } else {
           // 什么都没选中 则认为
           context.commit(types.SET_EDITOR_SELECTION_CELL, graph.model.root.children[0])
@@ -170,11 +171,13 @@ const store = new Vuex.Store({
             geometry.height = height
             break
           case types.CIRCLE:
+            let oldRadius = geometry.radius
             let radius = Math.min(mxGeometry.width, mxGeometry.height) / 2
+            let dradius = radius - oldRadius
             mxGeometry.width = radius * 2
             mxGeometry.height = radius * 2
-            geometry.x += radius
-            geometry.y += radius
+            geometry.x += dradius
+            geometry.y += dradius
             geometry.radius = radius
             break
         }
