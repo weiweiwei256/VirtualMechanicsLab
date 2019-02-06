@@ -30,15 +30,6 @@ export default {
     ...mapActions({
       initSceneEditor: types.INIT_SCENE_EDITOR,
     }),
-    deleteBody: function () {
-      console.log('delete')
-    },
-    undo: function () {
-      console.log('undo')
-    },
-    redo: function () {
-      console.log('redo')
-    },
   },
   beforeMount: function () {
     this.initSceneEditor();

@@ -182,8 +182,12 @@ const store = new Vuex.Store({
             break
         }
       })
-      // 添加物体
+      // 添加物体同步数据
       graph.addListener(mxEvent.CELLS_ADDED, (graph, event) => {
+        context.dispatch(types.SAVE_SCENE)
+      })
+      // 删除物体同步数据
+      graph.addListener(mxEvent.CELLS_REMOVED, (graph, event) => {
         context.dispatch(types.SAVE_SCENE)
       })
 
