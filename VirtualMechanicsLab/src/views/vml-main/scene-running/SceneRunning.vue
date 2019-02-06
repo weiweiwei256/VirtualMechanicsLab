@@ -28,7 +28,6 @@ export default {
     return {
       renderDom: undefined,
       runner: Runner.create(),
-      scale: 1,
       dragFlag: false,
       originX: 0,
       originY: 0,
@@ -61,6 +60,7 @@ export default {
     ...mapGetters([
       'render',
       'engine',
+      'renderScale'
     ])
   },
   methods: {
@@ -99,7 +99,7 @@ export default {
       // 设置matter尺寸。
       this.renderDom.appendChild(this.render.canvas);
       Render.lookAt(this.render, {
-        min: { x: 0, y: 0 },
+        min: { x: 0, y: 21 },  //FIXME: 不知道为啥会有缝隙先不处理
         max: { x: this.renderDom.clientWidth, y: this.renderDom.clientHeight }
       });
       Render.run(this.render);
@@ -113,12 +113,6 @@ export default {
     this.initSceneRunning(this.renderDom);
     this.reloadSceneRunning();
     this.renderScene();
-    this.renderDom.addEventListener("mousewheel", (event) => {
-      let scaleFactor = event.wheelDelta * 0.002;
-      this.scale += scaleFactor;
-      this.render.bounds.max.x = this.render.bounds.min.x + this.render.options.width * this.scale;
-      this.render.bounds.max.y = this.render.bounds.min.y + this.render.options.height * this.scale;
-    }, true);
     this.renderDom.addEventListener("mousedown", (event) => {
       this.dragFlag = true;
       this.originX = event.offsetX;
@@ -127,8 +121,8 @@ export default {
     this.renderDom.addEventListener("mousemove", (event) => {
       if (this.dragFlag) {
         let translate = {
-          x: (this.originX - event.offsetX) * this.scale,
-          y: (this.originY - event.offsetY) * this.scale
+          x: (this.originX - event.offsetX) * this.renderScale,
+          y: (this.originY - event.offsetY) * this.renderScale
         }
         Bounds.translate(this.render.bounds, translate);
         this.originX = event.offsetX;

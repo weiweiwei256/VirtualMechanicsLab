@@ -20,7 +20,6 @@ import defaultProperty from '@/common/default/default-property.json'
 import defaultSetting from './default-setting.json'
 import sceneCodec from '@/common/scene-codec'
 import BodyToolHandler from '@/common/BodyToolHandler'
-import { debug } from 'util'
 let storage = window.localStorage
 let setting = Object.assign(
   {},
@@ -41,7 +40,8 @@ const store = new Vuex.Store({
       editorGraph: null,
       selectionCell: null,
       // running data
-      render: null
+      render: null,
+      renderScale: 1
     }
   },
   getters: {
@@ -74,6 +74,9 @@ const store = new Vuex.Store({
     },
     world: state => {
       return state.render.engine.world
+    },
+    renderScale: state => {
+      return state.renderScale
     }
   },
   mutations: {
@@ -82,6 +85,9 @@ const store = new Vuex.Store({
     },
     [types.SET_RENDER]: (state, render) => {
       state.render = render
+    },
+    [types.SET_RENDER_SCALE]: (state, renderScale) => {
+      state.renderScale = renderScale
     },
     [types.SET_EDITOR_GRAPH]: (state, graph) => {
       state.editorGraph = graph
@@ -333,12 +339,41 @@ const store = new Vuex.Store({
     },
     [types.HANDLE_HOTKEY]: (context, hotKey) => {
       let editorGraph = context.getters.editorGraph
+      let renderScale = context.getters.renderScale
+      let render = context.getters.render
+
       switch (hotKey.toString()) {
         case ['Ctrl', 'wheel', 'up'].toString():
           editorGraph.zoomIn()
           break
         case ['Ctrl', 'wheel', 'down'].toString():
           editorGraph.zoomOut()
+          break
+        case ['Alt', 'wheel', 'up'].toString():
+          renderScale /= 1.2
+          context.commit(types.SET_RENDER_SCALE, renderScale)
+          render.bounds.max.x = render.bounds.min.x + render.options.width * renderScale
+          render.bounds.max.y = render.bounds.min.y + render.options.height * renderScale
+          break
+        case ['Alt', 'wheel', 'down'].toString():
+          renderScale *= 1.2
+          context.commit(types.SET_RENDER_SCALE, renderScale)
+          render.bounds.max.x = render.bounds.min.x + render.options.width * renderScale
+          render.bounds.max.y = render.bounds.min.y + render.options.height * renderScale
+          break
+        case ['Shift', 'wheel', 'up'].toString():
+          editorGraph.zoomIn()
+          renderScale /= 1.2
+          context.commit(types.SET_RENDER_SCALE, renderScale)
+          render.bounds.max.x = render.bounds.min.x + render.options.width * renderScale
+          render.bounds.max.y = render.bounds.min.y + render.options.height * renderScale
+          break
+        case ['Shift', 'wheel', 'down'].toString():
+          editorGraph.zoomOut()
+          renderScale *= 1.2
+          context.commit(types.SET_RENDER_SCALE, renderScale)
+          render.bounds.max.x = render.bounds.min.x + render.options.width * renderScale
+          render.bounds.max.y = render.bounds.min.y + render.options.height * renderScale
           break
         case ['Ctrl', 'x'].toString():
           mxClipboard.cut(editorGraph)
