@@ -5,10 +5,16 @@ import FlowEditor from '@/floweditor/FlowEditor.vue'
 import XMLFlow from '@/xml-flow/XMLFlow.vue'
 import JsonFlow from '@/json-flow/JsonFlow.vue'
 import UploadDownload from '@/upload-download/UploadDownload.vue'
+import Demo from '../demo.vue'
+import Echarts from '@/Echarts/Echarts.vue'
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/Demo',
+      component: Demo
+    },
     {
       path: '/Matter',
       component: Matter
@@ -28,6 +34,10 @@ export default new Router({
     {
       path: '/UploadDownload',
       component: UploadDownload
+    },
+    {
+      path: '/Echarts',
+      component: Echarts
     }
   ]
 })

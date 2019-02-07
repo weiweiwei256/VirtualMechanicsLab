@@ -4,11 +4,11 @@
     <vml-header id='top-workbench'></vml-header>
     <div id='main-workbench'>
       <scene-editor style='float:left;width:50%;height:100%'></scene-editor>
-      <scene-running style='float:right;width:50%;height:100%'></scene-running>
+      <scene-running style='position:relative;float:right;width:50%;height:100%'></scene-running>
     </div>
     <div id='bottom-workbench'>
-      <EditorProperty style='float:left;width:50%'></EditorProperty>
-      <RunningWatcher style='float:right;width:50%'></RunningWatcher>
+      <EditorProperty style='float:left;width:50%;height:100%'></EditorProperty>
+      <RunningWatcher style='position:relative;float:right;width:50%;height:100%'></RunningWatcher>
     </div>
   </div>
 </template>

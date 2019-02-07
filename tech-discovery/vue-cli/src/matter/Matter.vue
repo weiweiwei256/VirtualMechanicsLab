@@ -19,7 +19,7 @@
 import { Engine, Render, World, Bodies, Events, MouseConstraint, Composite, Bounds, Vertices } from 'matter-js'
 export default {
   name: 'Matter',
-  data: function () {
+  data: function() {
     return {
       engine: null,
       render: null,
@@ -32,50 +32,52 @@ export default {
   },
   watch: {
     viewPort: {
-      handler: function () {
-        Render.lookAt(this.render, this.viewPort);
+      handler: function() {
+        Render.lookAt(this.render, this.viewPort)
       },
       deep: true
     }
   },
   methods: {
-    handleAdd: function () {
-    }
+    handleAdd: function() {}
   },
-  mounted () {
+  mounted() {
     this.renderDom = $('#matter-render')[0]
-    this.engine = Engine.create();
+    this.engine = Engine.create()
     this.render = Render.create({
       element: this.renderDom,
       engine: this.engine
-    });
-    let boxA = Bodies.circle(400, 200, 80, { mass:1,inertia:Infinity,frictionAir: 0, friction: 0, restitution: 1});
-    let boxB = Bodies.rectangle(200, 50, 80, 80,{ mass:1,inertia:Infinity,frictionAir: 0, friction: 0, restitution: 1});
+    })
+    let boxA = Bodies.circle(400, 200, 80, { mass: 1, inertia: Infinity, frictionAir: 0, friction: 0, restitution: 1 })
+    let boxB = Bodies.rectangle(40, 40, 80, 80, {
+      mass: 1,
+      inertia: Infinity,
+      frictionAir: 0,
+      friction: 0,
+      restitution: 1
+    })
     console.log(boxA)
-    let ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
-    World.add(this.engine.world, [boxA, boxB, ground]);
-    //选中监听  暂只支持选中body  
+    let ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true })
+    World.add(this.engine.world, [boxA, boxB, ground])
+    //选中监听  暂只支持选中body
     // TODO: 1. 由于element渲染后 元素大小改变导致鼠标位置不准  matter-render放在前面  寻找更好solution
-    //       2. 视野改变未加入的事件中 得自己处理  
+    //       2. 视野改变未加入的事件中 得自己处理
     //         先通过树选中
-    Events.on(MouseConstraint.create(this.engine), 'mousedown', (event) => {
+    Events.on(MouseConstraint.create(this.engine), 'mousedown', event => {
       let mousePosition = event.mouse.mousedownPosition
       let bodies = Composite.allBodies(this.engine.world)
       for (let i = 0; i < bodies.length; i++) {
         let body = bodies[i]
-        if (
-          Bounds.contains(body.bounds, mousePosition) &&
-          Vertices.contains(body.vertices, mousePosition)
-        ) {
+        if (Bounds.contains(body.bounds, mousePosition) && Vertices.contains(body.vertices, mousePosition)) {
           console.log(body)
         }
       }
     })
-    Render.lookAt(this.render, this.viewPort);
+    Render.lookAt(this.render, this.viewPort)
     // 渲染运行
-    Engine.run(this.engine);
-    Render.run(this.render);
-  },
+    Render.run(this.render)
+    // Engine.run(this.engine)
+  }
 }
 </script>
 

@@ -154,8 +154,6 @@ export default {
       this.graph.getModel().setStyle(this.selectionCell, style)
     }
   },
-  components: {
-  }
 }
 </script>
 

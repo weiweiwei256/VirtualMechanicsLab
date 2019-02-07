@@ -1,6 +1,6 @@
 <template>
   <div id='scene-running'>
-    <div id='scene-running-toolbar'>
+    <div id='scene-running-toolbar' v-show='true'>
       <el-tooltip effect="light" :open-delay='500' :hide-after='3000' content="开始" placement="top">
         <i class="iconfont icon-start" @click='sceneStart'></i>
       </el-tooltip>
@@ -43,14 +43,17 @@ export default {
         // Menu options (菜单选项)
         menulists: [
           {
-            fnHandler: 'savedata', // Binding events(绑定事件)
-            icoName: 'fa fa-home fa-fw', // icon (icon图标 )
-            btnName: 'Save' // The name of the menu option (菜单名称)
+            fnHandler: 'sceneReset', // Binding events(绑定事件)
+            icoName: 'fa fa-home fa-fw',
+            btnName: '同步场景' // The name of the menu option (菜单名称)
           },
           {
-            fnHandler: 'newdata',
-            icoName: 'fa fa-home fa-fw',
-            btnName: 'New'
+            fnHandler: 'sceneStart',
+            btnName: '开始场景'
+          },
+          {
+            fnHandler: 'scenePause',
+            btnName: '暂停场景'
           }
         ]
       }
@@ -71,7 +74,6 @@ export default {
       event.preventDefault()
       var x = event.clientX
       var y = event.clientY
-      // Get the current location
       this.contextMenuData.axis = {
         x, y
       }
@@ -99,7 +101,7 @@ export default {
       // 设置matter尺寸。
       this.renderDom.appendChild(this.render.canvas);
       Render.lookAt(this.render, {
-        min: { x: 0, y: 21 },  //FIXME: 不知道为啥会有缝隙先不处理
+        min: { x: 0, y: 0 },
         max: { x: this.renderDom.clientWidth, y: this.renderDom.clientHeight }
       });
       Render.run(this.render);
@@ -138,8 +140,10 @@ export default {
 
 <style>
 #scene-running-render {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 19px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
 }
 </style>
