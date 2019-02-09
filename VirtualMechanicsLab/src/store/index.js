@@ -115,7 +115,6 @@ const store = new Vuex.Store({
       // 拖动
       graph.panningHandler.useLeftButtonForPanning = true
       graph.setPanning(true)
-
       graph.setTooltips(true)
       graph.getTooltip = function(state) {
         return state.cell.value.general.des

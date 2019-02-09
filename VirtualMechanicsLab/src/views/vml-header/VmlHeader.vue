@@ -29,10 +29,11 @@
     <circle-menu class='circle-menu-style' type="bottom" :number="4" animate="animated jello" circle>
       <a slot="item_btn" class="question el-icon-question" title="帮助"></a>
       <a slot="item_1" class='question-font' @click="handleAbout">关于</a>
-      <a slot="item_2" class='question-font'>问答</a>
+      <a slot="item_2" class='question-font' @click="handleSetting">设置</a>
       <a slot="item_3" class='question-font'>建议</a>
       <a slot="item_4" class='question-font'>支持</a>
     </circle-menu>
+    <vml-setting v-if="settingVisible" @settingClose="settingVisible = false"></vml-setting>
   </header>
 </template>
 <script>
@@ -40,7 +41,7 @@ import * as types from '@/modules-constant.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import CircleMenu from 'vue-circle-menu'
 import sceneManager from '@/common/scene-manager.js'
-
+import VmlSetting from './VmlSetting.vue'
 export default {
   name: 'vml-header',
   data: function () {
@@ -49,6 +50,7 @@ export default {
       sceneBarDisplay: 'none',
       defaultScenes: [],
       userScenes: [],
+      settingVisible: false
     }
   },
   computed: {
@@ -152,18 +154,21 @@ export default {
         showClose: true,
         type: 'info '
       })
+    },
+    handleSetting: function () {
+      this.settingVisible = true;
     }
   },
   beforeMount: function () {
   },
 
   components: {
-    CircleMenu
+    CircleMenu,
+    VmlSetting
   }
 }
 </script>
 <style>
-
 .el-card {
   padding: 5px !important;
 }
