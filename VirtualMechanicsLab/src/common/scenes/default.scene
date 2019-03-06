@@ -7,7 +7,8 @@
       "x": 0,
       "y": 1
     },
-    "allowRotate": false
+    "allowRotate": false,
+    "collisionCompensation": true
   },
   "bodies": [
     {
@@ -40,8 +41,8 @@
         "des": "这是一个矩形"
       },
       "geometry": {
-        "x": 100,
-        "y": 50,
+        "x": 40,
+        "y": 40,
         "width": 80,
         "height": 80
       },
@@ -67,7 +68,8 @@
         "height": 60
       },
       "physics": {
-        "isStatic": true
+        "isStatic": true,
+        "restitution": 0
       },
       "condition": {},
       "style": {}

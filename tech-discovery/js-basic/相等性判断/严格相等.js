@@ -5,8 +5,8 @@
 var num = 0;
 console.log(num === num); // true
 console.log(+0 === -0); // true
-console.log(NaN === NaN);
-
+console.log(NaN === NaN); //false
+console.log({} === {}); // false
 var num = 0;
 var obj = new String("0");
 var str = "0";

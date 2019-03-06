@@ -1,19 +1,46 @@
 <template>
   <div id='running-watcher'>
-    <el-select v-model="selectObject" placeholder="请选择物体">
-    </el-select>
+    <el-form :model="watcherData" :inline="true">
+      <el-form-item label="物体名称:">
+        <el-select v-model="watcherData.bodyLabel" placeholder="请选择物体">
+          <el-option v-for="item in bodiesList" :key="item.label" :label="item.label" :value='item.value'></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="数据类型:">
+        <el-select v-model="watcherData.dataType" placeholder="请选择物体">
+          <el-option v-for="item in dataTypeOption" :key="item.label" :label="item.label" :value='item.value'></el-option>
+        </el-select>
+      </el-form-item>
+
+    </el-form>
+
     <div ref='echarts' class='echarts-style'></div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import { Render, Engine, Runner, Common } from 'matter-js'
+import { Render, Engine, Runner, Events } from 'matter-js'
 import echarts from 'echarts'
 export default {
   data: function () {
     return {
-      selectObject: '',
+      watcherData: {
+        bodyLabel: '',
+        dataType: 'a-t'
+      },
+      dataTypeOption: [
+        {
+          value: 'a-t',
+          label: 'a-t图'
+        }, {
+          value: 'v-t',
+          label: 'v-t图'
+        }, {
+          value: 'x-t',
+          label: 'x-t图'
+        }
+      ],
       watchFlag: false,
       watcher: undefined,
       watchEcharts: undefined,
@@ -22,14 +49,14 @@ export default {
           text: 'ECharts 入门示例'
         },
         tooltip: {},
-        // dataZoom: [
-        //   {
-        //     // 这个dataZoom组件，默认控制x轴。
-        //     type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
-        //     start: 0,
-        //     end: 100
-        //   }
-        // ],
+        dataZoom: [
+          {
+            // 这个dataZoom组件，默认控制x轴。
+            type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+            start: 0,
+            end: 100
+          }
+        ],
         legend: {
           data: ['销量', '2016']
         },
@@ -59,11 +86,19 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'sceneData',
+      'engine',
       'render',
       'world'
-    ])
-  },
-  watch: {
+    ]),
+    bodiesList: function () {
+      let labelList = [];
+      this.sceneData.bodies.forEach(body => {
+        let { general: { label } } = body
+        labelList.push({ label, value: label })
+      })
+      return labelList;
+    }
   },
   methods: {
     handleWatch: function () {
@@ -78,9 +113,16 @@ export default {
       }
     }
   },
+  beforeMount: function () {
+    console.log(this.bodiesList)
+  },
   mounted: function () {
     this.watchEcharts = echarts.init(this.$refs.echarts, null, { renderer: 'svg' })
     this.watchEcharts.setOption(this.option)
+    console.log(this.world)
+    Events.on(this.engine, 'afterTick', (event) => {
+      // console.log(this.engine.timing.timestamp)
+    })
   }
 }
 </script>

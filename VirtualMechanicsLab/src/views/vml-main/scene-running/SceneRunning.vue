@@ -12,7 +12,7 @@
       </el-tooltip>
     </div>
     <div id='scene-running-render' @contextmenu="showMenu"></div>
-    <vue-context-menu :contextMenuData="contextMenuData" @savedata="savedata" @newdata="newdata">
+    <vue-context-menu :contextMenuData="contextMenuData" @sceneReset="sceneReset" @sceneStart="sceneStart" @scenePause="scenePause">
     </vue-context-menu>
   </div>
 </template>
@@ -20,7 +20,7 @@
 <script>
 import * as types from '@/modules-constant.js'
 import '@/common/decomp.js'
-import { Render, Engine, Runner, Common, Bounds } from 'matter-js'
+import { Render, Engine, Body, Events, Runner, Bounds } from 'matter-js'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'scene-running',
@@ -28,6 +28,10 @@ export default {
     return {
       renderDom: undefined,
       runner: Runner.create(),
+      // 记录碰撞瞬间的数据
+      collisionMap: new Map(),
+      collisionPosition: {},
+      collisionVelocity: {},
       dragFlag: false,
       originX: 0,
       originY: 0,
@@ -106,8 +110,6 @@ export default {
       });
       Render.run(this.render);
     },
-    handleAdd: function () {
-    }
   },
   mounted () {
     this.renderDom = $('#scene-running-render')[0]
@@ -115,6 +117,32 @@ export default {
     this.initSceneRunning(this.renderDom);
     this.reloadSceneRunning();
     this.renderScene();
+    // 由于matter引擎导致即使进行完全弹性碰撞
+    Events.on(this.engine, 'collisionStart', event => {
+      console.error('-------------------------collisionStart--------------------------------')
+      // let contacts = event.pairs[0].activeContacts;
+      // let collisionX = 0;
+      // let collisionY = 0;
+      // for (let j = 0; j < contacts.length; j++) {
+      //   let { x, y } = contacts[j].vertex
+      //   collisionX += x;
+      //   collisionY += y;
+      // }
+      // this.collisionPosition = { x: collisionX / contacts.length, y: collisionY / contacts.length };
+      // console.log(this.collisionPosition)
+      console.log(event.pairs[0].bodyA.label)
+      console.log(event.pairs[0].bodyB.label)
+      let { x, y } = event.pairs[0].bodyA.velocity;
+      this.collisionMap.set(event.pairs[0].bodyA.label, { x, y })
+    })
+    Events.on(this.engine, 'collisionEnd', event => {
+      console.error('-------------------------collisionEnd--------------------------------')
+      console.log(event.pairs[0].bodyA.label)
+      console.log(event.pairs[0].bodyB.label)
+      let { x, y } = this.collisionMap.get(event.pairs[0].bodyA.label)
+      // Body.setVelocity(event.pairs[0].bodyA, { x: 0, y: y * -1 })
+      this.collisionMap.delete(event.pairs[0].bodyA.label)
+    })
     this.renderDom.addEventListener("mousedown", (event) => {
       this.dragFlag = true;
       this.originX = event.offsetX;

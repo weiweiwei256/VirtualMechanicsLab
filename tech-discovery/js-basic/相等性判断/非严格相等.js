@@ -3,6 +3,7 @@
 // 最终的比较方式等同于全等操作符 === 的比较方式。 相等操作符满足交换律。
 console.log(undefined == null); //true
 console.log(undefined === null); // false
+console.log({} == {}); //false
 var a = { name: "1" };
 console.log(1 == a);
 // TODO:
@@ -14,4 +15,3 @@ console.log(parseInt("2.7"));
 console.log(undefined == false);
 console.log(undefined === false);
 console.log(null == 0);
-
