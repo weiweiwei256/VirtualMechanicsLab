@@ -1,9 +1,10 @@
 {
-  "type": "circle",
-  "x": 30,
-  "y": 30,
-  "radius": 30,
-  "options": {
-    "label": "circle"
+  "general": {
+    "type": "circle",
+    "label": "circle",
+    "des": "这是一个新圆形"
+  },
+  "geometry": {
+    "radius": 50
   }
 }

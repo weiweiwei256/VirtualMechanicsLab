@@ -1,54 +1,78 @@
 {
-  "description": "This is a default scene file",
+  "name": "默认场景",
+  "description": "这是一简单场景",
+  "author": "",
+  "global": {
+    "gravity": {
+      "x": 0,
+      "y": 1
+    },
+    "allowRotate": false,
+    "collisionCompensation": true
+  },
   "bodies": [
     {
-      "type": "circle",
-      "x": 100,
-      "y": 100,
-      "radius": 30,
-      "options": {
-        "label": "circle1"
-      }
-    },
-    {
-      "type": "rectangle",
-      "x": 200,
-      "y": 40,
-      "width": 80,
-      "height": 80,
-      "options": {
-        "label": "rectangle1",
-        "friction": 0,
-        "restitution": 1
-      }
-    },
-    {
-      "type": "triangle",
-      "x": 200,
-      "y": 200,
-      "width": 50,
-      "height": 50,
-      "direction": 1,
-      "options": {
-        "label": "triangle1",
-        "friction": 0.2,
-        "restitution": 0.1
-      }
-    },
-    {
-      "type": "rectangle",
-      "x": 0,
-      "y": 600,
-      "width": 810,
-      "height": 30,
-      "options": {
-        "label": "ground",
-        "isStatic": true,
-        "friction": 0,
+      "general": {
+        "type": "circle",
+        "label": "circle1",
+        "des": "这是一个圆"
+      },
+      "geometry": {
+        "x": 250,
+        "y": 100,
+        "radius": 50
+      },
+      "physics": {
+        "mass": 1,
         "frictionAir": 0,
-        "frictionStatic": 1,
+        "friction": 0,
         "restitution": 1
+      },
+      "condition": {},
+      "style": {
+        "fillColor": "#ff0000",
+        "fontColor": "#000000"
       }
+    },
+    {
+      "general": {
+        "type": "rectangle",
+        "label": "rectangle1",
+        "des": "这是一个矩形"
+      },
+      "geometry": {
+        "x": 40,
+        "y": 40,
+        "width": 80,
+        "height": 80
+      },
+      "physics": {
+        "mass": 1,
+        "frictionAir": 0,
+        "friction": 0,
+        "restitution": 1
+      },
+      "condition": {},
+      "style": {}
+    },
+    {
+      "general": {
+        "type": "rectangle",
+        "label": "ground",
+        "des": "这是矩形充当地面"
+      },
+      "geometry": {
+        "x": 400,
+        "y": 410,
+        "width": 810,
+        "height": 60
+      },
+      "physics": {
+        "isStatic": true,
+        "restitution": 0
+      },
+      "condition": {},
+      "style": {}
     }
   ]
 }

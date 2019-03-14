@@ -1,12 +1,34 @@
 {
-  "options": {
-    "label": "Body",
+  "name": "场景名称",
+  "description": "场景描述",
+  "author": "",
+  "global": {
+    "gravity": {
+      "x": 0,
+      "y": 1
+    },
+    "allowRotate": false
+  },
+  "physics": {
     "isStatic": false,
     "mass": 1,
-    "friction": 0.1,
-    "restitution": 0,
-    "position": { "x": 0, "y": 0 },
-    "vertices": [],
-    "angle": 0
+    "friction": 0,
+    "frictionStatic": 0,
+    "frictionAir": 0,
+    "restitution": 1
+  },
+  "condition": {
+    "velocity": {
+      "x": 0,
+      "y": 0
+    },
+    "force": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "style": {
+    "fillColor": "#C3D9FF",
+    "fontColor": "#774400"
   }
 }
